@@ -119,22 +119,49 @@ color:black;
 </div>
 
 <script>
-const p = new URLSearchParams(window.location.search);
+const params = new URLSearchParams(window.location.search);
 
-const img = p.get("img") || "";
-const name = p.get("name") || "Product";
-const desc = p.get("desc") || "No description";
-const price = Number(p.get("price")) || 0;
+/* SUPPORT BOTH SYSTEMS */
+const id = params.get("id");
 
-document.getElementById("img").src = img;
-document.getElementById("name").innerText = name;
-document.getElementById("desc").innerText = desc;
-document.getElementById("price").innerText = "₦" + price.toLocaleString();
+let img = params.get("img");
+let name = params.get("name");
+let price = params.get("price");
+let desc = params.get("desc");
 
+/* IF ID-STYLE LINK (FUTURE SAFE) */
+const productDB = {
+  "dreams-tee": {
+    img: "233d44f0-6ed6-4388-9a0f-69d90e762b66.jpeg",
+    name: "RECLUSE DREAMS",
+    price: 30000,
+    desc: "Dream-inspired minimal streetwear tee"
+  }
+};
+
+if(id && productDB[id]){
+  img = productDB[id].img;
+  name = productDB[id].name;
+  price = productDB[id].price;
+  desc = productDB[id].desc;
+}
+
+/* VALIDATION */
+if(!img || !name || !price){
+  document.querySelector(".container").innerHTML =
+  "<h2 style='text-align:center;'>PRODUCT NOT FOUND</h2>";
+} else {
+  document.getElementById("img").src = img;
+  document.getElementById("name").innerText = name;
+  document.getElementById("desc").innerText = desc || "";
+  document.getElementById("price").innerText = "₦" + Number(price).toLocaleString();
+}
+
+/* CART */
 function addToCart(){
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-cart.push({name, price, img});
+cart.push({img, name, price});
 
 localStorage.setItem("cart", JSON.stringify(cart));
 
