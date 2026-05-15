@@ -88,6 +88,29 @@ nav a:hover {
     background: white;
     color: black;
 }
+
+/* 🔥 SLEEVELESS SECTION FIX */
+#sleeveless {
+    margin-top: 60px;
+    padding: 60px 20px;
+    text-align: center;
+    border-top: 1px solid #222;
+    border-bottom: 1px solid #222;
+}
+
+#sleeveless h2 {
+    font-size: 22px;
+    letter-spacing: 4px;
+    margin-bottom: 10px;
+    font-family: Arial;
+}
+
+#sleeveless p {
+    opacity: 0.6;
+    max-width: 600px;
+    margin: auto;
+    font-size: 14px;
+}
 </style>
 </head>
 
@@ -102,61 +125,41 @@ nav a:hover {
 <a href="cart.html">CART 🛒 <span id="cartCount">0</span></a>
 </nav>
 
+<!-- PRODUCTS -->
 <div class="shop-grid">
 
-    <!-- PRODUCT 1 -->
     <div class="product-card">
         <img src="a041ae76-2fca-4c0c-9cac-6bcdfc03dd88.jpeg">
         <div class="product-info">
             <div class="product-title">RECLUSE BEER TEE</div>
             <div class="product-price">₦30,000</div>
-            <a class="btn"
-            href="product.html?img=a041ae76-2fca-4c0c-9cac-6bcdfc03dd88.jpeg&name=RECLUSE%20BEER%20TEE&price=30000&desc=Minimal%20front%20design%2C%20beer%20graphic%20back%2C%20round%20neck%20tee">
+            <a class="btn" href="product.html?img=a041ae76-2fca-4c0c-9cac-6bcdfc03dd88.jpeg&name=RECLUSE%20BEER%20TEE&price=30000">
             VIEW PRODUCT</a>
         </div>
     </div>
 
-    <!-- PRODUCT 2 -->
     <div class="product-card">
         <img src="2af34606-1479-4be7-a83d-7b61140dda21.jpeg">
         <div class="product-info">
             <div class="product-title">RECLUSE SMOKED FLOWER</div>
             <div class="product-price">₦30,000</div>
-            <a class="btn"
-            href="product.html?img=2af34606-1479-4be7-a83d-7b61140dda21.jpeg&name=RECLUSE%20SMOKED%20FLOWER&price=30000&desc=Smoked%20flower%20front%20design%2C%20round%20neck%20tee">
-            VIEW PRODUCT</a>
-        </div>
-    </div>
-
-    <!-- PRODUCT 3 -->
-    <div class="product-card">
-        <img src="e875715a-90af-4361-b1a9-9fe4e38f0a67.jpeg">
-        <div class="product-info">
-            <div class="product-title">RECLUSE CHAIN HEART</div>
-            <div class="product-price">₦30,000</div>
-            <a class="btn"
-            href="product.html?img=e875715a-90af-4361-b1a9-9fe4e38f0a67.jpeg&name=RECLUSE%20CHAIN%20HEART&price=30000&desc=Heavy%20streetwear%20tee%20with%20chain%20heart%20graphic%2C%20premium%20fit">
-            VIEW PRODUCT</a>
-        </div>
-    </div>
-
-    <!-- PRODUCT 4 -->
-    <div class="product-card">
-        <img src="233d44f0-6ed6-4388-9a0f-69d90e762b66.jpeg">
-        <div class="product-info">
-            <div class="product-title">RECLUSE DREAMS</div>
-            <div class="product-price">₦30,000</div>
-            <a class="btn"
-            href="product.html?img=233d44f0-6ed6-4388-9a0f-69d90e762b66.jpeg&name=RECLUSE%20DREAMS&price=30000&desc=Dream-inspired%20street%20tee%20with%20clean%20minimal%20aesthetic">
+            <a class="btn" href="product.html?img=2af34606-1479-4be7-a83d-7b61140dda21.jpeg&name=RECLUSE%20SMOKED%20FLOWER&price=30000">
             VIEW PRODUCT</a>
         </div>
     </div>
 
 </div>
+
+<!-- 🔥 SLEEVELESS SECTION (NOW PROPER) -->
 <div id="sleeveless">
-    <!-- your sleeveless shirts section here -->
+    <h2>SLEEVELESS DROP</h2>
+    <p>Lightweight essentials built for heat, movement, and silence. Limited pieces only.</p>
+
+    <div style="margin-top:30px;">
+        <a href="shop.html" class="btn">ENTER SLEEVELESS DROP</a>
+    </div>
 </div>
-    
+
 <script>
 function updateCartCounter(){
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
