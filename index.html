@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>RECLUSE</title>
 
-<!-- FONT -->
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
 
 <style>
@@ -17,10 +16,20 @@ body {
     overflow-x: hidden;
 }
 
-/* HEADER */
+/* HEADER (cleaner spacing) */
 header {
     text-align: center;
-    padding: 25px 20px;
+    padding: 20px 20px 10px;
+}
+
+/* ✅ FIXED LOGO */
+.logo {
+    height: 55px;
+    width: auto;
+    max-width: 180px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
 }
 
 /* NAV */
@@ -94,7 +103,7 @@ nav a:hover {
     margin-top: 120px;
 }
 
-/* QUOTE LINE (NOW BEBAS NEUE) */
+/* QUOTE */
 .hero p {
     opacity: 0.7;
     max-width: 520px;
@@ -114,12 +123,12 @@ nav a:hover {
     letter-spacing: 2px;
     font-size: 12px;
     transition: 0.3s;
+    font-family: 'Bebas Neue', sans-serif;
 }
 
 .btn:hover {
     background: white;
     color: black;
-    font-family: 'Bebas Neue', sans-serif;
 }
 
 /* SECTION */
@@ -182,7 +191,6 @@ footer {
 <a href="cart.html">CART 🛒</a>
 </nav>
 
-<!-- HERO -->
 <div class="hero">
 
 <img src="IMG_5251.jpeg" class="graffiti">
