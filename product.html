@@ -102,6 +102,7 @@ nav a:hover {
     <a href="shop.html">SHOP</a>
     <a href="drop.html">DROP</a>
     <a href="archive.html">ARCHIVE</a>
+    <a href="cart.html">CART</a>
 </nav>
 
 <div class="container">
@@ -120,7 +121,7 @@ nav a:hover {
 
 </div>
 
-<<script>
+<script>
 const params = new URLSearchParams(window.location.search);
 
 const img = params.get("img");
@@ -144,7 +145,7 @@ if (!img || !name || !desc) {
     priceEl.innerText = "LIMITED DROP PIECE";
 }
 
-// 🛒 CART FUNCTION (THIS FIXES YOUR BUTTON)
+// 🛒 CART FUNCTION (FIXED)
 function addToCart() {
 
     if (!img || !name) {
@@ -172,28 +173,6 @@ function addToCart() {
     localStorage.setItem("cart", JSON.stringify(cart));
 
     alert("Added to cart 🛒");
-}
-</script>>
-const params = new URLSearchParams(window.location.search);
-
-const img = params.get("img");
-const name = params.get("name");
-const desc = params.get("desc");
-
-const imageEl = document.getElementById("productImg");
-const nameEl = document.getElementById("productName");
-const descEl = document.getElementById("productDesc");
-const priceEl = document.getElementById("productPrice");
-
-if (!img || !name || !desc) {
-    nameEl.innerText = "PRODUCT NOT FOUND";
-    descEl.innerText = "Missing product data";
-    imageEl.style.display = "none";
-} else {
-    imageEl.src = img;
-    nameEl.innerText = name;
-    descEl.innerText = desc;
-    priceEl.innerText = "LIMITED DROP PIECE";
 }
 </script>
 
