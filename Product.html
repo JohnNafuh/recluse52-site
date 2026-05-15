@@ -16,8 +16,8 @@ color:white;
 header{
 text-align:center;
 padding:25px;
-font-size:26px;
 letter-spacing:5px;
+font-size:26px;
 }
 
 nav{
@@ -69,7 +69,6 @@ letter-spacing:3px;
 .price{
 margin:10px 0;
 opacity:0.7;
-font-size:14px;
 }
 
 .desc{
@@ -109,27 +108,26 @@ color:black;
 <nav>
 <a href="index.html">HOME</a>
 <a href="shop.html">SHOP</a>
-<a href="cart.html">CART 🛒</a>
+<a href="cart.html">CART 🛒 <span id="cartCount">0</span></a>
 </nav>
 
 <div class="container">
 
-    <div class="image">
-        <img id="img">
-    </div>
+<div class="image">
+<img id="img">
+</div>
 
-    <div class="details">
-        <h1 id="name"></h1>
-        <div class="price" id="price"></div>
-        <p class="desc" id="desc"></p>
+<div class="details">
+<h1 id="name"></h1>
+<div class="price" id="price"></div>
+<p class="desc" id="desc"></p>
 
-        <button class="btn" id="buyBtn" onclick="addToCart()">ADD TO CART</button>
-    </div>
+<button class="btn" id="buyBtn" onclick="addToCart()">ADD TO CART</button>
+</div>
 
 </div>
 
 <script>
-
 /* ================= PRODUCT DATABASE ================= */
 const products = {
   "beer-tee": {
@@ -150,7 +148,7 @@ const products = {
     img: "e875715a-90af-4361-b1a9-9fe4e38f0a67.jpeg",
     name: "RECLUSE CHAIN HEART",
     price: 30000,
-    desc: "Heavy streetwear tee with chain heart graphic design."
+    desc: "Heavy streetwear tee featuring chain heart graphic design."
   },
 
   "dreams": {
@@ -164,30 +162,22 @@ const products = {
     img: "photo-output.jpeg",
     name: "RECLUSE SWORD VEST",
     price: 28000,
-    desc: "Black sleeveless vest with Samurai Sword graphic. Sharp, minimal statement piece."
-  },
-
-  "shadow-sleeveless": {
-    img: "shadow-sleeveless.jpeg",
-    name: "RECLUSE SHADOW SLEEVELESS",
-    price: 28000,
-    desc: "Dark sleeveless vest with shadow slash graphic. Aggressive minimalist streetwear piece."
+    desc: "Black sleeveless round-neck vest featuring Samurai Sword graphic. Sharp, bold statement piece."
   }
 };
 
-/* ================= GET PRODUCT ================= */
+/* ================= GET ID ================= */
 const params = new URLSearchParams(window.location.search);
 const id = params.get("id");
 
 const product = products[id];
 
-/* SAFETY CHECK */
 if(!product){
-document.body.innerHTML = "<h2 style='text-align:center;margin-top:50px;'>PRODUCT NOT FOUND</h2>";
-throw new Error("Invalid product ID");
+  document.body.innerHTML = "<h2 style='text-align:center;margin-top:50px;'>PRODUCT NOT FOUND</h2>";
+  throw new Error("Invalid product ID");
 }
 
-/* DISPLAY */
+/* ================= DISPLAY ================= */
 document.getElementById("img").src = product.img;
 document.getElementById("name").innerText = product.name;
 document.getElementById("price").innerText = "₦" + product.price.toLocaleString();
@@ -195,32 +185,31 @@ document.getElementById("desc").innerText = product.desc;
 
 /* ================= CART ================= */
 function addToCart(){
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  cart.push(product);
 
-cart.push(product);
+  localStorage.setItem("cart", JSON.stringify(cart));
 
-localStorage.setItem("cart", JSON.stringify(cart));
+  let btn = document.getElementById("buyBtn");
+  btn.classList.add("added");
+  btn.innerText = "ADDED ✓";
 
-let btn = document.getElementById("buyBtn");
-btn.classList.add("added");
-btn.innerText = "ADDED ✓";
+  setTimeout(()=>{
+    btn.classList.remove("added");
+    btn.innerText = "ADD TO CART";
+  },1200);
 
-setTimeout(()=>{
-btn.classList.remove("added");
-btn.innerText = "ADD TO CART";
-},1200);
-
-updateCartCount();
+  updateCartCount();
 }
 
-/* COUNTER */
+/* ================= COUNTER ================= */
 function updateCartCount(){
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  document.getElementById("cartCount").innerText = cart.length;
 }
 
 updateCartCount();
-
 </script>
 
 </body>
