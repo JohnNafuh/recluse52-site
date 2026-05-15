@@ -37,6 +37,35 @@ nav a:hover {
     opacity: 1;
 }
 
+/* SECTION NAV (TABS) */
+.tabs {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.tabs a {
+    margin: 0 10px;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-decoration: none;
+    color: white;
+    opacity: 0.6;
+}
+
+.tabs a:hover {
+    opacity: 1;
+}
+
+/* SECTIONS */
+.section-title {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 14px;
+    letter-spacing: 4px;
+    opacity: 0.8;
+}
+
+/* GRID */
 .shop-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -56,7 +85,6 @@ nav a:hover {
     width: 100%;
     height: 260px;
     object-fit: cover;
-    pointer-events: none;
 }
 
 .product-info {
@@ -88,29 +116,6 @@ nav a:hover {
     background: white;
     color: black;
 }
-
-/* 🔥 SLEEVELESS SECTION FIX */
-#sleeveless {
-    margin-top: 60px;
-    padding: 60px 20px;
-    text-align: center;
-    border-top: 1px solid #222;
-    border-bottom: 1px solid #222;
-}
-
-#sleeveless h2 {
-    font-size: 22px;
-    letter-spacing: 4px;
-    margin-bottom: 10px;
-    font-family: Arial;
-}
-
-#sleeveless p {
-    opacity: 0.6;
-    max-width: 600px;
-    margin: auto;
-    font-size: 14px;
-}
 </style>
 </head>
 
@@ -125,7 +130,15 @@ nav a:hover {
 <a href="cart.html">CART 🛒 <span id="cartCount">0</span></a>
 </nav>
 
-<!-- PRODUCTS -->
+<!-- TABS -->
+<div class="tabs">
+    <a href="#tees">TEES</a>
+    <a href="#sleeveless">SLEEVELESS</a>
+</div>
+
+<!-- TEES SECTION -->
+<div id="tees" class="section-title">TEES</div>
+
 <div class="shop-grid">
 
     <div class="product-card">
@@ -133,8 +146,7 @@ nav a:hover {
         <div class="product-info">
             <div class="product-title">RECLUSE BEER TEE</div>
             <div class="product-price">₦30,000</div>
-            <a class="btn" href="product.html?img=a041ae76-2fca-4c0c-9cac-6bcdfc03dd88.jpeg&name=RECLUSE%20BEER%20TEE&price=30000">
-            VIEW PRODUCT</a>
+            <a class="btn" href="product.html">VIEW PRODUCT</a>
         </div>
     </div>
 
@@ -143,21 +155,29 @@ nav a:hover {
         <div class="product-info">
             <div class="product-title">RECLUSE SMOKED FLOWER</div>
             <div class="product-price">₦30,000</div>
-            <a class="btn" href="product.html?img=2af34606-1479-4be7-a83d-7b61140dda21.jpeg&name=RECLUSE%20SMOKED%20FLOWER&price=30000">
-            VIEW PRODUCT</a>
+            <a class="btn" href="product.html">VIEW PRODUCT</a>
         </div>
     </div>
 
 </div>
 
-<!-- 🔥 SLEEVELESS SECTION (NOW PROPER) -->
-<div id="sleeveless">
-    <h2>SLEEVELESS DROP</h2>
-    <p>Lightweight essentials built for heat, movement, and silence. Limited pieces only.</p>
+<!-- SLEEVELESS SECTION -->
+<div id="sleeveless" class="section-title">SLEEVELESS</div>
 
-    <div style="margin-top:30px;">
-        <a href="shop.html" class="btn">ENTER SLEEVELESS DROP</a>
+<div class="shop-grid">
+
+    <div class="product-card">
+        <img src="photo-output.jpeg">
+        <div class="product-info">
+            <div class="product-title">RECLUSE SWORD VEST</div>
+            <div class="product-price">₦28,000</div>
+            <p style="font-size:11px; opacity:0.6; margin:8px 0;">
+                Black round-neck sleeveless vest featuring a “Samurai Sword” front graphic. Minimal, sharp, and built for statement wear.
+            </p>
+            <a class="btn" href="product.html">VIEW PRODUCT</a>
+        </div>
     </div>
+
 </div>
 
 <script>
@@ -165,7 +185,6 @@ function updateCartCounter(){
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
     document.getElementById("cartCount").innerText = cart.length;
 }
-
 updateCartCounter();
 window.addEventListener("storage", updateCartCounter);
 </script>
