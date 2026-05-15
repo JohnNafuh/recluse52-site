@@ -130,6 +130,24 @@ alert("Please fill all fields");
 return;
 }
 
+let message = "RECLUSE ORDER%0A%0A";
+
+cart.forEach(item=>{
+message += item.name + " - ₦" + item.price + "%0A";
+});
+
+message += "%0ATOTAL: ₦" + total;
+message += "%0A%0ACustomer: " + name;
+message += "%0APhone: " + phone;
+message += "%0AAddress: " + address;
+
+window.open(
+"https://wa.me/2347038547668?text=" + message,
+"_blank"
+);
+
+}
+
 alert("Order placed successfully");
 
 localStorage.removeItem("cart");
