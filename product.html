@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RECLUSE | Product</title>
+<title>RECLUSE | PRODUCT</title>
 
 <style>
 body {
@@ -16,8 +16,8 @@ body {
 header {
     text-align: center;
     padding: 25px;
-    letter-spacing: 5px;
     font-size: 28px;
+    letter-spacing: 5px;
 }
 
 nav {
@@ -37,7 +37,6 @@ nav a:hover {
     opacity: 1;
 }
 
-/* LAYOUT */
 .container {
     display: flex;
     flex-wrap: wrap;
@@ -46,16 +45,11 @@ nav a:hover {
     justify-content: center;
 }
 
-/* IMAGE */
 .image {
     width: 320px;
     height: 400px;
-    background: #1a1a1a;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
     border: 1px solid #333;
+    overflow: hidden;
 }
 
 .image img {
@@ -64,7 +58,6 @@ nav a:hover {
     object-fit: cover;
 }
 
-/* DETAILS */
 .details {
     max-width: 350px;
 }
@@ -100,21 +93,19 @@ nav a:hover {
 <nav>
     <a href="index.html">HOME</a>
     <a href="shop.html">SHOP</a>
-    <a href="drop.html">DROP</a>
-    <a href="archive.html">ARCHIVE</a>
-    <a href="cart.html">CART</a>
+    <a href="cart.html">CART 🛒</a>
 </nav>
 
 <div class="container">
 
     <div class="image">
-        <img id="productImg" src="" alt="">
+        <img id="img">
     </div>
 
     <div class="details">
-        <h1 id="productName">Loading...</h1>
-        <div class="price" id="productPrice"></div>
-        <p id="productDesc"></p>
+        <h1 id="name">Loading...</h1>
+        <div class="price">₦30,000</div>
+        <p id="desc"></p>
 
         <div class="btn" onclick="addToCart()">BUY NOW</div>
     </div>
@@ -128,47 +119,21 @@ const img = params.get("img");
 const name = params.get("name");
 const desc = params.get("desc");
 
-const imageEl = document.getElementById("productImg");
-const nameEl = document.getElementById("productName");
-const descEl = document.getElementById("productDesc");
-const priceEl = document.getElementById("productPrice");
+document.getElementById("img").src = img;
+document.getElementById("name").innerText = name;
+document.getElementById("desc").innerText = desc;
 
-// Load product
-if (!img || !name || !desc) {
-    nameEl.innerText = "PRODUCT NOT FOUND";
-    descEl.innerText = "Missing product data";
-    imageEl.style.display = "none";
-} else {
-    imageEl.src = img;
-    nameEl.innerText = name;
-    descEl.innerText = desc;
-    priceEl.innerText = "LIMITED DROP PIECE";
-}
-
-// 🛒 CART FUNCTION (FIXED)
+// CART SYSTEM
 function addToCart() {
-
-    if (!img || !name) {
-        alert("Product not loaded properly");
-        return;
-    }
-
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-    const product = {
+    cart.push({
         img: img,
         name: name,
         desc: desc,
+        price: 30000,
         qty: 1
-    };
-
-    const existing = cart.find(item => item.name === name);
-
-    if (existing) {
-        existing.qty += 1;
-    } else {
-        cart.push(product);
-    }
+    });
 
     localStorage.setItem("cart", JSON.stringify(cart));
 
