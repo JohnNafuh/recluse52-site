@@ -128,20 +128,20 @@ transform:scale(0.95);
 
 const params = new URLSearchParams(window.location.search);
 
-/* SAFE FALLBACKS (IMPORTANT FIX) */
-const img = params.get("img") || "";
+/* GET DATA */
+const img = params.get("img");
 const name = params.get("name") || "UNKNOWN PRODUCT";
 const desc = params.get("desc") || "No description available";
-const price = Number(params.get("price")) || 30000;
+const price = Number(params.get("price")) || 0;
 
-/* STOP PAGE BREAKING */
-if(!img){
-document.querySelector(".container").innerHTML = "<h2>PRODUCT NOT FOUND</h2>";
-throw new Error("Missing image");
+/* FIX IMAGE (SAFE HANDLING) */
+if(img){
+document.getElementById("img").src = img;
+}else{
+document.getElementById("img").src = "placeholder.jpeg";
 }
 
 /* DISPLAY */
-document.getElementById("img").src = img;
 document.getElementById("name").innerText = name;
 document.getElementById("desc").innerText = desc;
 document.getElementById("price").innerText = "₦" + price.toLocaleString();
@@ -152,9 +152,9 @@ function addToCart(){
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
 let product = {
-name: name,
-price: price,
-img: img
+name,
+price,
+img
 };
 
 cart.push(product);
@@ -162,7 +162,6 @@ cart.push(product);
 localStorage.setItem("cart", JSON.stringify(cart));
 
 let btn = document.getElementById("buyBtn");
-
 btn.classList.add("added");
 btn.innerText = "ADDED ✓";
 
@@ -171,7 +170,6 @@ btn.classList.remove("added");
 btn.innerText = "ADD TO CART";
 },1500);
 
-/* update counter */
 updateCartCount();
 }
 
