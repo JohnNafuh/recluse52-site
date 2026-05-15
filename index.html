@@ -50,64 +50,62 @@ nav a:hover {
     opacity: 1;
 }
 
-/* ================= HERO ================= */
+/* ================= LUXURY HERO COLLAGE ================= */
 
 .hero {
     height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
     position: relative;
     overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }
 
-/* HERO IMAGE */
-.hero img.graffiti {
+/* IMAGE LAYERS */
+.hero .img1,
+.hero .img2,
+.hero .img3 {
     position: absolute;
     width: 100%;
-    height: 60vh;
-    top: 0;
-    left: 0;
+    height: 100%;
     object-fit: cover;
-    opacity: 0.75;
-    filter: brightness(1.05) contrast(1.1);
-    z-index: 1;
+    opacity: 0.35;
 }
 
-/* DARK OVERLAY */
-.hero .bg {
+/* subtle positioning for depth */
+.hero .img1 { z-index: 1; filter: brightness(1.05) contrast(1.05); }
+.hero .img2 { z-index: 2; mix-blend-mode: screen; opacity: 0.28; }
+.hero .img3 { z-index: 3; opacity: 0.32; }
+
+/* DARK LUXURY FADE */
+.hero::after {
+    content: "";
     position: absolute;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
+    inset: 0;
     background: linear-gradient(
         to bottom,
         rgba(0,0,0,0.2),
-        rgba(0,0,0,0.7),
+        rgba(0,0,0,0.65),
         #0b0b0b
     );
-    z-index: 2;
+    z-index: 4;
 }
 
 /* CONTENT */
 .hero .content {
     position: relative;
-    z-index: 3;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    gap:15px;
-    margin-top: 120px;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
 }
 
-/* TEXT */
 .hero p {
-    opacity: 0.6;
+    opacity: 0.7;
     max-width: 500px;
     line-height: 1.6;
-    animation: fadeUp 1.5s ease;
 }
 
 /* BUTTON */
@@ -127,57 +125,10 @@ nav a:hover {
     color: black;
 }
 
-/* FADE */
+/* FADE ANIMATION */
 @keyframes fadeUp {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
-}
-
-/* ================= IMAGE STACK (3 IMAGES BLENDED) ================= */
-
-.image-section {
-    position: relative;
-    height: 240vh;
-    overflow: hidden;
-    margin-top: -60px;
-}
-
-/* ALL IMAGES */
-.image-section img {
-    width: 100%;
-    height: 80vh;
-    object-fit: cover;
-    position: absolute;
-    opacity: 0.75;
-    filter: brightness(1.05) contrast(1.1);
-}
-
-/* FIRST */
-.img1 {
-    top: 0;
-}
-
-/* SECOND (YOUR NEW IMAGE) */
-.img2 {
-    top: 80vh;
-}
-
-/* THIRD */
-.img3 {
-    top: 160vh;
-}
-
-/* SOFT GLOBAL FADE */
-.image-section::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-        to bottom,
-        rgba(0,0,0,0.2),
-        rgba(0,0,0,0.7),
-        #0b0b0b
-    );
 }
 
 /* SECTION */
@@ -243,32 +194,20 @@ footer {
 <a href="cart.html">CART 🛒</a>
 </nav>
 
-<!-- HERO -->
+<!-- HERO (3 IMAGE LAYER COLLAGE) -->
 <div class="hero">
-
-<img src="IMG_5251.jpeg" class="graffiti">
-
-<div class="bg"></div>
-
-<div class="content">
-
-<p>
-Built in silence. Worn with intention.
-Limited streetwear for those who move differently.
-</p>
-
-<a href="shop.html" class="btn">ENTER SHOP</a>
-
-</div>
-</div>
-
-<!-- 3 IMAGE LOOKBOOK STACK -->
-<div class="image-section">
-
     <img src="IMG_5251.jpeg" class="img1">
     <img src="IMG_5294.jpeg" class="img2">
     <img src="IMG_5273.jpeg" class="img3">
 
+    <div class="content">
+        <p>
+        Built in silence. Worn with intention.
+        Limited streetwear for those who move differently.
+        </p>
+
+        <a href="shop.html" class="btn">ENTER SHOP</a>
+    </div>
 </div>
 
 <div class="section">
