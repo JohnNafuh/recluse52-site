@@ -88,6 +88,12 @@ letter-spacing:1px;
 background:white;
 color:black;
 }
+
+.btn.added{
+background:white;
+color:black;
+transform:scale(0.95);
+}
 </style>
 </head>
 
@@ -99,7 +105,7 @@ color:black;
 <a href="index.html">HOME</a>
 <a href="shop.html">SHOP</a>
 <a href="drop.html">DROP</a>
-<a href="cart.html">CART 🛒</a>
+<a href="cart.html">CART 🛒 <span id="cartCount">0</span></a>
 </nav>
 
 <div class="container">
@@ -109,43 +115,77 @@ color:black;
 </div>
 
 <div class="details">
-<h1 id="name"></h1>
+<h1 id="name">Loading...</h1>
 <div class="price" id="price"></div>
 <p id="desc"></p>
 
-<button class="btn" onclick="addToCart()">ADD TO CART</button>
+<button class="btn" id="buyBtn" onclick="addToCart()">ADD TO CART</button>
 </div>
 
 </div>
 
 <script>
+
 const params = new URLSearchParams(window.location.search);
 
-const img = params.get("img");
-const name = params.get("name");
-const price = params.get("price");
-const desc = params.get("desc");
+/* SAFE FALLBACKS (IMPORTANT FIX) */
+const img = params.get("img") || "";
+const name = params.get("name") || "UNKNOWN PRODUCT";
+const desc = params.get("desc") || "No description available";
+const price = Number(params.get("price")) || 30000;
 
-if(!img || !name || !price){
-    document.querySelector(".container").innerHTML =
-    "<h2 style='text-align:center;'>PRODUCT NOT FOUND</h2>";
-} else {
-    document.getElementById("img").src = img;
-    document.getElementById("name").innerText = name;
-    document.getElementById("desc").innerText = desc || "";
-    document.getElementById("price").innerText = "₦" + Number(price).toLocaleString();
+/* STOP PAGE BREAKING */
+if(!img){
+document.querySelector(".container").innerHTML = "<h2>PRODUCT NOT FOUND</h2>";
+throw new Error("Missing image");
 }
 
+/* DISPLAY */
+document.getElementById("img").src = img;
+document.getElementById("name").innerText = name;
+document.getElementById("desc").innerText = desc;
+document.getElementById("price").innerText = "₦" + price.toLocaleString();
+
+/* ADD TO CART */
 function addToCart(){
+
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-cart.push({img, name, price});
+let product = {
+name: name,
+price: price,
+img: img
+};
+
+cart.push(product);
 
 localStorage.setItem("cart", JSON.stringify(cart));
 
-alert("Added to cart");
+let btn = document.getElementById("buyBtn");
+
+btn.classList.add("added");
+btn.innerText = "ADDED ✓";
+
+setTimeout(()=>{
+btn.classList.remove("added");
+btn.innerText = "ADD TO CART";
+},1500);
+
+/* update counter */
+updateCartCount();
 }
+
+/* CART COUNTER */
+function updateCartCount(){
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+document.getElementById("cartCount").innerText = cart.length;
+}
+
+updateCartCount();
+
 </script>
 
 </body>
 </html>
+
+Fix product for sleeveless 
