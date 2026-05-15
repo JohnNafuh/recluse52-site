@@ -110,7 +110,7 @@ LOADING DROP TIMER...
 <script>
 function countdown() {
     const target = new Date();
-    target.setDate(target.getDate() + 3);
+    target.setMonth(target.getMonth() + 1);
 
     setInterval(() => {
         const now = new Date().getTime();
