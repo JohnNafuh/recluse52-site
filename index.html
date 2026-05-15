@@ -105,7 +105,13 @@ nav a:hover {
 }
 </style>
 </head>
+<script>
 
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+document.getElementById("cart-count").innerText = cart.length;
+
+</script>
 <body>
 
 <header>
