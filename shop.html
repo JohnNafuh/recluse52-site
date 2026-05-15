@@ -32,7 +32,7 @@ nav a {
     text-decoration: none;
     margin: 0 12px;
     font-size: 13px;
-    opacity: 0.8;
+    opacity: 0.7;
 }
 
 nav a:hover {
@@ -49,7 +49,7 @@ nav a:hover {
     margin: auto;
 }
 
-/* CARD */
+/* PRODUCT CARD */
 .product-card {
     background: #111;
     border: 1px solid #222;
@@ -62,11 +62,16 @@ nav a:hover {
     border-color: #444;
 }
 
-/* IMAGE */
+/* IMAGE LOCK (IMPORTANT PART) */
 .product-card img {
     width: 100%;
     height: 260px;
     object-fit: cover;
+
+    /* 🔒 LOCK IMAGE INTERACTION */
+    pointer-events: none;
+    -webkit-user-drag: none;
+    user-select: none;
 }
 
 /* INFO */
@@ -118,43 +123,39 @@ nav a:hover {
 
 <div class="shop-grid">
 
-    <!-- PRODUCT 1 -->
     <div class="product-card">
         <img src="a041ae76-2fca-4c0c-9cac-6bcdfc03dd88.jpeg">
         <div class="product-info">
             <div class="product-title">NO REST TEE</div>
             <div class="product-price">$120 — DROP 01</div>
-            <a href="product.html?img=a041ae76-2fca-4c0c-9cac-6bcdfc03dd88.jpeg&name=NO%20REST%20TEE&desc=DROP%2001%20A%20HEAVYWEIGHT%20STREET%20ESSENTIAL%20BUILT%20FOR%20NONSTOP%20MOTION" class="btn">VIEW PRODUCT</a>
+            <a href="product.html?img=a041ae76-2fca-4c0c-9cac-6bcdfc03dd88.jpeg&name=NO%20REST%20TEE&desc=DROP%2001%20HEAVYWEIGHT%20STREET%20ESSENTIAL" class="btn">VIEW PRODUCT</a>
         </div>
     </div>
 
-    <!-- PRODUCT 2 -->
     <div class="product-card">
         <img src="2af34606-1479-4be7-a83d-7b61140dda21.jpeg">
         <div class="product-info">
             <div class="product-title">RECLUSE TEE</div>
             <div class="product-price">$60 — CORE</div>
-            <a href="product.html?img=2af34606-1479-4be7-a83d-7b61140dda21.jpeg&name=RECLUSE%20TEE&desc=CORE%20COLLECTION%20MINIMAL%20FRONT%20WITH%20STATEMENT%20BACK%20GRAPHIC" class="btn">VIEW PRODUCT</a>
+            <a href="product.html?img=2af34606-1479-4be7-a83d-7b61140dda21.jpeg&name=RECLUSE%20TEE&desc=CORE%20COLLECTION%20MINIMAL%20FRONT%20STATEMENT%20BACK" class="btn">VIEW PRODUCT</a>
         </div>
     </div>
 
-    <!-- PRODUCT 3 -->
     <div class="product-card">
         <img src="e875715a-90af-4361-b1a9-9fe4e38f0a67.jpeg">
         <div class="product-info">
             <div class="product-title">STREET CARGO SET</div>
             <div class="product-price">$90 — ARCHIVE</div>
-            <a href="product.html?img=e875715a-90af-4361-b1a9-9fe4e38f0a67.jpeg&name=STREET%20CARGO%20SET&desc=ARCHIVE%20DROP%20UTILITY%20INSPIRED%20STREETWEAR%20BUILD%20FOR%20DAILY%20WEAR" class="btn">VIEW PRODUCT</a>
+            <a href="product.html?img=e875715a-90af-4361-b1a9-9fe4e38f0a67.jpeg&name=STREET%20CARGO%20SET&desc=ARCHIVE%20UTILITY%20STREETWEAR%20PIECE" class="btn">VIEW PRODUCT</a>
         </div>
     </div>
 
-    <!-- PRODUCT 4 -->
     <div class="product-card">
         <img src="233d44f0-6ed6-4388-9a0f-69d90e762b66.jpeg">
         <div class="product-info">
             <div class="product-title">RECLUSE LIMITED CAP</div>
             <div class="product-price">$40 — ACCESSORY</div>
-            <a href="product.html?img=233d44f0-6ed6-4388-9a0f-69d90e762b66.jpeg&name=RECLUSE%20LIMITED%20CAP&desc=ACCESSORY%20DROP%20CLEAN%20MINIMAL%20STREET%20FINISH%20FOR%20EVERY%20FIT" class="btn">VIEW PRODUCT</a>
+            <a href="product.html?img=233d44f0-6ed6-4388-9a0f-69d90e762b66.jpeg&name=RECLUSE%20LIMITED%20CAP&desc=CLEAN%20MINIMAL%20STREET%20ACCESSORY" class="btn">VIEW PRODUCT</a>
         </div>
     </div>
 
