@@ -20,6 +20,7 @@ header {
     letter-spacing: 5px;
 }
 
+/* NAV */
 nav {
     text-align: center;
     margin-bottom: 20px;
@@ -123,13 +124,15 @@ nav a:hover {
 
 <header>RECLUSE</header>
 
-<CART 🛒 <span id="cartCount">0</span>>
+<!-- NAV FIXED -->
+<nav>
 <a href="index.html">HOME</a>
 <a href="shop.html">SHOP</a>
 <a href="drop.html">DROP</a>
-<a href="cart.html">CART 🛒</a>
+<a href="cart.html">CART 🛒 <span id="cartCount">0</span></a>
 </nav>
 
+<!-- TABS -->
 <div class="tabs">
     <a href="#tees">TEES</a>
     <a href="#sleeveless">SLEEVELESS</a>
@@ -193,6 +196,19 @@ nav a:hover {
     </div>
 
 </div>
+
+<!-- CART COUNTER SCRIPT -->
+<script>
+function updateCartCounter(){
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let el = document.getElementById("cartCount");
+    if(el){
+        el.innerText = cart.length;
+    }
+}
+
+updateCartCounter();
+</script>
 
 </body>
 </html>
