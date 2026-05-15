@@ -3,119 +3,93 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RECLUSE | SHOP</title>
+<title>RECLUSE | PRODUCT</title>
 
 <style>
-body {
-    margin: 0;
-    font-family: Arial;
-    background: #0b0b0b;
-    color: white;
+body{
+margin:0;
+font-family:Arial;
+background:#0b0b0b;
+color:white;
 }
 
-header {
-    text-align: center;
-    padding: 25px;
-    font-size: 28px;
-    letter-spacing: 5px;
+header{
+text-align:center;
+padding:25px;
+letter-spacing:5px;
+font-size:26px;
 }
 
-/* NAV */
-nav {
-    text-align: center;
-    margin-bottom: 20px;
+nav{
+text-align:center;
+margin-bottom:20px;
 }
 
-nav a {
-    color: white;
-    margin: 0 10px;
-    text-decoration: none;
-    font-size: 13px;
-    opacity: 0.7;
+nav a{
+color:white;
+margin:0 10px;
+text-decoration:none;
+font-size:13px;
+opacity:0.7;
 }
 
-nav a:hover {
-    opacity: 1;
+nav a:hover{
+opacity:1;
 }
 
-/* TABS */
-.tabs {
-    text-align: center;
-    margin: 20px 0;
+.container{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:40px;
+padding:40px;
 }
 
-.tabs a {
-    margin: 0 10px;
-    font-size: 12px;
-    letter-spacing: 2px;
-    text-decoration: none;
-    color: white;
-    opacity: 0.6;
+.image{
+width:320px;
+height:420px;
+border:1px solid #222;
+overflow:hidden;
 }
 
-.tabs a:hover {
-    opacity: 1;
+.image img{
+width:100%;
+height:100%;
+object-fit:cover;
 }
 
-/* SECTION TITLE */
-.section-title {
-    text-align: center;
-    margin-top: 40px;
-    font-size: 14px;
-    letter-spacing: 4px;
-    opacity: 0.8;
+.details{
+max-width:350px;
 }
 
-/* GRID */
-.shop-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 20px;
-    padding: 40px;
-    max-width: 1000px;
-    margin: auto;
+.details h1{
+letter-spacing:3px;
 }
 
-.product-card {
-    background: #111;
-    border: 1px solid #222;
-    overflow: hidden;
+.price{
+margin:10px 0;
+opacity:0.7;
 }
 
-.product-card img {
-    width: 100%;
-    height: 260px;
-    object-fit: cover;
+.desc{
+opacity:0.6;
+line-height:1.6;
+font-size:14px;
 }
 
-.product-info {
-    padding: 15px;
-    text-align: center;
+.btn{
+margin-top:20px;
+padding:12px 18px;
+border:1px solid white;
+background:transparent;
+color:white;
+cursor:pointer;
+letter-spacing:2px;
 }
 
-.product-title {
-    font-size: 14px;
-    letter-spacing: 2px;
-}
-
-.product-price {
-    font-size: 12px;
-    opacity: 0.6;
-}
-
-.btn {
-    display: inline-block;
-    margin-top: 10px;
-    padding: 8px 14px;
-    border: 1px solid white;
-    font-size: 12px;
-    text-decoration: none;
-    color: white;
-}
-
-.btn:hover {
-    background: white;
-    color: black;
+.btn:hover{
+background:white;
+color:black;
 }
 </style>
 </head>
@@ -124,88 +98,112 @@ nav a:hover {
 
 <header>RECLUSE</header>
 
-<!-- NAV -->
 <nav>
 <a href="index.html">HOME</a>
 <a href="shop.html">SHOP</a>
-<a href="drop.html">DROP</a>
 <a href="cart.html">CART 🛒 <span id="cartCount">0</span></a>
 </nav>
 
-<!-- TABS -->
-<div class="tabs">
-    <a href="#tees">TEES</a>
-    <a href="#sleeveless">SLEEVELESS</a>
+<div class="container">
+
+<div class="image">
+<img id="img">
 </div>
 
-<!-- TEES -->
-<div id="tees" class="section-title">TEES</div>
+<div class="details">
+<h1 id="name"></h1>
+<div class="price" id="price"></div>
+<p class="desc" id="desc"></p>
 
-<div class="shop-grid">
-
-    <div class="product-card">
-        <img src="a041ae76-2fca-4c0c-9cac-6bcdfc03dd88.jpeg">
-        <div class="product-info">
-            <div class="product-title">RECLUSE BEER TEE</div>
-            <div class="product-price">₦30,000</div>
-            <a class="btn" href="product.html?id=beer-tee">VIEW PRODUCT</a>
-        </div>
-    </div>
-
-    <div class="product-card">
-        <img src="2af34606-1479-4be7-a83d-7b61140dda21.jpeg">
-        <div class="product-info">
-            <div class="product-title">RECLUSE SMOKED FLOWER</div>
-            <div class="product-price">₦30,000</div>
-            <a class="btn" href="product.html?id=smoked-flower">VIEW PRODUCT</a>
-        </div>
-    </div>
-
-    <div class="product-card">
-        <img src="e875715a-90af-4361-b1a9-9fe4e38f0a67.jpeg">
-        <div class="product-info">
-            <div class="product-title">RECLUSE CHAIN HEART</div>
-            <div class="product-price">₦30,000</div>
-            <a class="btn" href="product.html?id=chain-heart">VIEW PRODUCT</a>
-        </div>
-    </div>
-
-    <div class="product-card">
-        <img src="233d44f0-6ed6-4388-9a0f-69d90e762b66.jpeg">
-        <div class="product-info">
-            <div class="product-title">RECLUSE DREAMS</div>
-            <div class="product-price">₦30,000</div>
-            <a class="btn" href="product.html?id=dreams">VIEW PRODUCT</a>
-        </div>
-    </div>
+<button class="btn" onclick="addToCart()">ADD TO CART</button>
+</div>
 
 </div>
 
-<!-- SLEEVELESS -->
-<div id="sleeveless" class="section-title">SLEEVELESS</div>
-
-<div class="shop-grid">
-
-    <div class="product-card">
-        <img src="photo-output.jpeg">
-        <div class="product-info">
-            <div class="product-title">RECLUSE SWORD VEST</div>
-            <div class="product-price">₦28,000</div>
-            <a class="btn" href="product.html?id=sleeveless-sword">VIEW PRODUCT</a>
-        </div>
-    </div>
-
-</div>
-
-<!-- CART COUNTER FIX (GLOBAL SAFE) -->
 <script>
-function updateCartCounter(){
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
-    const el = document.getElementById("cartCount");
-    if(el) el.innerText = cart.length;
+
+const products = {
+
+"beer-tee":{
+img:"a041ae76-2fca-4c0c-9cac-6bcdfc03dd88.jpeg",
+name:"RECLUSE BEER TEE",
+price:30000,
+desc:"Minimal street graphic tee with bold back print."
+},
+
+"smoked-flower":{
+img:"2af34606-1479-4be7-a83d-7b61140dda21.jpeg",
+name:"RECLUSE SMOKED FLOWER",
+price:30000,
+desc:"Smoked floral graphic tee with premium cotton finish."
+},
+
+"chain-heart":{
+img:"e875715a-90af-4361-b1a9-9fe4e38f0a67.jpeg",
+name:"RECLUSE CHAIN HEART",
+price:30000,
+desc:"Heavy streetwear tee featuring chain heart graphic."
+},
+
+"dreams":{
+img:"233d44f0-6ed6-4388-9a0f-69d90e762b66.jpeg",
+name:"RECLUSE DREAMS",
+price:30000,
+desc:"Minimal dream-inspired streetwear tee."
+},
+
+"sleeveless-sword":{
+img:"photo-output.jpeg",
+name:"RECLUSE SWORD VEST",
+price:28000,
+desc:"Black sleeveless vest featuring Samurai sword graphic."
 }
 
-updateCartCounter();
+};
+
+const params = new URLSearchParams(window.location.search);
+const id = params.get("id");
+
+const product = products[id];
+
+if(product){
+
+document.getElementById("img").src = product.img;
+document.getElementById("name").innerText = product.name;
+document.getElementById("price").innerText = "₦" + product.price.toLocaleString();
+document.getElementById("desc").innerText = product.desc;
+
+}else{
+
+document.body.innerHTML =
+"<h2 style='text-align:center;margin-top:80px;'>Product not found</h2>";
+
+}
+
+function addToCart(){
+
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+cart.push(product);
+
+localStorage.setItem("cart",JSON.stringify(cart));
+
+updateCartCount();
+
+alert("Added to cart");
+
+}
+
+function updateCartCount(){
+
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+document.getElementById("cartCount").innerText = cart.length;
+
+}
+
+updateCartCount();
+
 </script>
 
 </body>
