@@ -142,6 +142,14 @@ function addToCart() {
     alert("Added to cart 🛒");
 }
 </script>
+<script>
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
+let counter = document.getElementById("cartCount");
+
+if(counter){
+counter.innerText = cart.length;
+}
+</script>
 </body>
 </html>
