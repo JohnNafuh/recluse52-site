@@ -50,7 +50,7 @@ nav a:hover {
     opacity: 1;
 }
 
-/* ================= HERO FIX ================= */
+/* ================= HERO ================= */
 
 .hero {
     height: 100vh;
@@ -62,7 +62,7 @@ nav a:hover {
     overflow: hidden;
 }
 
-/* IMAGE (ONLY CHANGE IS HERE 👇) */
+/* HERO IMAGE */
 .hero img.graffiti {
     position: absolute;
     width: 100%;
@@ -70,12 +70,12 @@ nav a:hover {
     top: 0;
     left: 0;
     object-fit: cover;
-    opacity: 0.72;
+    opacity: 0.75;
     filter: brightness(1.05) contrast(1.1);
     z-index: 1;
 }
 
-/* DARK GRADIENT OVERLAY */
+/* DARK OVERLAY */
 .hero .bg {
     position: absolute;
     top:0;
@@ -84,14 +84,14 @@ nav a:hover {
     height:100%;
     background: linear-gradient(
         to bottom,
-        rgba(0,0,0,0.2) 0%,
-        rgba(0,0,0,0.7) 60%,
-        #0b0b0b 100%
+        rgba(0,0,0,0.2),
+        rgba(0,0,0,0.7),
+        #0b0b0b
     );
     z-index: 2;
 }
 
-/* CONTENT ON TOP */
+/* CONTENT */
 .hero .content {
     position: relative;
     z-index: 3;
@@ -127,40 +127,61 @@ nav a:hover {
     color: black;
 }
 
-/* FADE ANIMATION */
+/* FADE */
 @keyframes fadeUp {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* SECOND IMAGE SECTION */
+/* ================= BLENDED SECOND IMAGE ================= */
+
 .image-section {
     position: relative;
-    height: 80vh;
+    height: 120vh;
+    margin-top: -80px; /* 🔥 THIS CREATES OVERLAP */
     overflow: hidden;
 }
 
+/* SECOND IMAGE */
 .image-section img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    opacity: 0.72;
+    opacity: 0.75;
     filter: brightness(1.05) contrast(1.1);
 }
 
-.image-section::after {
+/* SOFT FADE INTO FIRST IMAGE + BACKGROUND */
+.image-section::before {
     content: "";
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
+    height: 50%;
     background: linear-gradient(
         to bottom,
-        rgba(0,0,0,0.2),
-        rgba(0,0,0,0.7),
+        rgba(11,11,11,0),
+        rgba(11,11,11,0.6),
         #0b0b0b
     );
+    z-index: 2;
+}
+
+.image-section::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    background: linear-gradient(
+        to top,
+        rgba(11,11,11,0),
+        rgba(11,11,11,0.6),
+        #0b0b0b
+    );
+    z-index: 2;
 }
 
 /* SECTION */
@@ -245,9 +266,9 @@ Limited streetwear for those who move differently.
 </div>
 </div>
 
-<!-- SECOND IMAGE -->
+<!-- BLENDED SECOND IMAGE -->
 <div class="image-section">
-    <img src="IMG_5273.jpeg" alt="">
+    <img src="IMG_5273.jpeg">
 </div>
 
 <div class="section">
