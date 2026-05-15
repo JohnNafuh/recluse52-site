@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RECLUSE | CHECKOUT</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background:#0b0b0b;
+color:white;
+}
+
+header{
+text-align:center;
+padding:25px;
+font-size:28px;
+letter-spacing:5px;
+}
+
+nav{
+text-align:center;
+margin-bottom:30px;
+}
+
+nav a{
+color:white;
+text-decoration:none;
+margin:0 12px;
+font-size:13px;
+opacity:0.7;
+}
+
+nav a:hover{
+opacity:1;
+}
+
+.container{
+max-width:600px;
+margin:auto;
+padding:20px;
+}
+
+input{
+width:100%;
+padding:12px;
+margin-top:10px;
+background:#111;
+border:1px solid #333;
+color:white;
+}
+
+button{
+margin-top:20px;
+padding:12px;
+width:100%;
+border:1px solid white;
+background:none;
+color:white;
+cursor:pointer;
+}
+
+button:hover{
+background:white;
+color:black;
+}
+
+.order-summary{
+margin-bottom:30px;
+border-bottom:1px solid #222;
+padding-bottom:20px;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>RECLUSE</header>
+
+<nav>
+<a href="index.html">HOME</a>
+<a href="shop.html">SHOP</a>
+<a href="cart.html">CART 🛒</a>
+</nav>
+
+<div class="container">
+
+<h2>CHECKOUT</h2>
+
+<div class="order-summary" id="orderSummary"></div>
+
+<input id="name" placeholder="Full Name">
+<input id="email" placeholder="Email">
+<input id="phone" placeholder="Phone Number">
+<input id="address" placeholder="Delivery Address">
+
+<button onclick="placeOrder()">PLACE ORDER</button>
+
+</div>
+
+<script>
+
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+let container = document.getElementById("orderSummary");
+
+let total = 0;
+
+cart.forEach(item=>{
+total += Number(item.price);
+
+container.innerHTML += `
+<p>${item.name} — ₦${item.price}</p>
+`;
+});
+
+container.innerHTML += `<h3>TOTAL: ₦${total}</h3>`;
+
+function placeOrder(){
+
+let name = document.getElementById("name").value;
+let phone = document.getElementById("phone").value;
+let address = document.getElementById("address").value;
+
+if(!name || !phone || !address){
+alert("Please fill all fields");
+return;
+}
+
+alert("Order placed successfully");
+
+localStorage.removeItem("cart");
+
+window.location.href = "index.html";
+
+}
+
+</script>
+
+</body>
+</html>
