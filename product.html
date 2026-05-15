@@ -16,13 +16,13 @@ color:white;
 header{
 text-align:center;
 padding:25px;
-font-size:28px;
 letter-spacing:5px;
+font-size:26px;
 }
 
 nav{
 text-align:center;
-margin-top:10px;
+margin-bottom:20px;
 }
 
 nav a{
@@ -40,15 +40,15 @@ opacity:1;
 .container{
 display:flex;
 flex-wrap:wrap;
-padding:40px;
-gap:40px;
 justify-content:center;
+gap:40px;
+padding:40px;
 }
 
 .image{
 width:320px;
-height:400px;
-border:1px solid #333;
+height:420px;
+border:1px solid #222;
 overflow:hidden;
 }
 
@@ -69,6 +69,11 @@ letter-spacing:3px;
 .price{
 margin:10px 0;
 opacity:0.7;
+}
+
+.desc{
+opacity:0.6;
+line-height:1.6;
 font-size:14px;
 }
 
@@ -79,9 +84,8 @@ border:1px solid white;
 background:transparent;
 color:white;
 cursor:pointer;
-transition:0.25s;
-font-size:14px;
-letter-spacing:1px;
+transition:0.3s;
+letter-spacing:2px;
 }
 
 .btn:hover{
@@ -90,9 +94,9 @@ color:black;
 }
 
 .btn.added{
+transform:scale(0.95);
 background:white;
 color:black;
-transform:scale(0.95);
 }
 </style>
 </head>
@@ -104,7 +108,6 @@ transform:scale(0.95);
 <nav>
 <a href="index.html">HOME</a>
 <a href="shop.html">SHOP</a>
-<a href="drop.html">DROP</a>
 <a href="cart.html">CART 🛒 <span id="cartCount">0</span></a>
 </nav>
 
@@ -115,9 +118,9 @@ transform:scale(0.95);
 </div>
 
 <div class="details">
-<h1 id="name">Loading...</h1>
+<h1 id="name"></h1>
 <div class="price" id="price"></div>
-<p id="desc"></p>
+<p class="desc" id="desc"></p>
 
 <button class="btn" id="buyBtn" onclick="addToCart()">ADD TO CART</button>
 </div>
@@ -125,64 +128,88 @@ transform:scale(0.95);
 </div>
 
 <script>
+/* ================= PRODUCT DATABASE ================= */
+const products = {
+  "beer-tee": {
+    img: "a041ae76-2fca-4c0c-9cac-6bcdfc03dd88.jpeg",
+    name: "RECLUSE BEER TEE",
+    price: 30000,
+    desc: "Minimal street graphic tee with bold back print. Clean everyday fit."
+  },
 
-const params = new URLSearchParams(window.location.search);
+  "smoked-flower": {
+    img: "2af34606-1479-4be7-a83d-7b61140dda21.jpeg",
+    name: "RECLUSE SMOKED FLOWER",
+    price: 30000,
+    desc: "Smoked floral graphic tee with premium cotton finish."
+  },
 
-/* SAFE FALLBACKS (IMPORTANT FIX) */
-const img = params.get("img") || "";
-const name = params.get("name") || "UNKNOWN PRODUCT";
-const desc = params.get("desc") || "No description available";
-const price = Number(params.get("price")) || 30000;
+  "chain-heart": {
+    img: "e875715a-90af-4361-b1a9-9fe4e38f0a67.jpeg",
+    name: "RECLUSE CHAIN HEART",
+    price: 30000,
+    desc: "Heavy streetwear tee featuring chain heart graphic design."
+  },
 
-/* STOP PAGE BREAKING */
-if(!img){
-document.querySelector(".container").innerHTML = "<h2>PRODUCT NOT FOUND</h2>";
-throw new Error("Missing image");
-}
+  "dreams": {
+    img: "233d44f0-6ed6-4388-9a0f-69d90e762b66.jpeg",
+    name: "RECLUSE DREAMS",
+    price: 30000,
+    desc: "Minimal dream-inspired streetwear tee with clean aesthetic."
+  },
 
-/* DISPLAY */
-document.getElementById("img").src = img;
-document.getElementById("name").innerText = name;
-document.getElementById("desc").innerText = desc;
-document.getElementById("price").innerText = "₦" + price.toLocaleString();
-
-/* ADD TO CART */
-function addToCart(){
-
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-let product = {
-name: name,
-price: price,
-img: img
+  "sleeveless-sword": {
+    img: "photo-output.jpeg",
+    name: "RECLUSE SWORD VEST",
+    price: 28000,
+    desc: "Black sleeveless round-neck vest featuring Samurai Sword graphic. Sharp, bold statement piece."
+  }
 };
 
-cart.push(product);
+/* ================= GET ID ================= */
+const params = new URLSearchParams(window.location.search);
+const id = params.get("id");
 
-localStorage.setItem("cart", JSON.stringify(cart));
+const product = products[id];
 
-let btn = document.getElementById("buyBtn");
-
-btn.classList.add("added");
-btn.innerText = "ADDED ✓";
-
-setTimeout(()=>{
-btn.classList.remove("added");
-btn.innerText = "ADD TO CART";
-},1500);
-
-/* update counter */
-updateCartCount();
+if(!product){
+  document.body.innerHTML = "<h2 style='text-align:center;margin-top:50px;'>PRODUCT NOT FOUND</h2>";
+  throw new Error("Invalid product ID");
 }
 
-/* CART COUNTER */
+/* ================= DISPLAY ================= */
+document.getElementById("img").src = product.img;
+document.getElementById("name").innerText = product.name;
+document.getElementById("price").innerText = "₦" + product.price.toLocaleString();
+document.getElementById("desc").innerText = product.desc;
+
+/* ================= CART ================= */
+function addToCart(){
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  cart.push(product);
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+
+  let btn = document.getElementById("buyBtn");
+  btn.classList.add("added");
+  btn.innerText = "ADDED ✓";
+
+  setTimeout(()=>{
+    btn.classList.remove("added");
+    btn.innerText = "ADD TO CART";
+  },1200);
+
+  updateCartCount();
+}
+
+/* ================= COUNTER ================= */
 function updateCartCount(){
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
-document.getElementById("cartCount").innerText = cart.length;
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  document.getElementById("cartCount").innerText = cart.length;
 }
 
 updateCartCount();
-
 </script>
 
 </body>
