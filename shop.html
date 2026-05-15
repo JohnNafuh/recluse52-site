@@ -8,20 +8,18 @@
 <style>
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
+    font-family: Arial;
     background: #0b0b0b;
     color: white;
 }
 
-/* HEADER */
 header {
     text-align: center;
     padding: 25px;
     font-size: 28px;
-    letter-spacing: 6px;
+    letter-spacing: 5px;
 }
 
-/* NAV */
 nav {
     text-align: center;
     margin-bottom: 20px;
@@ -29,8 +27,8 @@ nav {
 
 nav a {
     color: white;
+    margin: 0 10px;
     text-decoration: none;
-    margin: 0 12px;
     font-size: 13px;
     opacity: 0.7;
 }
@@ -39,7 +37,6 @@ nav a:hover {
     opacity: 1;
 }
 
-/* GRID */
 .shop-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -49,27 +46,19 @@ nav a:hover {
     margin: auto;
 }
 
-/* CARD */
 .product-card {
     background: #111;
     border: 1px solid #222;
     overflow: hidden;
-    transition: 0.3s;
 }
 
-.product-card:hover {
-    transform: translateY(-5px);
-    border-color: #444;
-}
-
-/* IMAGE */
 .product-card img {
     width: 100%;
     height: 260px;
     object-fit: cover;
+    pointer-events: none;
 }
 
-/* INFO */
 .product-info {
     padding: 15px;
     text-align: center;
@@ -83,21 +72,17 @@ nav a:hover {
 .product-price {
     font-size: 12px;
     opacity: 0.6;
-    margin-top: 5px;
 }
 
-/* BUTTON */
 .btn {
     display: inline-block;
     margin-top: 10px;
     padding: 8px 14px;
-    border: 1px solid rgba(255,255,255,0.4);
+    border: 1px solid white;
     font-size: 12px;
     text-decoration: none;
     color: white;
-    transition: 0.3s;
 }
-
 .btn:hover {
     background: white;
     color: black;
@@ -112,8 +97,7 @@ nav a:hover {
 <nav>
     <a href="index.html">HOME</a>
     <a href="shop.html">SHOP</a>
-    <a href="drop.html">DROP</a>
-    <a href="#">ARCHIVE</a>
+    <a href="cart.html">CART 🛒</a>
 </nav>
 
 <div class="shop-grid">
@@ -124,7 +108,9 @@ nav a:hover {
         <div class="product-info">
             <div class="product-title">RECLUSE BEER TEE</div>
             <div class="product-price">₦30,000</div>
-            <a href="product.html?img=a041ae76-2fca-4c0c-9cac-6bcdfc03dd88.jpeg&name=RECLUSE%20BEER%20TEE&desc=A%20minimal%20front%20tee%20with%20bold%20beer%20graphic%20back%20print%20on%20a%20premium%20round%20neck%20fit." class="btn">VIEW PRODUCT</a>
+            <a class="btn"
+            href="product.html?img=a041ae76-2fca-4c0c-9cac-6bcdfc03dd88.jpeg&name=RECLUSE%20BEER%20TEE&desc=Minimal%20front%20design%2C%20beer%20graphic%20back%2C%20round%20neck%20tee">
+            VIEW PRODUCT</a>
         </div>
     </div>
 
@@ -134,7 +120,9 @@ nav a:hover {
         <div class="product-info">
             <div class="product-title">RECLUSE SMOKED FLOWER</div>
             <div class="product-price">₦30,000</div>
-            <a href="product.html?img=2af34606-1479-4be7-a83d-7b61140dda21.jpeg&name=RECLUSE%20SMOKED%20FLOWER&desc=A%20smoked%20floral%20graphic%20tee%20blending%20soft%20visuals%20with%20urban%20street%20aesthetic." class="btn">VIEW PRODUCT</a>
+            <a class="btn"
+            href="product.html?img=2af34606-1479-4be7-a83d-7b61140dda21.jpeg&name=RECLUSE%20SMOKED%20FLOWER&desc=Smoked%20flower%20front%20design%2C%20round%20neck%20tee">
+            VIEW PRODUCT</a>
         </div>
     </div>
 
@@ -144,7 +132,9 @@ nav a:hover {
         <div class="product-info">
             <div class="product-title">RECLUSE CHAIN HEART</div>
             <div class="product-price">₦30,000</div>
-            <a href="product.html?img=e875715a-90af-4361-b1a9-9fe4e38f0a67.jpeg&name=RECLUSE%20CHAIN%20HEART&desc=A%20symbolic%20streetwear%20tee%20featuring%20a%20chained%20heart%20representing%20strength%20and%20resilience." class="btn">VIEW PRODUCT</a>
+            <a class="btn"
+            href="product.html?img=e875715a-90af-4361-b1a9-9fe4e38f0a67.jpeg&name=RECLUSE%20CHAIN%20HEART&desc=Heavy%20streetwear%20tee%20with%20chain%20heart%20graphic%2C%20premium%20fit">
+            VIEW PRODUCT</a>
         </div>
     </div>
 
@@ -154,7 +144,9 @@ nav a:hover {
         <div class="product-info">
             <div class="product-title">RECLUSE DREAMS</div>
             <div class="product-price">₦30,000</div>
-            <a href="product.html?img=233d44f0-6ed6-4388-9a0f-69d90e762b66.jpeg&name=RECLUSE%20DREAMS&desc=A%20concept%20tee%20inspired%20by%20ambition%20and%20dreams%20with%20a%20bold%20minimal%20street%20design." class="btn">VIEW PRODUCT</a>
+            <a class="btn"
+            href="product.html?img=233d44f0-6ed6-4388-9a0f-69d90e762b66.jpeg&name=RECLUSE%20DREAMS&desc=Dream-inspired%20street%20tee%20with%20clean%20minimal%20aesthetic">
+            VIEW PRODUCT</a>
         </div>
     </div>
 
