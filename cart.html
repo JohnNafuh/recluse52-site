@@ -43,6 +43,17 @@ margin:auto;
 padding:20px;
 }
 
+input, textarea{
+width:100%;
+padding:12px;
+margin-top:10px;
+margin-bottom:10px;
+background:#111;
+border:1px solid #333;
+color:white;
+outline:none;
+}
+
 .cart-item{
 display:flex;
 align-items:center;
@@ -127,6 +138,12 @@ margin-top:40px;
 
 <div class="container">
 
+<!-- CUSTOMER DETAILS -->
+<input id="name" placeholder="Full Name">
+<input id="phone" placeholder="Phone Number">
+<textarea id="address" placeholder="Delivery Address"></textarea>
+
+<!-- CART ITEMS -->
 <div id="cartItems"></div>
 
 <div class="total" id="cartTotal"></div>
@@ -197,7 +214,16 @@ alert("Your cart is empty");
 return;
 }
 
-let message = "🛒 RECLUSE ORDER\n\n";
+let name = document.getElementById("name").value;
+let phone = document.getElementById("phone").value;
+let address = document.getElementById("address").value;
+
+let message =
+"🛒 RECLUSE ORDER\n\n" +
+"Name: " + name + "\n" +
+"Phone: " + phone + "\n" +
+"Address: " + address + "\n\n";
+
 let total = 0;
 
 cart.forEach((item,i)=>{
@@ -207,11 +233,11 @@ total += price;
 });
 
 message += `\nTOTAL: ₦${total.toLocaleString()}`;
-message += `\n\nPlease confirm my order.`;
+message += `\n\nI wish to place my order now`;
 
-let phone = "2347038547668";
+let whatsappNumber = "2347038547668";
 
-let url = "https://wa.me/" + phone + "?text=" + encodeURIComponent(message);
+let url = "https://wa.me/" + whatsappNumber + "?text=" + encodeURIComponent(message);
 
 window.open(url, "_blank");
 }
