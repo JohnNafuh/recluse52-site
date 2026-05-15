@@ -124,7 +124,7 @@ nav a:hover {
 <a href="index.html">HOME</a>
 <a href="shop.html">SHOP</a>
 <a href="drop.html">DROP</a>
-<a href="cart.html">CART 🛒 <span id="cartCount">0</span></a>
+<a href="cart.html">CART 🛒</a>
 </nav>
 
 <div class="tabs">
@@ -137,23 +137,43 @@ nav a:hover {
 
 <div class="shop-grid">
 
+    <!-- BEER TEE -->
     <div class="product-card">
         <img src="a041ae76-2fca-4c0c-9cac-6bcdfc03dd88.jpeg">
         <div class="product-info">
             <div class="product-title">RECLUSE BEER TEE</div>
             <div class="product-price">₦30,000</div>
-
             <a class="btn" href="product.html?id=beer-tee">VIEW PRODUCT</a>
         </div>
     </div>
 
+    <!-- SMOKED FLOWER -->
     <div class="product-card">
         <img src="2af34606-1479-4be7-a83d-7b61140dda21.jpeg">
         <div class="product-info">
             <div class="product-title">RECLUSE SMOKED FLOWER</div>
             <div class="product-price">₦30,000</div>
-
             <a class="btn" href="product.html?id=smoked-flower">VIEW PRODUCT</a>
+        </div>
+    </div>
+
+    <!-- DREAMS TEE -->
+    <div class="product-card">
+        <img src="233d44f0-6ed6-4388-9a0f-69d90e762b66.jpeg">
+        <div class="product-info">
+            <div class="product-title">RECLUSE DREAMS</div>
+            <div class="product-price">₦30,000</div>
+            <a class="btn" href="product.html?id=dreams-tee">VIEW PRODUCT</a>
+        </div>
+    </div>
+
+    <!-- CHAIN HEART -->
+    <div class="product-card">
+        <img src="e875715a-90af-4361-b1a9-9fe4e38f0a67.jpeg">
+        <div class="product-info">
+            <div class="product-title">RECLUSE CHAIN HEART</div>
+            <div class="product-price">₦30,000</div>
+            <a class="btn" href="product.html?id=chain-heart">VIEW PRODUCT</a>
         </div>
     </div>
 
@@ -169,20 +189,11 @@ nav a:hover {
         <div class="product-info">
             <div class="product-title">RECLUSE SWORD VEST</div>
             <div class="product-price">₦28,000</div>
-
             <a class="btn" href="product.html?id=sword-vest">VIEW PRODUCT</a>
         </div>
     </div>
 
 </div>
-
-<script>
-function updateCartCounter(){
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
-    document.getElementById("cartCount").innerText = cart.length;
-}
-updateCartCounter();
-</script>
 
 </body>
 </html>
