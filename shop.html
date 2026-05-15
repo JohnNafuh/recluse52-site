@@ -83,6 +83,7 @@ nav a:hover {
     text-decoration: none;
     color: white;
 }
+
 .btn:hover {
     background: white;
     color: black;
@@ -104,63 +105,63 @@ nav a:hover {
 
 <div class="shop-grid">
 
-    <!-- PRODUCT 1 -->
     <div class="product-card">
         <img src="a041ae76-2fca-4c0c-9cac-6bcdfc03dd88.jpeg">
         <div class="product-info">
             <div class="product-title">RECLUSE BEER TEE</div>
             <div class="product-price">₦30,000</div>
             <a class="btn"
-            href="product.html?img=a041ae76-2fca-4c0c-9cac-6bcdfc03dd88.jpeg&name=RECLUSE%20BEER%20TEE&desc=Minimal%20front%20design%2C%20beer%20graphic%20back%2C%20round%20neck%20tee">
+            href="product.html?img=a041ae76-2fca-4c0c-9cac-6bcdfc03dd88.jpeg&name=RECLUSE%20BEER%20TEE&price=30000&desc=Minimal%20front%20design%2C%20beer%20graphic%20back%2C%20round%20neck%20tee">
             VIEW PRODUCT</a>
         </div>
     </div>
 
-    <!-- PRODUCT 2 -->
     <div class="product-card">
         <img src="2af34606-1479-4be7-a83d-7b61140dda21.jpeg">
         <div class="product-info">
             <div class="product-title">RECLUSE SMOKED FLOWER</div>
             <div class="product-price">₦30,000</div>
             <a class="btn"
-            href="product.html?img=2af34606-1479-4be7-a83d-7b61140dda21.jpeg&name=RECLUSE%20SMOKED%20FLOWER&desc=Smoked%20flower%20front%20design%2C%20round%20neck%20tee">
+            href="product.html?img=2af34606-1479-4be7-a83d-7b61140dda21.jpeg&name=RECLUSE%20SMOKED%20FLOWER&price=30000&desc=Smoked%20flower%20front%20design%2C%20round%20neck%20tee">
             VIEW PRODUCT</a>
         </div>
     </div>
 
-    <!-- PRODUCT 3 -->
     <div class="product-card">
         <img src="e875715a-90af-4361-b1a9-9fe4e38f0a67.jpeg">
         <div class="product-info">
             <div class="product-title">RECLUSE CHAIN HEART</div>
             <div class="product-price">₦30,000</div>
             <a class="btn"
-            href="product.html?img=e875715a-90af-4361-b1a9-9fe4e38f0a67.jpeg&name=RECLUSE%20CHAIN%20HEART&desc=Heavy%20streetwear%20tee%20with%20chain%20heart%20graphic%2C%20premium%20fit">
+            href="product.html?img=e875715a-90af-4361-b1a9-9fe4e38f0a67.jpeg&name=RECLUSE%20CHAIN%20HEART&price=30000&desc=Heavy%20streetwear%20tee%20with%20chain%20heart%20graphic%2C%20premium%20fit">
             VIEW PRODUCT</a>
         </div>
     </div>
 
-    <!-- PRODUCT 4 -->
     <div class="product-card">
         <img src="233d44f0-6ed6-4388-9a0f-69d90e762b66.jpeg">
         <div class="product-info">
             <div class="product-title">RECLUSE DREAMS</div>
             <div class="product-price">₦30,000</div>
             <a class="btn"
-            href="product.html?img=233d44f0-6ed6-4388-9a0f-69d90e762b66.jpeg&name=RECLUSE%20DREAMS&desc=Dream-inspired%20street%20tee%20with%20clean%20minimal%20aesthetic">
+            href="product.html?img=233d44f0-6ed6-4388-9a0f-69d90e762b66.jpeg&name=RECLUSE%20DREAMS&price=30000&desc=Dream-inspired%20street%20tee%20with%20clean%20minimal%20aesthetic">
             VIEW PRODUCT</a>
         </div>
     </div>
 
 </div>
+
 <script>
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-let counter = document.getElementById("cartCount");
-
-if(counter){
-counter.innerText = cart.length;
+function updateCartCounter(){
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    document.getElementById("cartCount").innerText = cart.length;
 }
+
+updateCartCounter();
+
+/* keeps it updated when user comes back */
+window.addEventListener("storage", updateCartCounter);
 </script>
+
 </body>
 </html>
