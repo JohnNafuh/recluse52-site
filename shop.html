@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RECLUSE | SHOP</title>
+<title>RECLUSE | PRODUCT</title>
 
 <style>
 body {
@@ -32,80 +32,93 @@ nav a {
     text-decoration: none;
     margin: 0 12px;
     font-size: 13px;
-    opacity: 0.8;
+    opacity: 0.7;
 }
 
 nav a:hover {
     opacity: 1;
 }
 
-/* GRID */
-.shop-grid {
+/* MAIN LAYOUT */
+.wrapper {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 20px;
-    padding: 40px;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
     max-width: 1000px;
     margin: auto;
-}
-
-/* CARD */
-.product-card {
-    background: #111;
-    border: 1px solid #222;
-    overflow: hidden;
-    transition: 0.3s;
-}
-
-.product-card:hover {
-    transform: translateY(-5px);
-    border-color: #444;
+    padding: 40px;
 }
 
 /* IMAGE */
-.product-card img {
+.product-img {
     width: 100%;
-    height: 260px;
-    object-fit: cover;
+    border: 1px solid #333;
     transition: 0.4s;
 }
 
-.product-card:hover img {
-    transform: scale(1.05);
+.product-img:hover {
+    transform: scale(1.02);
 }
 
 /* INFO */
-.product-info {
-    padding: 15px;
-    text-align: center;
+h1 {
+    letter-spacing: 3px;
+    margin-bottom: 10px;
 }
 
-.product-title {
-    font-size: 14px;
-    letter-spacing: 2px;
+p {
+    opacity: 0.7;
+    line-height: 1.5;
 }
 
-.product-price {
-    font-size: 12px;
-    opacity: 0.6;
-    margin-top: 5px;
+/* SIZE BUTTONS */
+.sizes {
+    margin-top: 20px;
 }
 
-/* BUTTON */
-.btn {
+.size-btn {
     display: inline-block;
-    margin-top: 10px;
-    padding: 8px 14px;
-    border: 1px solid rgba(255,255,255,0.4);
+    padding: 10px 14px;
+    border: 1px solid #444;
+    margin-right: 8px;
+    cursor: pointer;
+    transition: 0.3s;
     font-size: 12px;
+}
+
+.size-btn:hover {
+    background: white;
+    color: black;
+}
+
+/* BUY BUTTON */
+.buy-btn {
+    display: inline-block;
+    margin-top: 25px;
+    padding: 12px 20px;
+    border: 1px solid white;
     text-decoration: none;
     color: white;
+    letter-spacing: 2px;
     transition: 0.3s;
 }
 
-.btn:hover {
+.buy-btn:hover {
     background: white;
     color: black;
+}
+
+/* BACK */
+.back {
+    display: inline-block;
+    margin-top: 20px;
+    opacity: 0.6;
+    text-decoration: none;
+    color: white;
+}
+
+.back:hover {
+    opacity: 1;
 }
 </style>
 </head>
@@ -121,45 +134,65 @@ nav a:hover {
     <a href="#">ARCHIVE</a>
 </nav>
 
-<div class="shop-grid">
+<div class="wrapper">
 
-    <div class="product-card">
-        <img src="a041ae76-2fca-4c0c-9cac-6bcdfc03dd88.jpeg">
-        <div class="product-info">
-            <div class="product-title">NO REST TEE</div>
-            <div class="product-price">$120 — LIMITED DROP</div>
-            <a href="product.html?item=tee1" class="btn">VIEW PRODUCT</a>
-        </div>
+    <!-- IMAGE -->
+    <div>
+        <img id="productImg" class="product-img">
     </div>
 
-    <div class="product-card">
-        <img src="2af34606-1479-4be7-a83d-7b61140dda21.jpeg">
-        <div class="product-info">
-            <div class="product-title">RECLUSE TEE</div>
-            <div class="product-price">$60 — CORE</div>
-            <a href="product.html?item=tee2" class="btn">VIEW PRODUCT</a>
-        </div>
-    </div>
+    <!-- INFO -->
+    <div>
+        <h1 id="productName">PRODUCT</h1>
+        <p id="productDesc">LIMITED STREETWEAR DROP</p>
 
-    <div class="product-card">
-        <img src="e875715a-90af-4361-b1a9-9fe4e38f0a67.jpeg">
-        <div class="product-info">
-            <div class="product-title">STREET CARGO</div>
-            <div class="product-price">$90 — DROP 01</div>
-            <a href="product.html?item=tee3" class="btn">VIEW PRODUCT</a>
-        </div>
-    </div>
+        <p style="margin-top:15px; opacity:0.5;">SELECT SIZE</p>
 
-    <div class="product-card">
-        <img src="233d44f0-6ed6-4388-9a0f-69d90e762b66.jpeg">
-        <div class="product-info">
-            <div class="product-title">LIMITED CAP</div>
-            <div class="product-price">$40 — ACCESSORY</div>
-            <a href="product.html?item=tee4" class="btn">VIEW PRODUCT</a>
+        <div class="sizes">
+            <div class="size-btn">S</div>
+            <div class="size-btn">M</div>
+            <div class="size-btn">L</div>
+            <div class="size-btn">XL</div>
         </div>
+
+        <a href="shop.html" class="buy-btn">BACK TO SHOP</a>
     </div>
 
 </div>
+
+<script>
+const products = {
+    tee1: {
+        img: "a041ae76-2fca-4c0c-9cac-6bcdfc03dd88.jpeg",
+        name: "NO REST TEE",
+        desc: "DROP 01 • LIMITED EDITION PIECE BUILT FOR THE STREET."
+    },
+    tee2: {
+        img: "2af34606-1479-4be7-a83d-7b61140dda21.jpeg",
+        name: "RECLUSE TEE",
+        desc: "CORE COLLECTION • MINIMAL FRONT, STATEMENT BACK DESIGN."
+    },
+    tee3: {
+        img: "e875715a-90af-4361-b1a9-9fe4e38f0a67.jpeg",
+        name: "STREET CARGO SET",
+        desc: "ARCHIVE PIECE • HEAVYWEIGHT STREET ESSENTIAL."
+    },
+    tee4: {
+        img: "233d44f0-6ed6-4388-9a0f-69d90e762b66.jpeg",
+        name: "LIMITED CAP",
+        desc: "ACCESSORY DROP • CLEAN STREETWEAR FINISH."
+    }
+};
+
+const params = new URLSearchParams(window.location.search);
+const item = params.get("item");
+
+const product = products[item] || products.tee1;
+
+document.getElementById("productImg").src = product.img;
+document.getElementById("productName").innerText = product.name;
+document.getElementById("productDesc").innerText = product.desc;
+</script>
 
 </body>
 </html>
