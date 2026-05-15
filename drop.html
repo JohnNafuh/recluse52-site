@@ -61,7 +61,60 @@ nav a:hover {
 </style>
 </head>
 
-<body>
+<<header>RECLUSE</header>
+
+<nav>
+    <a href="index.html">HOME</a>
+    <a href="shop.html">SHOP</a>
+    <a href="drop.html">DROP</a>
+    <a href="#">ARCHIVE</a>
+</nav>
+
+<div class="hero">
+    <h1>DROP 01</h1>
+    <p>LIMITED TEE COLLECTION — FIRST RELEASE</p>
+</div>
+
+<!-- FEATURED PRODUCT -->
+<div style="margin-top:50px;">
+    <img src="a041ae76-2fca-4c0c-9cac-6bcdfc03dd88.jpeg"
+    style="width:85%; max-width:500px; height:auto; object-fit:cover; border:1px solid #333;">
+    
+    <h2 style="margin-top:20px; letter-spacing:3px;">NO REST TEE</h2>
+    <p style="opacity:0.7;">CORE DROP PIECE — LIMITED STOCK</p>
+</div>
+
+<!-- COUNTDOWN -->
+<div style="margin-top:40px; font-size:28px;" id="timer">
+LOADING DROP TIMER...
+</div>
+
+<a href="shop.html" class="btn">ENTER DROP</a>
+
+<script>
+function countdown() {
+    const target = new Date();
+    target.setDate(target.getDate() + 3);
+
+    setInterval(() => {
+        const now = new Date().getTime();
+        const distance = target - now;
+
+        const hours = Math.floor((distance / (1000 * 60 * 60)));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        document.getElementById("timer").innerHTML =
+        "DROP IN: " + hours + "H " + minutes + "M " + seconds + "S";
+
+        if (distance < 0) {
+            document.getElementById("timer").innerHTML = "LIVE NOW 🔥";
+        }
+    }, 1000);
+}
+
+countdown();
+</script>>
 
 <header>RECLUSE</header>
 
