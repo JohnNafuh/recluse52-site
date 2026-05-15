@@ -86,13 +86,28 @@ nav a:hover {
     margin: auto;
     line-height: 1.6;
 }
-</style>
+</style>.logo {
+    height: 70px;
+    opacity: 0;
+    animation: fadeIn 2s ease forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 </head>
 
 <body>
 
 <header style="text-align:center; padding:30px;">
-    <img src="Yellow%20Black%20Brush%20Streetwear%20Brand%20Logo.png" alt="RECLUSE" style="height:70px;">
+   <img src="Yellow%20Black%20Brush%20Streetwear%20Brand%20Logo.png" alt="RECLUSE" class="logo">
 </header>
 
 <nav>
