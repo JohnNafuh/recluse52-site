@@ -45,6 +45,7 @@ nav a:hover {
     opacity: 0.7;
 }
 
+/* BUTTON */
 .btn {
     margin-top: 30px;
     padding: 10px 18px;
@@ -57,6 +58,20 @@ nav a:hover {
 .btn:hover {
     background: white;
     color: black;
+}
+
+/* 🔥 DROP IMAGE LOCK STYLE */
+.drop-img {
+    width: 85%;
+    max-width: 500px;
+    height: auto;
+    filter: brightness(0.35) blur(1px);
+    border: 1px solid #333;
+    transition: 0.5s;
+}
+
+.drop-img:hover {
+    filter: brightness(0.6) blur(0px);
 }
 </style>
 </head>
@@ -74,15 +89,15 @@ nav a:hover {
 
 <div class="hero">
     <h1>DROP 01</h1>
-    <p>LIMITED TEE COLLECTION — FIRST RELEASE</p>
+    <p>LIMITED TEE COLLECTION — COMING SOON</p>
 </div>
 
 <!-- FEATURED PRODUCT -->
 <div style="margin-top:50px;">
     <img src="B4E664D9-A44D-4442-A75E-F1E4BE1987B5.png" class="drop-img">
 
-    <h2 style="margin-top:20px; letter-spacing:3px;">NO REST TEE</h2>
-    <p style="opacity:0.7;">CORE DROP PIECE — LIMITED STOCK</p>
+    <h2 style="margin-top:20px; letter-spacing:3px;">RECLUSE TEE</h2>
+    <p style="opacity:0.6;">🔒 COMING SOON — NOT RELEASED YET</p>
 </div>
 
 <!-- COUNTDOWN -->
@@ -90,7 +105,7 @@ nav a:hover {
 LOADING DROP TIMER...
 </div>
 
-<a href="shop.html" class="btn">ENTER SHOP</a>
+<a href="#" class="btn">LOCKED UNTIL DROP</a>
 
 <script>
 function countdown() {
