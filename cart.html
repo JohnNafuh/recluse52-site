@@ -84,6 +84,12 @@ font-size:12px;
 margin-top:4px;
 }
 
+.meta{
+font-size:11px;
+opacity:0.6;
+margin-top:5px;
+}
+
 .remove{
 cursor:pointer;
 font-size:12px;
@@ -158,16 +164,20 @@ CHECKOUT VIA WHATSAPP
 
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-let cartContainer = document.getElementById("cartItems");
-let totalEl = document.getElementById("cartTotal");
+function save(){
+localStorage.setItem("cart", JSON.stringify(cart));
+}
 
 function removeItem(index){
 cart.splice(index,1);
-localStorage.setItem("cart", JSON.stringify(cart));
+save();
 renderCart();
 }
 
 function renderCart(){
+
+let cartContainer = document.getElementById("cartItems");
+let totalEl = document.getElementById("cartTotal");
 
 cartContainer.innerHTML = "";
 
@@ -182,8 +192,9 @@ let total = 0;
 cart.forEach((item, index) => {
 
 let price = Number(item.price) || 0;
+let qty = Number(item.qty) || 1;
 
-total += price;
+total += price * qty;
 
 cartContainer.innerHTML += `
 <div class="cart-item">
@@ -193,6 +204,7 @@ cartContainer.innerHTML += `
 <div class="item-info">
 <div class="item-name">${item.name}</div>
 <div class="item-price">₦${price.toLocaleString()}</div>
+<div class="meta">Size: ${item.size || "M"} | Qty: ${qty}</div>
 </div>
 
 <div class="remove" onclick="removeItem(${index})">
@@ -218,6 +230,11 @@ let name = document.getElementById("name").value;
 let phone = document.getElementById("phone").value;
 let address = document.getElementById("address").value;
 
+if(!name || !phone || !address){
+alert("Please fill all details");
+return;
+}
+
 let message =
 "🛒 RECLUSE ORDER\n\n" +
 "Name: " + name + "\n" +
@@ -228,8 +245,11 @@ let total = 0;
 
 cart.forEach((item,i)=>{
 let price = Number(item.price) || 0;
-message += `${i+1}. ${item.name} - ₦${price.toLocaleString()}\n`;
-total += price;
+let qty = Number(item.qty) || 1;
+
+message += `${i+1}. ${item.name} (${item.size || "M"}) x${qty} - ₦${(price*qty).toLocaleString()}\n`;
+
+total += price * qty;
 });
 
 message += `\nTOTAL: ₦${total.toLocaleString()}`;
