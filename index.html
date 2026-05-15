@@ -16,13 +16,12 @@ body {
     overflow-x: hidden;
 }
 
-/* HEADER (cleaner spacing) */
+/* HEADER */
 header {
     text-align: center;
     padding: 20px 20px 10px;
 }
 
-/* ✅ FIXED LOGO */
 .logo {
     height: 55px;
     width: auto;
@@ -76,7 +75,6 @@ nav a:hover {
     z-index: 1;
 }
 
-/* OVERLAY */
 .hero .bg {
     position: absolute;
     top:0;
@@ -92,7 +90,6 @@ nav a:hover {
     z-index: 2;
 }
 
-/* CONTENT */
 .hero .content {
     position: relative;
     z-index: 3;
@@ -103,7 +100,6 @@ nav a:hover {
     margin-top: 120px;
 }
 
-/* QUOTE */
 .hero p {
     opacity: 0.7;
     max-width: 520px;
@@ -113,7 +109,6 @@ nav a:hover {
     letter-spacing: 2px;
 }
 
-/* BUTTON */
 .btn {
     margin-top: 10px;
     padding: 12px 22px;
@@ -131,7 +126,73 @@ nav a:hover {
     color: black;
 }
 
-/* SECTION */
+/* DROP SECTION (IMAGE OVERLAY FIXED) */
+#drop {
+    position: relative;
+    height: 80vh;
+    width: 100%;
+    overflow: hidden;
+    border-top: 1px solid #222;
+    border-bottom: 1px solid #222;
+}
+
+#drop img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    filter: brightness(0.45) contrast(1.1);
+    z-index: 1;
+}
+
+#drop .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.45);
+    z-index: 2;
+}
+
+#drop .content {
+    position: relative;
+    z-index: 3;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+}
+
+#drop h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 6px;
+    font-size: 30px;
+    margin: 0;
+}
+
+#drop .sub {
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 2px;
+    font-size: 16px;
+    opacity: 0.8;
+    margin-top: 10px;
+}
+
+#drop p {
+    opacity: 0.6;
+    max-width: 500px;
+    font-size: 13px;
+    margin-top: 10px;
+    line-height: 1.6;
+}
+
+/* OTHER SECTIONS */
 .section {
     padding: 80px 20px;
     text-align: center;
@@ -152,22 +213,6 @@ nav a:hover {
     font-size: 14px;
 }
 
-/* DROP */
-.drop {
-    border-top: 1px solid #222;
-    border-bottom: 1px solid #222;
-    padding: 60px 20px;
-    text-align: center;
-}
-
-.drop h3 {
-    letter-spacing: 6px;
-    font-size: 24px;
-    margin-bottom: 10px;
-    font-family: 'Bebas Neue', sans-serif;
-}
-
-/* FOOTER */
 footer {
     text-align: center;
     padding: 40px 20px;
@@ -187,10 +232,11 @@ footer {
 <nav>
 <a href="index.html">HOME</a>
 <a href="shop.html">SHOP</a>
-<a href="drop.html">DROP</a>
+<a href="#drop">NEW DROP</a>
 <a href="cart.html">CART 🛒</a>
 </nav>
 
+<!-- HERO -->
 <div class="hero">
 
 <img src="IMG_5251.jpeg" class="graffiti">
@@ -198,43 +244,45 @@ footer {
 <div class="bg"></div>
 
 <div class="content">
-
 <p>
 Built in silence. Worn with intention.
 Limited streetwear for those who move differently.
 </p>
 
 <a href="shop.html" class="btn">ENTER SHOP</a>
+</div>
 
 </div>
-</div>
-<!-- NEW DROP SECTION -->
-<div class="drop" style="background: #0b0b0b; padding: 80px 20px;">
-    
-    <h3 style="font-family: 'Bebas Neue', sans-serif; letter-spacing: 6px; font-size: 26px;">
-        NEW DROP — SLEEVELESS ESSENTIALS
-    </h3>
 
-    <p>
-        Lightweight sleeveless shirts built for heat, movement, and silence.
-        Limited quantities. No restock.
-    </p>
+<!-- NEW DROP -->
+<div id="drop">
 
-    <a href="shop.html#sleeveless" class="btn">ENTER SHOP</a>
+<img src="IMG_4340.jpeg">
+
+<div class="overlay"></div>
+
+<div class="content">
+
+<h3>NEW DROP</h3>
+<div class="sub">SLEEVELESS ESSENTIALS</div>
+
+<p>
+Lightweight sleeveless pieces built for heat, movement, and silence. Limited release — no restock.
+</p>
+
+<a href="shop.html#sleeveless" class="btn">ENTER DROP</a>
+
 </div>
-    
+
+</div>
+
+<!-- ABOUT -->
 <div class="section">
 <h2>ABOUT RECLUSE</h2>
 <p>
 RECLUSE is a minimal streetwear label focused on identity, silence, and exclusivity.
 No mass production. No noise. Every drop is intentional and limited.
 </p>
-</div>
-
-<div class="drop">
-<h3>DROP 01 — LIVE NOW</h3>
-<p>Limited pieces available. Once sold out, it’s gone forever.</p>
-<a href="shop.html" class="btn">SHOP DROP</a>
 </div>
 
 <footer>
