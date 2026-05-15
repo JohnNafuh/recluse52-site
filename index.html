@@ -133,6 +133,15 @@ nav a:hover {
         and quiet confidence. No noise. No trends. Just presence.
     </p>
 </div>
+<script>
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+let counter = document.getElementById("cartCount");
+
+if(counter){
+counter.innerText = cart.length;
+}
+<script>
 
 </body>
 </html>
