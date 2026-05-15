@@ -128,88 +128,106 @@ color:black;
 </div>
 
 <script>
-/* ================= PRODUCT DATABASE ================= */
+
+/* PRODUCT DATABASE */
+
 const products = {
-  "beer-tee": {
-    img: "a041ae76-2fca-4c0c-9cac-6bcdfc03dd88.jpeg",
-    name: "RECLUSE BEER TEE",
-    price: 30000,
-    desc: "Minimal street graphic tee with bold back print. Clean everyday fit."
-  },
 
-  "smoked-flower": {
-    img: "2af34606-1479-4be7-a83d-7b61140dda21.jpeg",
-    name: "RECLUSE SMOKED FLOWER",
-    price: 30000,
-    desc: "Smoked floral graphic tee with premium cotton finish."
-  },
+"beer-tee":{
+img:"a041ae76-2fca-4c0c-9cac-6bcdfc03dd88.jpeg",
+name:"RECLUSE BEER TEE",
+price:30000,
+desc:"Minimal street graphic tee with bold back print. Clean everyday fit."
+},
 
-  "chain-heart": {
-    img: "e875715a-90af-4361-b1a9-9fe4e38f0a67.jpeg",
-    name: "RECLUSE CHAIN HEART",
-    price: 30000,
-    desc: "Heavy streetwear tee featuring chain heart graphic design."
-  },
+"smoked-flower":{
+img:"2af34606-1479-4be7-a83d-7b61140dda21.jpeg",
+name:"RECLUSE SMOKED FLOWER",
+price:30000,
+desc:"Smoked floral graphic tee with premium cotton finish."
+},
 
-  "dreams": {
-    img: "233d44f0-6ed6-4388-9a0f-69d90e762b66.jpeg",
-    name: "RECLUSE DREAMS",
-    price: 30000,
-    desc: "Minimal dream-inspired streetwear tee with clean aesthetic."
-  },
+"chain-heart":{
+img:"e875715a-90af-4361-b1a9-9fe4e38f0a67.jpeg",
+name:"RECLUSE CHAIN HEART",
+price:30000,
+desc:"Heavy streetwear tee featuring chain heart graphic design."
+},
 
-  "sleeveless-sword": {
-    img: "photo-output.jpeg",
-    name: "RECLUSE SWORD VEST",
-    price: 28000,
-    desc: "Black sleeveless round-neck vest featuring Samurai Sword graphic. Sharp, bold statement piece."
-  }
+"dreams":{
+img:"233d44f0-6ed6-4388-9a0f-69d90e762b66.jpeg",
+name:"RECLUSE DREAMS",
+price:30000,
+desc:"Minimal dream-inspired streetwear tee with clean aesthetic."
+},
+
+"sleeveless-sword":{
+img:"photo-output.jpeg",
+name:"RECLUSE SWORD VEST",
+price:28000,
+desc:"Black sleeveless round-neck vest featuring Samurai sword graphic. Sharp minimalist street design."
+}
+
 };
 
-/* ================= GET ID ================= */
+/* GET PRODUCT ID */
+
 const params = new URLSearchParams(window.location.search);
 const id = params.get("id");
 
 const product = products[id];
 
-if(!product){
-  document.body.innerHTML = "<h2 style='text-align:center;margin-top:50px;'>PRODUCT NOT FOUND</h2>";
-  throw new Error("Invalid product ID");
-}
+/* DISPLAY PRODUCT */
 
-/* ================= DISPLAY ================= */
+if(product){
+
 document.getElementById("img").src = product.img;
 document.getElementById("name").innerText = product.name;
 document.getElementById("price").innerText = "₦" + product.price.toLocaleString();
 document.getElementById("desc").innerText = product.desc;
 
-/* ================= CART ================= */
-function addToCart(){
-  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+}else{
 
-  cart.push(product);
+document.querySelector(".container").innerHTML =
+"<h2 style='text-align:center;margin-top:50px;'>Product not found</h2>";
 
-  localStorage.setItem("cart", JSON.stringify(cart));
-
-  let btn = document.getElementById("buyBtn");
-  btn.classList.add("added");
-  btn.innerText = "ADDED ✓";
-
-  setTimeout(()=>{
-    btn.classList.remove("added");
-    btn.innerText = "ADD TO CART";
-  },1200);
-
-  updateCartCount();
 }
 
-/* ================= COUNTER ================= */
+/* ADD TO CART */
+
+function addToCart(){
+
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+cart.push(product);
+
+localStorage.setItem("cart", JSON.stringify(cart));
+
+let btn = document.getElementById("buyBtn");
+
+btn.classList.add("added");
+btn.innerText = "ADDED ✓";
+
+setTimeout(()=>{
+btn.classList.remove("added");
+btn.innerText = "ADD TO CART";
+},1200);
+
+updateCartCount();
+}
+
+/* CART COUNTER */
+
 function updateCartCount(){
-  let cart = JSON.parse(localStorage.getItem("cart")) || [];
-  document.getElementById("cartCount").innerText = cart.length;
+
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+document.getElementById("cartCount").innerText = cart.length;
+
 }
 
 updateCartCount();
+
 </script>
 
 </body>
