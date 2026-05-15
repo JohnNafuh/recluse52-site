@@ -88,12 +88,6 @@ letter-spacing:1px;
 background:white;
 color:black;
 }
-
-.btn.added{
-background:white;
-color:black;
-transform:scale(0.95);
-}
 </style>
 </head>
 
@@ -105,7 +99,7 @@ transform:scale(0.95);
 <a href="index.html">HOME</a>
 <a href="shop.html">SHOP</a>
 <a href="drop.html">DROP</a>
-<a href="cart.html">CART 🛒 <span id="cartCount">0</span></a>
+<a href="cart.html">CART 🛒</a>
 </nav>
 
 <div class="container">
@@ -115,72 +109,37 @@ transform:scale(0.95);
 </div>
 
 <div class="details">
-<h1 id="name">Loading...</h1>
+<h1 id="name"></h1>
 <div class="price" id="price"></div>
 <p id="desc"></p>
 
-<button class="btn" id="buyBtn" onclick="addToCart()">ADD TO CART</button>
+<button class="btn" onclick="addToCart()">ADD TO CART</button>
 </div>
 
 </div>
 
 <script>
+const p = new URLSearchParams(window.location.search);
 
-const params = new URLSearchParams(window.location.search);
+const img = p.get("img") || "";
+const name = p.get("name") || "Product";
+const desc = p.get("desc") || "No description";
+const price = Number(p.get("price")) || 0;
 
-/* GET DATA */
-const img = params.get("img");
-const name = params.get("name") || "UNKNOWN PRODUCT";
-const desc = params.get("desc") || "No description available";
-const price = Number(params.get("price")) || 0;
-
-/* FIX IMAGE (SAFE HANDLING) */
-if(img){
 document.getElementById("img").src = img;
-}else{
-document.getElementById("img").src = "placeholder.jpeg";
-}
-
-/* DISPLAY */
 document.getElementById("name").innerText = name;
 document.getElementById("desc").innerText = desc;
 document.getElementById("price").innerText = "₦" + price.toLocaleString();
 
-/* ADD TO CART */
 function addToCart(){
-
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-let product = {
-name,
-price,
-img
-};
-
-cart.push(product);
+cart.push({name, price, img});
 
 localStorage.setItem("cart", JSON.stringify(cart));
 
-let btn = document.getElementById("buyBtn");
-btn.classList.add("added");
-btn.innerText = "ADDED ✓";
-
-setTimeout(()=>{
-btn.classList.remove("added");
-btn.innerText = "ADD TO CART";
-},1500);
-
-updateCartCount();
+alert("Added to cart");
 }
-
-/* CART COUNTER */
-function updateCartCount(){
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
-document.getElementById("cartCount").innerText = cart.length;
-}
-
-updateCartCount();
-
 </script>
 
 </body>
