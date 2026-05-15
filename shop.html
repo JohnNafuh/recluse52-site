@@ -39,7 +39,7 @@ nav a:hover {
     opacity: 1;
 }
 
-/* MAIN LAYOUT */
+/* LAYOUT */
 .wrapper {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -52,15 +52,13 @@ nav a:hover {
 /* IMAGE */
 .product-img {
     width: 100%;
+    max-width: 500px;
     border: 1px solid #333;
-    transition: 0.4s;
+    display: block;
+    margin: auto;
 }
 
-.product-img:hover {
-    transform: scale(1.02);
-}
-
-/* INFO */
+/* TEXT */
 h1 {
     letter-spacing: 3px;
     margin-bottom: 10px;
@@ -71,7 +69,7 @@ p {
     line-height: 1.5;
 }
 
-/* SIZE BUTTONS */
+/* SIZE */
 .sizes {
     margin-top: 20px;
 }
@@ -91,7 +89,7 @@ p {
     color: black;
 }
 
-/* BUY BUTTON */
+/* BUTTON */
 .buy-btn {
     display: inline-block;
     margin-top: 25px;
@@ -120,6 +118,13 @@ p {
 .back:hover {
     opacity: 1;
 }
+
+/* MOBILE */
+@media(max-width: 768px){
+    .wrapper {
+        grid-template-columns: 1fr;
+    }
+}
 </style>
 </head>
 
@@ -143,8 +148,8 @@ p {
 
     <!-- INFO -->
     <div>
-        <h1 id="productName">PRODUCT</h1>
-        <p id="productDesc">LIMITED STREETWEAR DROP</p>
+        <h1 id="productName"></h1>
+        <p id="productDesc"></p>
 
         <p style="margin-top:15px; opacity:0.5;">SELECT SIZE</p>
 
@@ -161,37 +166,22 @@ p {
 </div>
 
 <script>
-const products = {
-    tee1: {
-        img: "a041ae76-2fca-4c0c-9cac-6bcdfc03dd88.jpeg",
-        name: "NO REST TEE",
-        desc: "DROP 01 • LIMITED EDITION PIECE BUILT FOR THE STREET."
-    },
-    tee2: {
-        img: "2af34606-1479-4be7-a83d-7b61140dda21.jpeg",
-        name: "RECLUSE TEE",
-        desc: "CORE COLLECTION • MINIMAL FRONT, STATEMENT BACK DESIGN."
-    },
-    tee3: {
-        img: "e875715a-90af-4361-b1a9-9fe4e38f0a67.jpeg",
-        name: "STREET CARGO SET",
-        desc: "ARCHIVE PIECE • HEAVYWEIGHT STREET ESSENTIAL."
-    },
-    tee4: {
-        img: "233d44f0-6ed6-4388-9a0f-69d90e762b66.jpeg",
-        name: "LIMITED CAP",
-        desc: "ACCESSORY DROP • CLEAN STREETWEAR FINISH."
-    }
-};
-
 const params = new URLSearchParams(window.location.search);
-const item = params.get("item");
 
-const product = products[item] || products.tee1;
+/* 🔥 DIRECT DATA FROM URL (NO MORE BUGS) */
+const img = params.get("img");
+const name = params.get("name");
+const desc = params.get("desc");
 
-document.getElementById("productImg").src = product.img;
-document.getElementById("productName").innerText = product.name;
-document.getElementById("productDesc").innerText = product.desc;
+/* SAFETY CHECK */
+if (!img || !name) {
+    document.getElementById("productName").innerText = "PRODUCT NOT FOUND";
+    document.getElementById("productDesc").innerText = "";
+} else {
+    document.getElementById("productImg").src = img;
+    document.getElementById("productName").innerText = name;
+    document.getElementById("productDesc").innerText = desc;
+}
 </script>
 
 </body>
