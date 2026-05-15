@@ -133,20 +133,53 @@ margin-top:40px;
 </div>
 
 <script>
+
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-const container = document.getElementById("cartItems");
-const totalEl = document.getElementById("cartTotal");
+let cartContainer = document.getElementById("cartItems");
+let total = 0;
 
-function renderCart(){
+function removeItem(index){
 
-container.innerHTML = "";
+cart.splice(index,1);
+
+localStorage.setItem("cart",JSON.stringify(cart));
+
+location.reload();
+
+}
 
 if(cart.length === 0){
-container.innerHTML = "<div class='empty'>YOUR CART IS EMPTY</div>";
-totalEl.innerText = "";
-return;
+
+cartContainer.innerHTML = "YOUR CART IS EMPTY";
+
 }
+
+cart.forEach((item,index)=>{
+
+total += Number(item.price);
+
+cartContainer.innerHTML += `
+
+<div class="cart-item">
+
+<img src="${item.img}" width="120">
+
+<h3>${item.name}</h3>
+
+<p>₦${item.price}</p>
+
+<button onclick="removeItem(${index})">REMOVE</button>
+
+</div>
+
+`;
+
+});
+
+document.getElementById("cartTotal").innerText = "TOTAL: ₦"+total;
+
+</script>
 
 let total = 0;
 
