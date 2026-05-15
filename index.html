@@ -52,33 +52,47 @@ nav a:hover {
 
 /* HERO */
 .hero {
-    <div class="hero">
-    <div class="bg"></div>
-
-    <div class="content">
-        <img src="a_digital_graffiti_tag_in_high_resolution_features.png" class="graffiti">
-
-        <p>
-            Built in silence. Worn with intention.
-            Limited streetwear for those who move differently.
-        </p>
-
-        <a href="shop.html" class="btn">ENTER SHOP</a>
-    </div>
-</div>
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
 }
 
-.hero h1 {
-    font-size: 75px;
-    letter-spacing: 12px;
-    margin: 0;
+/* DARK OVERLAY */
+.hero .bg {
+    position: absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background: radial-gradient(circle at center, rgba(0,0,0,0.2), #0b0b0b 70%);
+    z-index: 1;
+}
+
+/* HERO CONTENT */
+.hero .content {
+    position: relative;
+    z-index: 2;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:20px;
+}
+
+/* GRAFFITI LOGO */
+.graffiti {
+    width: 320px;
+    max-width: 80%;
+    filter: drop-shadow(0 0 10px rgba(255,255,255,0.1));
     animation: fadeUp 1.5s ease;
 }
 
 .hero p {
     opacity: 0.6;
     max-width: 500px;
-    margin-top: 15px;
     line-height: 1.6;
     animation: fadeUp 2s ease;
 }
@@ -88,8 +102,9 @@ nav a:hover {
     to { opacity: 1; transform: translateY(0); }
 }
 
+/* BUTTON */
 .btn {
-    margin-top: 30px;
+    margin-top: 20px;
     padding: 12px 22px;
     border: 1px solid white;
     text-decoration: none;
@@ -97,7 +112,6 @@ nav a:hover {
     letter-spacing: 2px;
     font-size: 12px;
     transition: 0.3s;
-    animation: fadeUp 2.3s ease;
 }
 
 .btn:hover {
@@ -158,43 +172,52 @@ footer {
 <body>
 
 <header>
-    <img src="Yellow%20Black%20Brush%20Streetwear%20Brand%20Logo.png" class="logo">
+<img src="Yellow%20Black%20Brush%20Streetwear%20Brand%20Logo.png" class="logo">
 </header>
 
 <nav>
-    <a href="index.html">HOME</a>
-    <a href="shop.html">SHOP</a>
-    <a href="drop.html">DROP</a>
-    <a href="archive.html">ARCHIVE</a>
-    <a href="cart.html">CART 🛒</a>
+<a href="index.html">HOME</a>
+<a href="shop.html">SHOP</a>
+<a href="drop.html">DROP</a>
+<a href="archive.html">ARCHIVE</a>
+<a href="cart.html">CART 🛒</a>
 </nav>
 
+<!-- HERO -->
 <div class="hero">
-    <h1>RECLUSE</h1>
-    <p>
-        Built in silence. Worn with intention.
-        Limited streetwear for those who move differently.
-    </p>
 
-    <a href="shop.html" class="btn">ENTER SHOP</a>
+<div class="bg"></div>
+
+<div class="content">
+
+<img src="a_digital_graffiti_tag_in_high_resolution_features.png" class="graffiti">
+
+<p>
+Built in silence. Worn with intention.
+Limited streetwear for those who move differently.
+</p>
+
+<a href="shop.html" class="btn">ENTER SHOP</a>
+
+</div>
 </div>
 
 <div class="section">
-    <h2>ABOUT RECLUSE</h2>
-    <p>
-        RECLUSE is a minimal streetwear label focused on identity, silence, and exclusivity.
-        No mass production. No noise. Every drop is intentional and limited.
-    </p>
+<h2>ABOUT RECLUSE</h2>
+<p>
+RECLUSE is a minimal streetwear label focused on identity, silence, and exclusivity.
+No mass production. No noise. Every drop is intentional and limited.
+</p>
 </div>
 
 <div class="drop">
-    <h3>DROP 01 — LIVE NOW</h3>
-    <p>Limited pieces available. Once sold out, it’s gone forever.</p>
-    <a href="shop.html" class="btn">SHOP DROP</a>
+<h3>DROP 01 — LIVE NOW</h3>
+<p>Limited pieces available. Once sold out, it’s gone forever.</p>
+<a href="shop.html" class="btn">SHOP DROP</a>
 </div>
 
 <footer>
-    © RECLUSE — BUILT IN SILENCE
+© RECLUSE — BUILT IN SILENCE
 </footer>
 
 </body>
