@@ -136,20 +136,30 @@ document.getElementById("name").innerText = name;
 document.getElementById("desc").innerText = desc;
 
 // CART SYSTEM
-function addToCart() {
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+function addToCart(){
 
-    cart.push({
-        img: img,
-        name: name,
-        desc: desc,
-        price: 30000,
-        qty: 1
-    });
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-    localStorage.setItem("cart", JSON.stringify(cart));
+let product = {
+name: name,
+price: price,
+img: img
+};
 
-    alert("Added to cart 🛒");
+cart.push(product);
+
+localStorage.setItem("cart", JSON.stringify(cart));
+
+let btn = document.getElementById("buyBtn");
+
+btn.classList.add("added");
+btn.innerText = "ADDED ✓";
+
+setTimeout(()=>{
+btn.classList.remove("added");
+btn.innerText = "ADD TO CART";
+},1500);
+
 }
 </script>
 <script>
