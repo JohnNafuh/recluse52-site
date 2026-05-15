@@ -117,7 +117,7 @@ nav a:hover {
 <a href="shop.html">SHOP</a>
 <a href="drop.html">DROP</a>
 <a href="archive.html">ARCHIVE</a>
-<a href="cart.html">CART 🛒 (<span id="cart-count">0</span>)</a>
+<a href="cart.html">CART 🛒 (<span id="cartCount">0</span>)</a>
 </nav>
 
 <div class="hero">
@@ -133,20 +133,18 @@ nav a:hover {
         and quiet confidence. No noise. No trends. Just presence.
     </p>
 </div>
+
 <script>
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-let counter = document.getElementById("cartCount");
-
-if(counter){
-counter.innerText = cart.length;
-}
-<script>
-
+function updateCartCount() {
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    document.getElementById("cartCount").innerText = cart.length;
+}
 
-document.getElementById("cart-count").innerText = cart.length;
+updateCartCount();
 
+/* updates when user comes back to tab */
+window.addEventListener("storage", updateCartCount);
 </script>
+
 </body>
 </html>
