@@ -120,7 +120,60 @@ nav a:hover {
 
 </div>
 
-<script>
+<<script>
+const params = new URLSearchParams(window.location.search);
+
+const img = params.get("img");
+const name = params.get("name");
+const desc = params.get("desc");
+
+const imageEl = document.getElementById("productImg");
+const nameEl = document.getElementById("productName");
+const descEl = document.getElementById("productDesc");
+const priceEl = document.getElementById("productPrice");
+
+// Load product
+if (!img || !name || !desc) {
+    nameEl.innerText = "PRODUCT NOT FOUND";
+    descEl.innerText = "Missing product data";
+    imageEl.style.display = "none";
+} else {
+    imageEl.src = img;
+    nameEl.innerText = name;
+    descEl.innerText = desc;
+    priceEl.innerText = "LIMITED DROP PIECE";
+}
+
+// 🛒 CART FUNCTION (THIS FIXES YOUR BUTTON)
+function addToCart() {
+
+    if (!img || !name) {
+        alert("Product not loaded properly");
+        return;
+    }
+
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    const product = {
+        img: img,
+        name: name,
+        desc: desc,
+        qty: 1
+    };
+
+    const existing = cart.find(item => item.name === name);
+
+    if (existing) {
+        existing.qty += 1;
+    } else {
+        cart.push(product);
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    alert("Added to cart 🛒");
+}
+</script>>
 const params = new URLSearchParams(window.location.search);
 
 const img = params.get("img");
