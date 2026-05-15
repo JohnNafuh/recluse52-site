@@ -112,9 +112,7 @@ margin-top:40px;
 </style>
 </head>
 
-<div id="cartItems"></div>
-
-<h2 id="cartTotal"></h2>
+<body>
 
 <header>RECLUSE</header>
 
@@ -139,7 +137,7 @@ margin-top:40px;
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
 let cartContainer = document.getElementById("cartItems");
-let total = 0;
+let totalEl = document.getElementById("cartTotal");
 
 function removeItem(index){
 
@@ -151,52 +149,37 @@ location.reload();
 
 }
 
+function renderCart(){
+
+let total = 0;
+
+cartContainer.innerHTML = "";
+
 if(cart.length === 0){
 
-cartContainer.innerHTML = "YOUR CART IS EMPTY";
+cartContainer.innerHTML = "<div class='empty'>YOUR CART IS EMPTY</div>";
+
+totalEl.innerText = "";
+
+return;
 
 }
 
 cart.forEach((item,index)=>{
 
-total += Number(item.price);
+let price = Number(item.price) || 0;
+
+total += price;
 
 cartContainer.innerHTML += `
 
-<div class="cart-item">
-
-<img src="${item.img}" width="120">
-
-<h3>${item.name}</h3>
-
-<p>₦${item.price}</p>
-
-<button onclick="removeItem(${index})">REMOVE</button>
-
-</div>
-
-`;
-
-});
-
-document.getElementById("cartTotal").innerText = "TOTAL: ₦"+total;
-
-</script>
-
-let total = 0;
-
-cart.forEach((item,index)=>{
-
-total += item.price;
-
-container.innerHTML += `
 <div class="cart-item">
 
 <img src="${item.img}">
 
 <div class="item-info">
 <div class="item-name">${item.name}</div>
-<div class="item-price">₦${item.price}</div>
+<div class="item-price">₦${price}</div>
 </div>
 
 <div class="remove" onclick="removeItem(${index})">
@@ -204,6 +187,7 @@ REMOVE
 </div>
 
 </div>
+
 `;
 
 });
@@ -212,17 +196,8 @@ totalEl.innerText = "TOTAL: ₦" + total;
 
 }
 
-function removeItem(index){
-
-cart.splice(index,1);
-
-localStorage.setItem("cart",JSON.stringify(cart));
-
 renderCart();
 
-}
-
-renderCart();
 </script>
 
 </body>
