@@ -274,18 +274,21 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .card-img {
   aspect-ratio: 4 / 5;
   width: 100%;
+  border: 1px solid transparent;
   border-radius: var(--radius);
   background: var(--stone);
   object-fit: cover;
 }
 
+/* white-background photos get a slim outline (set by markLight in products.js) */
+.card-img.is-light { border-color: var(--line); }
+
 .card:hover .card-img { opacity: 0.9; }
 
 .card-meta {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 2px 12px;
+  flex-direction: column;
+  gap: 2px;
   padding: 0 4px;
   font-size: 14px;
 }

@@ -160,10 +160,33 @@ function listProducts(category) {
 function productCard(p) {
   return `
     <a class="card" href="product.html?id=${p.id}">
-      <img class="card-img" src="${p.images[0]}" alt="${p.name}" loading="lazy">
+      <img class="card-img" src="${p.images[0]}" alt="${p.name}" loading="lazy" onload="markLight(this)">
       <div class="card-meta">
         <span class="card-name">${p.name}</span>
         <span class="card-price">${formatPrice(p.price)}</span>
       </div>
     </a>`;
+}
+
+// adds a thin border to photos with a white / near-white background
+// (checks the top-left corner pixel once the photo has loaded)
+function markLight(img) {
+  try {
+    const c = document.createElement("canvas");
+    c.width = c.height = 1;
+    const ctx = c.getContext("2d");
+    ctx.drawImage(img, 0, 0, 4, 4, 0, 0, 1, 1);
+    const [r, g, b] = ctx.getImageData(0, 0, 1, 1).data;
+    if ((r + g + b) / 3 > 225) img.classList.add("is-light");
+  } catch (e) { /* can't read the photo: leave it without a border */ }
+}
+
+// random order (Fisher-Yates shuffle), returns a new list
+function shuffle(list) {
+  const a = list.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
 }
