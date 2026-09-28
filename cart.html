@@ -4,266 +4,160 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>RECLUSE | CART</title>
-
-<style>
-body{
-margin:0;
-font-family:Arial;
-background:#0b0b0b;
-color:white;
-}
-
-header{
-text-align:center;
-padding:25px;
-font-size:28px;
-letter-spacing:5px;
-}
-
-nav{
-text-align:center;
-margin-bottom:30px;
-}
-
-nav a{
-color:white;
-text-decoration:none;
-margin:0 12px;
-font-size:13px;
-opacity:0.7;
-}
-
-nav a:hover{
-opacity:1;
-}
-
-.container{
-max-width:900px;
-margin:auto;
-padding:20px;
-}
-
-input, textarea{
-width:100%;
-padding:12px;
-margin-top:10px;
-margin-bottom:10px;
-background:#111;
-border:1px solid #333;
-color:white;
-outline:none;
-}
-
-.cart-item{
-display:flex;
-align-items:center;
-gap:20px;
-border-bottom:1px solid #222;
-padding:20px 0;
-}
-
-.cart-item img{
-width:90px;
-height:110px;
-object-fit:cover;
-border:1px solid #333;
-}
-
-.item-info{
-flex:1;
-}
-
-.item-name{
-letter-spacing:2px;
-font-size:14px;
-}
-
-.item-price{
-opacity:0.6;
-font-size:12px;
-margin-top:4px;
-}
-
-.meta{
-font-size:11px;
-opacity:0.6;
-margin-top:5px;
-}
-
-.remove{
-cursor:pointer;
-font-size:12px;
-border:1px solid white;
-padding:6px 10px;
-}
-
-.remove:hover{
-background:white;
-color:black;
-}
-
-.total{
-margin-top:30px;
-font-size:18px;
-letter-spacing:2px;
-}
-
-.checkout{
-margin-top:15px;
-display:inline-block;
-padding:10px 16px;
-border:1px solid white;
-cursor:pointer;
-background:transparent;
-color:white;
-text-decoration:none;
-}
-
-.checkout:hover{
-background:white;
-color:black;
-}
-
-.empty{
-opacity:0.5;
-text-align:center;
-margin-top:40px;
-}
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<header>RECLUSE</header>
-
-<nav>
-<a href="index.html">HOME</a>
-<a href="shop.html">SHOP</a>
-<a href="cart.html">CART 🛒</a>
+<nav class="nav">
+  <a class="nav-logo" href="index.html">RECLUSE</a>
+  <div class="nav-links">
+    <a href="shop.html">SHOP</a>
+    <a href="cart.html">CART (<span data-cart-count>0</span>)</a>
+  </div>
 </nav>
 
-<div class="container">
+<main class="wrap" style="max-width: 720px">
 
-<!-- CUSTOMER DETAILS -->
-<input id="name" placeholder="Full Name">
-<input id="phone" placeholder="Phone Number">
-<textarea id="address" placeholder="Delivery Address"></textarea>
+  <div class="section-head" style="padding-top: 16px">
+    <h2>YOUR CART</h2>
+  </div>
 
-<!-- CART ITEMS -->
-<div id="cartItems"></div>
+  <div class="cart-list" id="cartList"></div>
 
-<div class="total" id="cartTotal"></div>
+  <div id="checkout">
+    <div class="cart-total">
+      <span>Total</span>
+      <span id="cartTotal"></span>
+    </div>
 
-<div class="checkout" onclick="checkoutWhatsApp()">
-CHECKOUT VIA WHATSAPP
-</div>
+    <div class="form">
+      <div class="field">
+        <label for="name">Full name</label>
+        <input id="name" autocomplete="name">
+      </div>
+      <div class="field">
+        <label for="phone">Phone number</label>
+        <input id="phone" type="tel" autocomplete="tel">
+      </div>
+      <div class="field">
+        <label for="address">Delivery address</label>
+        <textarea id="address" rows="3" autocomplete="street-address"></textarea>
+      </div>
 
-</div>
+      <p id="formError" role="alert" style="margin: 0; color: #b42318" hidden></p>
 
+      <button type="button" class="btn" id="checkoutBtn" style="width: 100%">CHECKOUT ON WHATSAPP</button>
+      <p style="margin: 0; font-size: 14px; color: var(--muted); text-align: center">
+        Your order opens in WhatsApp. Send the message to confirm it.
+      </p>
+    </div>
+  </div>
+
+</main>
+
+<footer class="footer">
+  <span>© RECLUSE</span>
+  <div class="footer-links">
+    <a href="#">INSTAGRAM</a>
+    <a href="https://wa.me/2347038547668" target="_blank" rel="noopener">WHATSAPP</a>
+  </div>
+</footer>
+
+<script src="products.js"></script>
+<script src="cart.js"></script>
 <script>
+const WHATSAPP_NUMBER = "2347038547668";
 
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
+const listEl = document.getElementById("cartList");
+const checkoutEl = document.getElementById("checkout");
 
-function save(){
-localStorage.setItem("cart", JSON.stringify(cart));
+function renderCart() {
+  const cart = readCart();
+
+  if (cart.length === 0) {
+    listEl.innerHTML = `
+      <div class="cart-empty">
+        <p>Your cart is empty.</p>
+        <a class="btn" href="shop.html">SHOP NOW</a>
+      </div>`;
+    checkoutEl.hidden = true;
+    return;
+  }
+
+  checkoutEl.hidden = false;
+
+  listEl.innerHTML = cart.map((item, i) => {
+    const p = PRODUCTS[item.id];
+    const details = "Size " + item.size + (item.color ? " · " + item.color : "");
+    return `
+      <div class="cart-item">
+        <img src="${p.images[0]}" alt="${p.name}">
+        <div class="cart-info">
+          <span class="cart-name">${p.name}</span>
+          <span class="cart-meta">${details}</span>
+          <span class="cart-meta">${formatPrice(p.price * item.qty)}</span>
+          <div class="qty">
+            <button type="button" aria-label="One less" data-qty="${i}" data-change="-1">−</button>
+            <span>${item.qty}</span>
+            <button type="button" aria-label="One more" data-qty="${i}" data-change="1">+</button>
+          </div>
+        </div>
+        <button type="button" class="remove-btn" data-remove="${i}">Remove</button>
+      </div>`;
+  }).join("");
+
+  document.getElementById("cartTotal").textContent = formatPrice(cartTotal());
 }
 
-function removeItem(index){
-cart.splice(index,1);
-save();
-renderCart();
-}
+// quantity and remove buttons
+listEl.onclick = e => {
+  const qtyBtn = e.target.closest("[data-qty]");
+  const removeBtn = e.target.closest("[data-remove]");
+  if (qtyBtn) {
+    const i = Number(qtyBtn.dataset.qty);
+    setQty(i, readCart()[i].qty + Number(qtyBtn.dataset.change));
+  } else if (removeBtn) {
+    removeFromCart(Number(removeBtn.dataset.remove));
+  } else {
+    return;
+  }
+  renderCart();
+};
 
-function renderCart(){
+// WhatsApp checkout
+document.getElementById("checkoutBtn").onclick = () => {
+  const name = document.getElementById("name").value.trim();
+  const phone = document.getElementById("phone").value.trim();
+  const address = document.getElementById("address").value.trim();
+  const errorEl = document.getElementById("formError");
 
-let cartContainer = document.getElementById("cartItems");
-let totalEl = document.getElementById("cartTotal");
+  if (!name || !phone || !address) {
+    errorEl.textContent = "Add your name, phone number and delivery address to check out.";
+    errorEl.hidden = false;
+    return;
+  }
+  errorEl.hidden = true;
 
-cartContainer.innerHTML = "";
+  let message =
+    "🛒 RECLUSE ORDER\n\n" +
+    "Name: " + name + "\n" +
+    "Phone: " + phone + "\n" +
+    "Address: " + address + "\n\n";
 
-if(cart.length === 0){
-cartContainer.innerHTML = "<div class='empty'>YOUR CART IS EMPTY</div>";
-totalEl.innerText = "";
-return;
-}
+  readCart().forEach((item, i) => {
+    const p = PRODUCTS[item.id];
+    const details = item.size + (item.color ? ", " + item.color : "");
+    message += `${i + 1}. ${p.name} (${details}) x${item.qty} - ${formatPrice(p.price * item.qty)}\n`;
+  });
 
-let total = 0;
+  message += "\nTOTAL: " + formatPrice(cartTotal());
+  message += "\n\nI wish to place my order now";
 
-cart.forEach((item, index) => {
-
-let price = Number(item.price) || 0;
-let qty = Number(item.qty) || 1;
-
-total += price * qty;
-
-cartContainer.innerHTML += `
-<div class="cart-item">
-
-<img src="${item.img}">
-
-<div class="item-info">
-<div class="item-name">${item.name}</div>
-<div class="item-price">₦${price.toLocaleString()}</div>
-<div class="meta">Size: ${item.size || "M"} | Qty: ${qty}</div>
-</div>
-
-<div class="remove" onclick="removeItem(${index})">
-REMOVE
-</div>
-
-</div>
-`;
-});
-
-totalEl.innerText = "TOTAL: ₦" + total.toLocaleString();
-}
-
-/* WHATSAPP CHECKOUT */
-function checkoutWhatsApp(){
-
-if(cart.length === 0){
-alert("Your cart is empty");
-return;
-}
-
-let name = document.getElementById("name").value;
-let phone = document.getElementById("phone").value;
-let address = document.getElementById("address").value;
-
-if(!name || !phone || !address){
-alert("Please fill all details");
-return;
-}
-
-let message =
-"🛒 RECLUSE ORDER\n\n" +
-"Name: " + name + "\n" +
-"Phone: " + phone + "\n" +
-"Address: " + address + "\n\n";
-
-let total = 0;
-
-cart.forEach((item,i)=>{
-let price = Number(item.price) || 0;
-let qty = Number(item.qty) || 1;
-
-message += `${i+1}. ${item.name} (${item.size || "M"}) x${qty} - ₦${(price*qty).toLocaleString()}\n`;
-
-total += price * qty;
-});
-
-message += `\nTOTAL: ₦${total.toLocaleString()}`;
-message += `\n\nI wish to place my order now`;
-
-let whatsappNumber = "2347038547668";
-
-let url = "https://wa.me/" + whatsappNumber + "?text=" + encodeURIComponent(message);
-
-window.open(url, "_blank");
-}
+  window.open("https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(message), "_blank");
+};
 
 renderCart();
-
 </script>
 
 </body>
