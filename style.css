@@ -432,17 +432,24 @@ button { font: inherit; color: inherit; cursor: pointer; }
   .product-layout {
     display: grid;
     grid-template-columns: minmax(0, 1fr) 440px;
-    gap: 40px;
+    grid-template-rows: auto auto auto 1fr;
+    grid-template-areas:
+      "gallery intro"
+      "gallery panel"
+      "gallery buy"
+      "gallery .";
+    column-gap: 40px;
     align-items: start;
   }
 
-  .gallery { margin: 0; border-radius: 28px; overflow: hidden; }
+  .gallery { grid-area: gallery; margin: 0; border-radius: 28px; overflow: hidden; }
   .gallery img { aspect-ratio: 4 / 5; }
 
-  .product-side { display: flex; flex-direction: column; }
-  .product-intro { padding-top: 0; }
+  .product-intro { grid-area: intro; padding-top: 0; }
+  .panel { grid-area: panel; margin-top: 0; }
 
   .buy-bar {
+    grid-area: buy;
     position: static;
     margin-top: 24px;
     padding: 0;

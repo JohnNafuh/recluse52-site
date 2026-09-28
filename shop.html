@@ -4,210 +4,54 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>RECLUSE | SHOP</title>
-
-<style>
-body {
-    margin: 0;
-    font-family: Arial;
-    background: #0b0b0b;
-    color: white;
-}
-
-header {
-    text-align: center;
-    padding: 25px;
-    font-size: 28px;
-    letter-spacing: 5px;
-}
-
-/* NAV */
-nav {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-nav a {
-    color: white;
-    margin: 0 10px;
-    text-decoration: none;
-    font-size: 13px;
-    opacity: 0.7;
-}
-
-nav a:hover {
-    opacity: 1;
-}
-
-/* TABS */
-.tabs {
-    text-align: center;
-    margin: 20px 0;
-}
-
-.tabs a {
-    margin: 0 10px;
-    font-size: 12px;
-    letter-spacing: 2px;
-    text-decoration: none;
-    color: white;
-    opacity: 0.6;
-}
-
-.tabs a:hover {
-    opacity: 1;
-}
-
-/* SECTION TITLE */
-.section-title {
-    text-align: center;
-    margin-top: 40px;
-    font-size: 14px;
-    letter-spacing: 4px;
-    opacity: 0.8;
-}
-
-/* GRID */
-.shop-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 20px;
-    padding: 40px;
-    max-width: 1000px;
-    margin: auto;
-}
-
-.product-card {
-    background: #111;
-    border: 1px solid #222;
-    overflow: hidden;
-}
-
-.product-card img {
-    width: 100%;
-    height: 260px;
-    object-fit: cover;
-}
-
-.product-info {
-    padding: 15px;
-    text-align: center;
-}
-
-.product-title {
-    font-size: 14px;
-    letter-spacing: 2px;
-}
-
-.product-price {
-    font-size: 12px;
-    opacity: 0.6;
-}
-
-.btn {
-    display: inline-block;
-    margin-top: 10px;
-    padding: 8px 14px;
-    border: 1px solid white;
-    font-size: 12px;
-    text-decoration: none;
-    color: white;
-}
-
-.btn:hover {
-    background: white;
-    color: black;
-}
-</style>
+<meta name="description" content="Shop RECLUSE tees and sleeveless pieces. Limited drops, no restock.">
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<header>RECLUSE</header>
-
-<!-- NAV FIXED -->
-<nav>
-<a href="index.html">HOME</a>
-<a href="shop.html">SHOP</a>
-<a href="drop.html">DROP</a>
-<a href="cart.html">CART 🛒 <span id="cartCount">0</span></a>
+<nav class="nav">
+  <a class="nav-logo" href="index.html">RECLUSE</a>
+  <div class="nav-links">
+    <a href="shop.html">SHOP</a>
+    <a href="cart.html">CART (<span data-cart-count>0</span>)</a>
+  </div>
 </nav>
 
-<!-- TABS -->
-<div class="tabs">
-    <a href="#tees">TEES</a>
-    <a href="#sleeveless">SLEEVELESS</a>
-</div>
+<main class="wrap">
 
-<!-- TEES -->
-<div id="tees" class="section-title">TEES</div>
+  <div class="pills" style="padding-top: 16px">
+    <a class="pill" href="#tees">Tees</a>
+    <a class="pill" href="#sleeveless">Sleeveless</a>
+  </div>
 
-<div class="shop-grid">
+  <section class="section" id="tees">
+    <div class="section-head"><h2>TEES</h2></div>
+    <div class="grid" data-category="tees"></div>
+  </section>
 
-    <div class="product-card">
-        <img src="a041ae76-2fca-4c0c-9cac-6bcdfc03dd88.jpeg">
-        <div class="product-info">
-            <div class="product-title">RECLUSE BEER TEE</div>
-            <div class="product-price">₦30,000</div>
-            <a class="btn" href="product.html?id=beer-tee">VIEW PRODUCT</a>
-        </div>
-    </div>
+  <section class="section" id="sleeveless">
+    <div class="section-head"><h2>SLEEVELESS</h2></div>
+    <div class="grid" data-category="sleeveless"></div>
+  </section>
 
-    <div class="product-card">
-        <img src="2af34606-1479-4be7-a83d-7b61140dda21.jpeg">
-        <div class="product-info">
-            <div class="product-title">RECLUSE SMOKED FLOWER</div>
-            <div class="product-price">₦30,000</div>
-            <a class="btn" href="product.html?id=smoked-flower">VIEW PRODUCT</a>
-        </div>
-    </div>
+</main>
 
-    <div class="product-card">
-        <img src="e875715a-90af-4361-b1a9-9fe4e38f0a67.jpeg">
-        <div class="product-info">
-            <div class="product-title">RECLUSE CHAIN HEART</div>
-            <div class="product-price">₦30,000</div>
-            <a class="btn" href="product.html?id=chain-heart">VIEW PRODUCT</a>
-        </div>
-    </div>
+<footer class="footer">
+  <span>© RECLUSE</span>
+  <div class="footer-links">
+    <a href="#">INSTAGRAM</a>
+    <a href="https://wa.me/2347038547668" target="_blank" rel="noopener">WHATSAPP</a>
+  </div>
+</footer>
 
-    <div class="product-card">
-        <img src="233d44f0-6ed6-4388-9a0f-69d90e762b66.jpeg">
-        <div class="product-info">
-            <div class="product-title">RECLUSE DREAMS</div>
-            <div class="product-price">₦30,000</div>
-            <a class="btn" href="product.html?id=dreams">VIEW PRODUCT</a>
-        </div>
-    </div>
-
-</div>
-
-<!-- SLEEVELESS -->
-<div id="sleeveless" class="section-title">SLEEVELESS</div>
-
-<div class="shop-grid">
-
-    <div class="product-card">
-        <img src="photo-output.jpeg">
-        <div class="product-info">
-            <div class="product-title">RECLUSE SWORD VEST</div>
-            <div class="product-price">₦28,000</div>
-            <a class="btn" href="product.html?id=sleeveless-sword">VIEW PRODUCT</a>
-        </div>
-    </div>
-
-</div>
-
-<!-- CART COUNTER SCRIPT -->
+<script src="products.js"></script>
+<script src="cart.js"></script>
 <script>
-function updateCartCounter(){
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
-    let el = document.getElementById("cartCount");
-    if(el){
-        el.innerText = cart.length;
-    }
-}
-
-updateCartCounter();
+  // fill each section with its category from products.js
+  document.querySelectorAll("[data-category]").forEach(grid => {
+    grid.innerHTML = listProducts(grid.dataset.category).map(productCard).join("");
+  });
 </script>
 
 </body>

@@ -3,207 +3,164 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RECLUSE | PRODUCT</title>
-
-<style>
-body{
-margin:0;
-font-family:Arial;
-background:#0b0b0b;
-color:white;
-}
-
-header{
-text-align:center;
-padding:25px;
-letter-spacing:5px;
-font-size:26px;
-}
-
-nav{
-text-align:center;
-margin-bottom:20px;
-}
-
-nav a{
-color:white;
-margin:0 10px;
-text-decoration:none;
-font-size:13px;
-opacity:0.7;
-}
-
-nav a:hover{
-opacity:1;
-}
-
-.container{
-display:flex;
-flex-wrap:wrap;
-justify-content:center;
-gap:40px;
-padding:40px;
-}
-
-.image{
-width:320px;
-height:420px;
-border:1px solid #222;
-overflow:hidden;
-}
-
-.image img{
-width:100%;
-height:100%;
-object-fit:cover;
-}
-
-.details{
-max-width:350px;
-}
-
-.details h1{
-letter-spacing:3px;
-}
-
-.price{
-margin:10px 0;
-opacity:0.7;
-}
-
-.desc{
-opacity:0.6;
-line-height:1.6;
-font-size:14px;
-}
-
-.btn{
-margin-top:20px;
-padding:12px 18px;
-border:1px solid white;
-background:transparent;
-color:white;
-cursor:pointer;
-letter-spacing:2px;
-}
-
-.btn:hover{
-background:white;
-color:black;
-}
-</style>
+<title>RECLUSE</title>
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<header>RECLUSE</header>
-
-<nav>
-<a href="index.html">HOME</a>
-<a href="shop.html">SHOP</a>
-<a href="cart.html">CART 🛒 <span id="cartCount">0</span></a>
+<nav class="nav">
+  <a class="nav-logo" href="index.html">RECLUSE</a>
+  <div class="nav-links">
+    <a href="shop.html">SHOP</a>
+    <a href="cart.html">CART (<span data-cart-count>0</span>)</a>
+  </div>
 </nav>
 
-<div class="container">
+<main class="wrap product" id="product">
+  <div class="product-layout">
 
-<div class="image">
-<img id="img">
-</div>
+    <div class="product-intro">
+      <a class="back-link" href="shop.html">
+        <svg width="20" height="14" viewBox="0 0 20 14" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M19 7H1M7 1L1 7l6 6"/></svg>
+        Back to shop
+      </a>
+      <div class="product-title-row">
+        <h1 class="product-title" id="name"></h1>
+        <span class="badge" id="drop"></span>
+      </div>
+      <p class="product-desc" id="desc"></p>
+    </div>
 
-<div class="details">
-<h1 id="name"></h1>
-<div class="price" id="price"></div>
-<p class="desc" id="desc"></p>
+    <div class="gallery">
+      <img id="photo" alt="">
+      <div class="counter" id="counter" hidden>
+        <button type="button" id="prevPhoto" aria-label="Previous photo">‹</button>
+        <span id="photoCount">1 / 1</span>
+        <button type="button" id="nextPhoto" aria-label="Next photo">›</button>
+      </div>
+    </div>
 
-<button class="btn" onclick="addToCart()">ADD TO CART</button>
-</div>
+    <div class="panel">
+      <div class="option" id="colorOption" hidden>
+        <div class="option-head"><h2>Color</h2><span id="colorName"></span></div>
+        <div class="swatches" id="swatches"></div>
+      </div>
+      <div class="option">
+        <div class="option-head"><h2>Size</h2><span id="sizeName"></span></div>
+        <div class="sizes" id="sizes"></div>
+      </div>
+    </div>
 
-</div>
+    <div class="buy-bar">
+      <div class="price-block">
+        <span class="price" id="price"></span>
+        <span class="price-note">Limited · no restock</span>
+      </div>
+      <button type="button" class="save-btn" id="shareBtn" aria-label="Share this product">
+        <svg width="18" height="20" viewBox="0 0 18 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M9 13V1M4 6l5-5 5 5"/><path d="M1 11v8h16v-8"/></svg>
+      </button>
+      <button type="button" class="add-btn" id="addBtn">Add to cart</button>
+    </div>
 
+  </div>
+</main>
+
+<script src="products.js"></script>
+<script src="cart.js"></script>
 <script>
+const id = new URLSearchParams(location.search).get("id");
+const product = getProduct(id);
 
-const products = {
+if (!product) {
+  document.getElementById("product").innerHTML = `
+    <div class="cart-empty">
+      <p>This product isn't available.</p>
+      <a class="btn" href="shop.html">BACK TO SHOP</a>
+    </div>`;
+} else {
+  let photo = 0;
+  let size = product.sizes.includes("M") ? "M" : product.sizes[0];
+  let color = product.colors.length ? product.colors[0].name : "";
 
-"beer-tee":{
-img:"a041ae76-2fca-4c0c-9cac-6bcdfc03dd88.jpeg",
-name:"RECLUSE BEER TEE",
-price:30000,
-desc:"Minimal street graphic tee with bold back print."
-},
+  document.title = "RECLUSE | " + product.name;
+  document.getElementById("name").textContent = product.name;
+  document.getElementById("drop").textContent = product.drop;
+  document.getElementById("desc").textContent = product.desc;
+  document.getElementById("price").textContent = formatPrice(product.price);
 
-"smoked-flower":{
-img:"2af34606-1479-4be7-a83d-7b61140dda21.jpeg",
-name:"RECLUSE SMOKED FLOWER",
-price:30000,
-desc:"Smoked floral graphic tee with premium cotton finish."
-},
+  const addBtn = document.getElementById("addBtn");
+  const resetAdd = () => { addBtn.textContent = "Add to cart"; };
 
-"chain-heart":{
-img:"e875715a-90af-4361-b1a9-9fe4e38f0a67.jpeg",
-name:"RECLUSE CHAIN HEART",
-price:30000,
-desc:"Heavy streetwear tee featuring chain heart graphic."
-},
+  /* photos: counter only shows with 2+ photos */
+  const photoEl = document.getElementById("photo");
+  function showPhoto() {
+    photoEl.src = product.images[photo];
+    photoEl.alt = product.name + " photo " + (photo + 1);
+    document.getElementById("photoCount").textContent = (photo + 1) + " / " + product.images.length;
+  }
+  if (product.images.length > 1) {
+    document.getElementById("counter").hidden = false;
+    document.getElementById("prevPhoto").onclick = () => { photo = (photo - 1 + product.images.length) % product.images.length; showPhoto(); };
+    document.getElementById("nextPhoto").onclick = () => { photo = (photo + 1) % product.images.length; showPhoto(); };
+  }
+  showPhoto();
 
-"dreams":{
-img:"233d44f0-6ed6-4388-9a0f-69d90e762b66.jpeg",
-name:"RECLUSE DREAMS",
-price:30000,
-desc:"Minimal dream-inspired streetwear tee."
-},
+  /* colors: option only shows with 2+ colors */
+  function renderColors() {
+    document.getElementById("colorName").textContent = color;
+    document.getElementById("swatches").innerHTML = product.colors.map(c => `
+      <button type="button" class="swatch" aria-label="${c.name}" aria-pressed="${c.name === color}" data-color="${c.name}">
+        <span style="background:${c.hex}"></span>
+      </button>`).join("");
+  }
+  if (product.colors.length > 1) {
+    document.getElementById("colorOption").hidden = false;
+    document.getElementById("swatches").onclick = e => {
+      const btn = e.target.closest("[data-color]");
+      if (!btn) return;
+      color = btn.dataset.color;
+      renderColors();
+      resetAdd();
+    };
+    renderColors();
+  }
 
-"sleeveless-sword":{
-img:"photo-output.jpeg",
-name:"RECLUSE SWORD VEST",
-price:28000,
-desc:"Black sleeveless vest featuring Samurai sword graphic."
+  /* sizes */
+  function renderSizes() {
+    document.getElementById("sizeName").textContent = size;
+    document.getElementById("sizes").innerHTML = product.sizes.map(s => `
+      <button type="button" class="size" aria-pressed="${s === size}" data-size="${s}">${s}</button>`).join("");
+  }
+  document.getElementById("sizes").onclick = e => {
+    const btn = e.target.closest("[data-size]");
+    if (!btn) return;
+    size = btn.dataset.size;
+    renderSizes();
+    resetAdd();
+  };
+  renderSizes();
+
+  /* add to cart */
+  addBtn.onclick = () => {
+    addToCart(product.id, size, color);
+    addBtn.textContent = "Added ✓";
+  };
+
+  /* share: phone share sheet, or copy the link on desktop */
+  document.getElementById("shareBtn").onclick = async () => {
+    const data = { title: product.name, text: product.name + " — RECLUSE", url: location.href };
+    try {
+      if (navigator.share) {
+        await navigator.share(data);
+      } else {
+        await navigator.clipboard.writeText(location.href);
+        addBtn.textContent = "Link copied";
+        setTimeout(resetAdd, 1500);
+      }
+    } catch (e) { /* share cancelled */ }
+  };
 }
-
-};
-
-const params = new URLSearchParams(window.location.search);
-const id = params.get("id");
-
-const product = products[id];
-
-if(product){
-
-document.getElementById("img").src = product.img;
-document.getElementById("name").innerText = product.name;
-document.getElementById("price").innerText = "₦" + product.price.toLocaleString();
-document.getElementById("desc").innerText = product.desc;
-
-}else{
-
-document.body.innerHTML =
-"<h2 style='text-align:center;margin-top:80px;'>Product not found</h2>";
-
-}
-
-function addToCart(){
-
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-cart.push(product);
-
-localStorage.setItem("cart",JSON.stringify(cart));
-
-updateCartCount();
-
-alert("Added to cart");
-
-}
-
-function updateCartCount(){
-
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-document.getElementById("cartCount").innerText = cart.length;
-
-}
-
-updateCartCount();
-
 </script>
 
 </body>
