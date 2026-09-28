@@ -259,6 +259,16 @@ button { font: inherit; color: inherit; cursor: pointer; }
   .grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; }
 }
 
+/* home teaser: 2 on phones, 3 on desktop */
+.teaser .card:nth-child(n+3) { display: none; }
+
+@media (min-width: 900px) {
+  .teaser { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .teaser .card:nth-child(3) { display: flex; }
+}
+
+.view-all { display: flex; justify-content: center; margin-top: 28px; }
+
 .card { display: flex; flex-direction: column; gap: 10px; }
 
 .card-img {

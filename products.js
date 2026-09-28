@@ -8,9 +8,79 @@
    colors        leave [] to hide the color option; example for later:
                  [{ name: "White", hex: "#f4f4f2" }, { name: "Black", hex: "#161616" }]
    sizes         buttons shown on the product page
+   featured      true = shown in the home page teaser (keep it to 3)
 */
 
 const PRODUCTS = {
+  "fifty-two": {
+    name: "RECLUSE FIFTY TWO",
+    category: "tees",
+    drop: "TEE ESSENTIALS",
+    price: 32000,
+    featured: true,
+    images: ["recluse-fifty-two-back.jpeg"],
+    colors: [],
+    sizes: ["S", "M", "L", "XL"],
+    desc: "White tee. RECLUSE Fifty Two arch on the front, samurai in a red brush circle on the back."
+  },
+
+  "thorns": {
+    name: "RECLUSE THORNS",
+    category: "tees",
+    drop: "DROP 03",
+    price: 30000,
+    featured: true,
+    images: ["recluse-thorns.jpeg"],
+    colors: [],
+    sizes: ["S", "M", "L", "XL"],
+    desc: "White tee. Black-and-white crown of thorns portrait on the front, blackletter RECLUSE across the back."
+  },
+
+  "camo-thorns": {
+    name: "RECLUSE CAMO THORNS",
+    category: "tees",
+    drop: "DROP 03",
+    price: 30000,
+    images: ["recluse-camo-thorns.jpeg"],
+    colors: [],
+    sizes: ["S", "M", "L", "XL"],
+    desc: "White tee. Camo RECLUSE oval on the front, camo crown of thorns portrait on the back."
+  },
+
+  "camo-block": {
+    name: "RECLUSE CAMO BLOCK",
+    category: "tees",
+    drop: "DROP 03",
+    price: 30000,
+    images: ["recluse-camo-block.jpeg"],
+    colors: [],
+    sizes: ["S", "M", "L", "XL"],
+    desc: "White tee. Camo RECLUSE wordmark on the front, camo crown of thorns portrait on the back."
+  },
+
+  "no-rest": {
+    name: "RECLUSE NO REST",
+    category: "tees",
+    drop: "DROP 03",
+    price: 30000,
+    images: ["recluse-no-rest.jpeg"],
+    colors: [],
+    sizes: ["S", "M", "L", "XL"],
+    desc: "White tee. Blackletter RECLUSE over a winged hourglass and No Rest banner on the back."
+  },
+
+  "rf2": {
+    name: "RECLUSE RF2",
+    category: "tees",
+    drop: "DROP 03",
+    price: 30000,
+    featured: true,
+    images: ["recluse-rf2.jpeg"],
+    colors: [],
+    sizes: ["S", "M", "L", "XL"],
+    desc: "Black tee. RECLUSE over a glowing planet on the front, stacked RF2 on the back."
+  },
+
   "beer-tee": {
     name: "RECLUSE BEER TEE",
     category: "tees",

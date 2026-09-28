@@ -9,10 +9,10 @@
 <!-- link preview on WhatsApp / Instagram / X -->
 <meta property="og:title" content="RECLUSE">
 <meta property="og:description" content="Limited streetwear for those who move differently.">
-<meta property="og:image" content="https://johnnafuh.github.io/recluse52-site/sleeveless-drop.jpeg">
+<meta property="og:image" content="https://johnnafuh.github.io/recluse52-site/IMG_8129.jpeg">
 <meta property="og:url" content="https://johnnafuh.github.io/recluse52-site/">
 
-<link rel="stylesheet" href="style.css?v=4">
+<link rel="stylesheet" href="style.css?v=5">
 </head>
 
 <body>
@@ -35,7 +35,7 @@
 
   <!-- current drop -->
   <section class="drop-box">
-    <img src="sleeveless-drop.jpeg" alt="RECLUSE sleeveless essentials in navy, grey, black, beige and white">
+    <img src="IMG_8129.jpeg" alt="RECLUSE sleeveless essentials in navy, grey, black, beige and white">
     <div class="drop-content">
       <div>
         <span class="drop-label">DROP 02</span>
@@ -49,10 +49,12 @@
   <!-- products (filled from products.js) -->
   <section class="section">
     <div class="section-head">
-      <h2>ALL PIECES</h2>
-      <a href="shop.html">VIEW ALL</a>
+      <h2>NEW PIECES</h2>
     </div>
-    <div class="grid" id="homeGrid"></div>
+    <div class="grid teaser" id="homeGrid"></div>
+    <div class="view-all">
+      <a class="btn" href="shop.html" id="viewAll">VIEW ALL PIECES</a>
+    </div>
   </section>
 
   <!-- about -->
@@ -76,12 +78,14 @@
   </div>
 </footer>
 
-<script src="products.js?v=2"></script>
+<script src="products.js?v=3"></script>
 <script src="cart.js?v=2"></script>
 <script>
-  // first 4 products, in the order they're listed in products.js
+  // teaser: only products marked featured: true (3 on desktop, 2 on phones)
   document.getElementById("homeGrid").innerHTML =
-    listProducts().slice(0, 4).map(productCard).join("");
+    listProducts().filter(p => p.featured).slice(0, 3).map(productCard).join("");
+  document.getElementById("viewAll").textContent =
+    "VIEW ALL " + listProducts().length + " PIECES";
 </script>
 
 </body>
