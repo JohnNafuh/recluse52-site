@@ -49,22 +49,38 @@ button { font: inherit; color: inherit; cursor: pointer; }
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 8px;
   max-width: var(--max);
   margin: 0 auto;
   padding: 12px var(--pad);
   font-family: var(--wide);
-  font-size: 11px;
-  letter-spacing: 0.2em;
+  font-size: 9px;
+  letter-spacing: 0.16em;
 }
 
-.nav-links { display: flex; gap: clamp(18px, 3vw, 40px); }
+.nav-links { display: flex; gap: 6px; }
 
-.nav a { display: inline-flex; align-items: center; min-height: 44px; }
+/* every nav link is a tappable pill (except the logo) */
+.nav a:not(.nav-logo) {
+  display: inline-flex;
+  align-items: center;
+  min-height: 38px;
+  padding: 0 12px;
+  border-radius: 999px;
+  background: var(--stone);
+  white-space: nowrap;
+}
 
-.nav a:hover { color: var(--muted); }
+.nav a:not(.nav-logo):hover,
+.nav a:not(.nav-logo):active { background: var(--ink); color: var(--paper); }
 
-/* small centered logo used on inner pages */
-.nav-logo { font-size: 17px; letter-spacing: 0.14em; }
+/* cart stands out as the main action */
+.nav a[href="cart.html"] { background: var(--ink); color: var(--paper); }
+.nav a[href="cart.html"]:hover,
+.nav a[href="cart.html"]:active { background: #333333; }
+
+/* small logo used on inner pages */
+.nav-logo { display: inline-flex; align-items: center; min-height: 44px; font-size: 15px; letter-spacing: 0.14em; }
 
 /* ---------- wordmark (home header) ---------- */
 .masthead {
