@@ -4,289 +4,85 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>RECLUSE</title>
+<meta name="description" content="RECLUSE — minimal, limited streetwear. Built in silence. Worn with intention.">
 
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+<!-- link preview on WhatsApp / Instagram / X -->
+<meta property="og:title" content="RECLUSE">
+<meta property="og:description" content="Limited streetwear for those who move differently.">
+<meta property="og:image" content="https://johnnafuh.github.io/recluse52-site/IMG_4340.jpeg">
+<meta property="og:url" content="https://johnnafuh.github.io/recluse52-site/">
 
-<style>
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #0b0b0b;
-    color: white;
-    overflow-x: hidden;
-}
-
-/* HEADER */
-header {
-    text-align: center;
-    padding: 20px 20px 10px;
-}
-
-.logo {
-    height: 55px;
-    width: auto;
-    max-width: 180px;
-    object-fit: contain;
-    display: block;
-    margin: 0 auto;
-}
-
-/* NAV */
-nav {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-nav a {
-    color: white;
-    text-decoration: none;
-    margin: 0 12px;
-    font-size: 13px;
-    letter-spacing: 2px;
-    opacity: 0.6;
-    transition: 0.3s;
-    font-family: 'Bebas Neue', sans-serif;
-}
-
-nav a:hover {
-    opacity: 1;
-}
-
-/* HERO */
-.hero {
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-}
-
-.hero img.graffiti {
-    position: absolute;
-    width: 100%;
-    height: 60vh;
-    top: 0;
-    left: 0;
-    object-fit: cover;
-    opacity: 0.72;
-    filter: brightness(1.05) contrast(1.1);
-    z-index: 1;
-}
-
-.hero .bg {
-    position: absolute;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    background: linear-gradient(
-        to bottom,
-        rgba(0,0,0,0.2) 0%,
-        rgba(0,0,0,0.7) 60%,
-        #0b0b0b 100%
-    );
-    z-index: 2;
-}
-
-.hero .content {
-    position: relative;
-    z-index: 3;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    gap:15px;
-    margin-top: 120px;
-}
-
-.hero p {
-    opacity: 0.7;
-    max-width: 520px;
-    line-height: 1.6;
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 22px;
-    letter-spacing: 2px;
-}
-
-.btn {
-    margin-top: 10px;
-    padding: 12px 22px;
-    border: 1px solid white;
-    text-decoration: none;
-    color: white;
-    letter-spacing: 2px;
-    font-size: 12px;
-    transition: 0.3s;
-    font-family: 'Bebas Neue', sans-serif;
-}
-
-.btn:hover {
-    background: white;
-    color: black;
-}
-
-/* DROP SECTION */
-#drop {
-    position: relative;
-    height: 80vh;
-    width: 100%;
-    overflow: hidden;
-    border-top: 1px solid #222;
-    border-bottom: 1px solid #222;
-}
-
-#drop img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    position: absolute;
-    top: 0;
-    left: 0;
-    filter: brightness(0.45) contrast(1.1);
-    z-index: 1;
-}
-
-#drop .overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.45);
-    z-index: 2;
-}
-
-#drop .content {
-    position: relative;
-    z-index: 3;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 20px;
-}
-
-#drop h3 {
-    font-family: 'Bebas Neue', sans-serif;
-    letter-spacing: 6px;
-    font-size: 30px;
-    margin: 0;
-}
-
-#drop .sub {
-    font-family: 'Bebas Neue', sans-serif;
-    letter-spacing: 2px;
-    font-size: 16px;
-    opacity: 0.8;
-    margin-top: 10px;
-}
-
-#drop p {
-    opacity: 0.6;
-    max-width: 500px;
-    font-size: 13px;
-    margin-top: 10px;
-    line-height: 1.6;
-}
-
-/* OTHER SECTIONS */
-.section {
-    padding: 80px 20px;
-    text-align: center;
-}
-
-.section h2 {
-    letter-spacing: 4px;
-    margin-bottom: 15px;
-    font-size: 18px;
-    font-family: 'Bebas Neue', sans-serif;
-}
-
-.section p {
-    opacity: 0.6;
-    max-width: 650px;
-    margin: auto;
-    line-height: 1.8;
-    font-size: 14px;
-}
-
-footer {
-    text-align: center;
-    padding: 40px 20px;
-    opacity: 0.4;
-    font-size: 12px;
-    border-top: 1px solid #222;
-}
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<header>
-<img src="Yellow%20Black%20Brush%20Streetwear%20Brand%20Logo.png" class="logo">
-</header>
-
-<nav>
-<a href="index.html">HOME</a>
-<a href="shop.html">SHOP</a>
-<a href="cart.html">CART 🛒</a>
+<nav class="nav">
+  <div class="nav-links">
+    <a href="shop.html">SHOP</a>
+    <a href="shop.html#sleeveless">DROPS</a>
+    <a href="#about">ABOUT</a>
+  </div>
+  <a href="cart.html">CART (<span data-cart-count>0</span>)</a>
 </nav>
 
-<!-- HERO -->
-<div class="hero">
+<header class="masthead">
+  <h1 class="wordmark">RECLUSE</h1>
+  <p class="tagline">BUILT IN SILENCE · WORN WITH INTENTION</p>
+</header>
 
-<img src="IMG_5251.jpeg" class="graffiti">
+<main class="wrap">
 
-<div class="bg"></div>
+  <!-- current drop -->
+  <section class="drop-box">
+    <img src="IMG_4340.jpeg" alt="RECLUSE sleeveless essentials">
+    <div class="drop-content">
+      <div>
+        <span class="drop-label">DROP 02</span>
+        <h2 class="drop-title">SLEEVELESS ESSENTIALS</h2>
+        <p class="drop-sub">Limited release. No restock.</p>
+      </div>
+      <a class="btn" href="shop.html#sleeveless">SHOP THE DROP</a>
+    </div>
+  </section>
 
-<div class="content">
-<p>
-Built in silence. Worn with intention.
-Limited streetwear for those who move differently.
-</p>
+  <!-- products (filled from products.js) -->
+  <section class="section">
+    <div class="section-head">
+      <h2>ALL PIECES</h2>
+      <a href="shop.html">VIEW ALL</a>
+    </div>
+    <div class="grid" id="homeGrid"></div>
+  </section>
 
-<a href="shop.html" class="btn">ENTER SHOP</a>
-</div>
+  <!-- about -->
+  <section class="section" id="about">
+    <div class="section-head">
+      <h2>ABOUT RECLUSE</h2>
+    </div>
+    <p class="about-text">
+      RECLUSE is a minimal streetwear label focused on identity, silence, and exclusivity.
+      No mass production. No noise. Every drop is intentional and limited.
+    </p>
+  </section>
 
-</div>
+</main>
 
-<!-- NEW DROP -->
-<div id="drop">
-
-<img src="IMG_4340.jpeg">
-
-<div class="overlay"></div>
-
-<div class="content">
-
-<h3>NEW DROP</h3>
-<div class="sub">SLEEVELESS ESSENTIALS</div>
-
-<p>
-Lightweight sleeveless pieces built for heat, movement, and silence. Limited release — no restock.
-</p>
-
-<a href="shop.html#sleeveless" class="btn">ENTER DROP</a>
-
-</div>
-
-</div>
-
-<!-- ABOUT -->
-<div class="section">
-<h2>ABOUT RECLUSE</h2>
-<p>
-RECLUSE is a minimal streetwear label focused on identity, silence, and exclusivity.
-No mass production. No noise. Every drop is intentional and limited.
-</p>
-</div>
-
-<footer>
-© RECLUSE — BUILT IN SILENCE
+<footer class="footer">
+  <span>© RECLUSE</span>
+  <div class="footer-links">
+    <a href="#">INSTAGRAM</a>
+    <a href="https://wa.me/2347038547668" target="_blank" rel="noopener">WHATSAPP</a>
+  </div>
 </footer>
+
+<script src="products.js"></script>
+<script src="cart.js"></script>
+<script>
+  // first 4 products, in the order they're listed in products.js
+  document.getElementById("homeGrid").innerHTML =
+    listProducts().slice(0, 4).map(productCard).join("");
+</script>
 
 </body>
 </html>
