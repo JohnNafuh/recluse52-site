@@ -54,7 +54,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
   margin: 0 auto;
   padding: 12px var(--pad);
   font-family: var(--wide);
-  font-size: 9px;
+  font-size: 8px;
   letter-spacing: 0.16em;
 }
 
@@ -62,13 +62,21 @@ button { font: inherit; color: inherit; cursor: pointer; }
 
 /* every nav link is a tappable pill (except the logo) */
 .nav a:not(.nav-logo) {
+  position: relative;
   display: inline-flex;
   align-items: center;
-  min-height: 38px;
-  padding: 0 12px;
+  min-height: 30px;
+  padding: 0 10px;
   border-radius: 999px;
   background: var(--stone);
   white-space: nowrap;
+}
+
+/* invisible margin around each pill so it's easier to tap than it looks */
+.nav a:not(.nav-logo)::before {
+  content: "";
+  position: absolute;
+  inset: -7px -3px;
 }
 
 .nav a:not(.nav-logo):hover,
