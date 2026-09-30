@@ -15,27 +15,40 @@
     return;
   }
 
-  // metal gradients for the hooks, defined once
+  // metal + plastic gradients for the hangers, defined once
   document.body.insertAdjacentHTML("beforeend", `
     <svg width="0" height="0" style="position:absolute" aria-hidden="true">
       <defs>
-        <linearGradient id="hookChrome" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0" stop-color="#5a5a5a"/>
-          <stop offset="0.45" stop-color="#f2f2f2"/>
-          <stop offset="1" stop-color="#7a7a7a"/>
+        <linearGradient id="hookChrome" gradientUnits="userSpaceOnUse" x1="22" y1="0" x2="50" y2="0">
+          <stop offset="0" stop-color="#4f4f4f"/>
+          <stop offset="0.3" stop-color="#d9d9d9"/>
+          <stop offset="0.45" stop-color="#ffffff"/>
+          <stop offset="0.7" stop-color="#8c8c8c"/>
+          <stop offset="1" stop-color="#3a3a3a"/>
         </linearGradient>
-        <linearGradient id="hangerNeck" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stop-color="#3a3a3a"/>
-          <stop offset="1" stop-color="#0d0d0d"/>
+        <linearGradient id="nutChrome" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#5e5e5e"/>
+          <stop offset="0.45" stop-color="#f4f4f4"/>
+          <stop offset="1" stop-color="#6e6e6e"/>
+        </linearGradient>
+        <linearGradient id="hangerNeck" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#050505"/>
+          <stop offset="0.4" stop-color="#3b3b3b"/>
+          <stop offset="0.6" stop-color="#1c1c1c"/>
+          <stop offset="1" stop-color="#050505"/>
         </linearGradient>
       </defs>
     </svg>`);
 
-  // hook curls over the rail, then drops into the hanger neck behind the collar
+  // wire hook: rises from the hanger, arcs over the rail and tucks behind it
+  // (the rail is drawn on top, so the part inside the curl is hidden, like the real thing)
   const hookSvg = `
-    <svg class="hook" width="40" height="66" viewBox="0 0 40 66" fill="none" aria-hidden="true">
-      <path d="M20 60 V22 C20 9 21 1 28 1 C35 1 36 9 33 15" stroke="url(#hookChrome)" stroke-width="3.2" stroke-linecap="round"/>
-      <rect x="13" y="52" width="14" height="14" rx="3" fill="url(#hangerNeck)"/>
+    <svg class="hook" width="56" height="86" viewBox="0 0 56 86" fill="none" aria-hidden="true">
+      <path d="M28 66 V24 C28 12 31 2 39 2 C47 2 50 9 48 17" stroke="rgba(0,0,0,0.18)" stroke-width="4.4" stroke-linecap="round" transform="translate(1.2 1.2)"/>
+      <path d="M28 66 V24 C28 12 31 2 39 2 C47 2 50 9 48 17" stroke="url(#hookChrome)" stroke-width="3.6" stroke-linecap="round"/>
+      <rect x="23.5" y="60" width="9" height="8" rx="1.5" fill="url(#nutChrome)"/>
+      <path d="M21 68 H35 L39 86 H17 Z" fill="url(#hangerNeck)"/>
+      <path d="M21.5 68.5 H34.5" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
     </svg>`;
 
   track.innerHTML = pieces.map(p => `
