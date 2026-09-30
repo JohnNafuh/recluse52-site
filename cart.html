@@ -16,7 +16,7 @@
   </div>
 </nav>
 
-<main class="wrap" style="max-width: 720px">
+<main class="wrap" id="cartPage" style="max-width: 720px">
 
   <div class="section-head" style="padding-top: 16px">
     <h2>YOUR CART</h2>
@@ -36,6 +36,10 @@
         <input id="name" autocomplete="name">
       </div>
       <div class="field">
+        <label for="email">Email (for your receipt)</label>
+        <input id="email" type="email" autocomplete="email" inputmode="email">
+      </div>
+      <div class="field">
         <label for="phone">Phone number</label>
         <input id="phone" type="tel" autocomplete="tel">
       </div>
@@ -46,9 +50,9 @@
 
       <p id="formError" role="alert" style="margin: 0; color: #b42318" hidden></p>
 
-      <button type="button" class="btn" id="checkoutBtn" style="width: 100%">CHECKOUT ON WHATSAPP</button>
+      <button type="button" class="btn" id="payBtn" style="width: 100%">PAY</button>
       <p style="margin: 0; font-size: 14px; color: var(--muted); text-align: center">
-        Your order opens in WhatsApp. Send the message to confirm it.
+        Pay by card or bank transfer. Secured by Paystack.
       </p>
     </div>
   </div>
@@ -63,13 +67,24 @@
   </div>
 </footer>
 
-<script src="products.js?v=4"></script>
+<script src="https://js.paystack.co/v2/inline.js"></script>
+<script src="products.js?v=5"></script>
 <script src="cart.js?v=2"></script>
 <script>
+/* Public key only. Never put the secret key (sk_...) in this file.
+   Swap to pk_live_... when Paystack approves the business. */
+const PAYSTACK_PUBLIC_KEY = "pk_test_5782603cdecee08c6aff3139313ced1d8cbf4925";
 const WHATSAPP_NUMBER = "2347038547668";
 
 const listEl = document.getElementById("cartList");
 const checkoutEl = document.getElementById("checkout");
+const payBtn = document.getElementById("payBtn");
+const errorEl = document.getElementById("formError");
+
+function showError(msg) {
+  errorEl.textContent = msg;
+  errorEl.hidden = false;
+}
 
 function renderCart() {
   const cart = readCart();
@@ -106,7 +121,9 @@ function renderCart() {
       </div>`;
   }).join("");
 
-  document.getElementById("cartTotal").textContent = formatPrice(cartTotal());
+  const total = formatPrice(cartTotal());
+  document.getElementById("cartTotal").textContent = total;
+  payBtn.textContent = "PAY " + total;
 }
 
 // quantity and remove buttons
@@ -124,37 +141,100 @@ listEl.onclick = e => {
   renderCart();
 };
 
-// WhatsApp checkout
-document.getElementById("checkoutBtn").onclick = () => {
+// one line per item, used in Paystack and the receipt
+function orderLines() {
+  return readCart().map(item => {
+    const p = PRODUCTS[item.id];
+    const details = item.size + (item.color ? ", " + item.color : "");
+    return `${p.name} (${details}) x${item.qty} - ${formatPrice(p.price * item.qty)}`;
+  });
+}
+
+// Paystack checkout: card or bank transfer
+payBtn.onclick = () => {
   const name = document.getElementById("name").value.trim();
+  const email = document.getElementById("email").value.trim();
   const phone = document.getElementById("phone").value.trim();
   const address = document.getElementById("address").value.trim();
-  const errorEl = document.getElementById("formError");
 
-  if (!name || !phone || !address) {
-    errorEl.textContent = "Add your name, phone number and delivery address to check out.";
-    errorEl.hidden = false;
+  if (!name || !email || !phone || !address) {
+    showError("Add your name, email, phone number and delivery address to pay.");
+    return;
+  }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    showError("That email doesn't look right. Check it and try again.");
+    return;
+  }
+  if (typeof PaystackPop === "undefined") {
+    showError("Payment couldn't load. Check your connection and refresh the page.");
     return;
   }
   errorEl.hidden = true;
 
-  let message =
-    "🛒 RECLUSE ORDER\n\n" +
-    "Name: " + name + "\n" +
-    "Phone: " + phone + "\n" +
-    "Address: " + address + "\n\n";
+  const total = cartTotal();
+  const lines = orderLines();
+  const reference = "RCL-" + Date.now();
 
-  readCart().forEach((item, i) => {
-    const p = PRODUCTS[item.id];
-    const details = item.size + (item.color ? ", " + item.color : "");
-    message += `${i + 1}. ${p.name} (${details}) x${item.qty} - ${formatPrice(p.price * item.qty)}\n`;
+  const popup = new PaystackPop();
+  popup.newTransaction({
+    key: PAYSTACK_PUBLIC_KEY,
+    email: email,
+    amount: total * 100, // Paystack counts in kobo
+    currency: "NGN",
+    reference: reference,
+    channels: ["card", "bank_transfer"],
+    metadata: {
+      custom_fields: [
+        { display_name: "Name", variable_name: "name", value: name },
+        { display_name: "Phone", variable_name: "phone", value: phone },
+        { display_name: "Address", variable_name: "address", value: address },
+        { display_name: "Items", variable_name: "items", value: lines.join(" | ") },
+        { display_name: "Order total", variable_name: "order_total", value: formatPrice(total) }
+      ]
+    },
+    onSuccess: transaction => {
+      showConfirmation({ name, reference: transaction.reference || reference, lines, total });
+    },
+    onCancel: () => {
+      showError("Payment cancelled. Your cart is still here when you're ready.");
+    },
+    onError: () => {
+      showError("Something went wrong with the payment. Please try again.");
+    }
   });
-
-  message += "\nTOTAL: " + formatPrice(cartTotal());
-  message += "\n\nI wish to place my order now";
-
-  window.open("https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(message), "_blank");
 };
+
+// after a successful payment
+function showConfirmation(order) {
+  clearCart();
+
+  const receipt =
+    "RECLUSE PAYMENT RECEIPT\n\n" +
+    "Name: " + order.name + "\n" +
+    "Reference: " + order.reference + "\n" +
+    "Total paid: " + formatPrice(order.total) + "\n\n" +
+    order.lines.join("\n");
+
+  document.getElementById("cartPage").innerHTML = `
+    <div class="section-head" style="padding-top: 16px">
+      <h2>ORDER CONFIRMED</h2>
+    </div>
+    <p class="about-text" style="margin-bottom: 16px">
+      Thank you, ${order.name.replace(/[<>&"]/g, "")}. Your payment went through and your order is in.
+      A receipt has been sent to your email.
+    </p>
+    <div class="cart-list">
+      ${order.lines.map(l => `<div class="cart-item"><span class="cart-meta">${l}</span></div>`).join("")}
+    </div>
+    <div class="cart-total"><span>Total paid</span><span>${formatPrice(order.total)}</span></div>
+    <p class="cart-meta" style="margin: 0 0 24px">Reference: ${order.reference}</p>
+    <div class="form">
+      <a class="btn" style="width: 100%" target="_blank" rel="noopener"
+         href="https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(receipt)}">SEND RECEIPT ON WHATSAPP</a>
+      <a class="btn" style="width: 100%; background: var(--stone); color: var(--ink)" href="shop.html">CONTINUE SHOPPING</a>
+    </div>`;
+  window.scrollTo(0, 0);
+}
 
 renderCart();
 </script>
