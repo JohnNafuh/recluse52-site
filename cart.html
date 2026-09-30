@@ -87,6 +87,8 @@
    Swap to pk_live_... when Paystack approves the business. */
 const PAYSTACK_PUBLIC_KEY = "pk_test_5782603cdecee08c6aff3139313ced1d8cbf4925";
 const WHATSAPP_NUMBER = "2347038547668";
+// every paid order is emailed to you through this Formspree form
+const ORDER_EMAIL_ENDPOINT = "https://formspree.io/f/mwlpznkk";
 
 // delivery options: edit prices here
 const DELIVERY = [
@@ -236,10 +238,14 @@ payBtn.onclick = () => {
   const deliveryLine = "Delivery: " + delivery.label + " - " + (delivery.fee ? formatPrice(delivery.fee) : "Free");
   const reference = "RCL-" + Date.now();
 
+  const nameParts = name.split(/\s+/);
   const popup = new PaystackPop();
   popup.newTransaction({
     key: PAYSTACK_PUBLIC_KEY,
     email: email,
+    firstName: nameParts[0],
+    lastName: nameParts.slice(1).join(" "),
+    phone: phone,
     amount: total * 100, // Paystack counts in kobo
     currency: "NGN",
     reference: reference,
@@ -254,7 +260,14 @@ payBtn.onclick = () => {
       ]
     },
     onSuccess: transaction => {
-      showConfirmation({ name, reference: transaction.reference || reference, lines, deliveryLine, total });
+      const order = {
+        name, email, phone,
+        address: isPickup ? "Pickup" : address,
+        reference: transaction.reference || reference,
+        lines, deliveryLine, total
+      };
+      emailOrder(order);
+      showConfirmation(order);
     },
     onCancel: () => {
       showError("Payment cancelled. Your cart is still here when you're ready.");
@@ -265,6 +278,27 @@ payBtn.onclick = () => {
   });
 };
 
+// sends the paid order to your email (Formspree)
+function emailOrder(order) {
+  fetch(ORDER_EMAIL_ENDPOINT, {
+    method: "POST",
+    keepalive: true, // still sends if the customer leaves the page
+    headers: { "Content-Type": "application/json", "Accept": "application/json" },
+    body: JSON.stringify({
+      _subject: "New RECLUSE order " + order.reference + " - " + formatPrice(order.total),
+      _replyto: order.email,
+      Reference: order.reference,
+      "Total paid": formatPrice(order.total),
+      Name: order.name,
+      Email: order.email,
+      Phone: order.phone,
+      Delivery: order.deliveryLine,
+      Address: order.address,
+      Items: order.lines.join("\n")
+    })
+  }).catch(() => { /* email failed: the order is still in Paystack */ });
+}
+
 // after a successful payment
 function showConfirmation(order) {
   clearCart();
@@ -272,6 +306,8 @@ function showConfirmation(order) {
   const receipt =
     "RECLUSE PAYMENT RECEIPT\n\n" +
     "Name: " + order.name + "\n" +
+    "Phone: " + order.phone + "\n" +
+    "Address: " + order.address + "\n" +
     "Reference: " + order.reference + "\n" +
     "Total paid: " + formatPrice(order.total) + "\n\n" +
     order.lines.join("\n") + "\n" + order.deliveryLine;
