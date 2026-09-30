@@ -121,16 +121,27 @@ const PRODUCTS = {
     desc: "Heavy streetwear tee featuring chain heart graphic."
   },
   "sleeveless-sword": {
-    name: "RECLUSE SWORD VEST",
+    name: "RECLUSE SWORD VEST BLACK",
     category: "sleeveless",
     drop: "DROP 02",
     price: 28000,
     exclusive: true,
     railImage: "rail-sword-vest.webp",
-    images: ["photo-output.jpeg", "recluse-sword-vest-white.jpeg"],
+    images: ["photo-output.jpeg"],
     colors: [],
     sizes: ["S", "M", "L", "XL"],
     desc: "Black sleeveless vest featuring Samurai sword graphic."
+  },
+
+  "sleeveless-sword-white": {
+    name: "RECLUSE SWORD VEST WHITE",
+    category: "sleeveless",
+    drop: "DROP 02",
+    price: 28000,
+    images: ["recluse-sword-vest-white.jpeg"],
+    colors: [],
+    sizes: ["S", "M", "L", "XL"],
+    desc: "White sleeveless vest featuring Samurai sword graphic."
   }
 };
 
