@@ -274,7 +274,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .rail-track {
   display: flex;
   align-items: flex-start;
-  gap: clamp(24px, 5vw, 56px);
+  gap: 0;
   width: max-content;
   padding: 0 var(--pad) 32px;
   opacity: 0;
@@ -306,6 +306,9 @@ button { font: inherit; color: inherit; cursor: pointer; }
   align-items: center;
   transform-origin: 50% 8px; /* swings from where the hook meets the rail */
 }
+
+/* pieces hang tight together, sleeves slightly overlapping like a real rail */
+.hang + .hang { margin-left: clamp(-40px, -6vw, -20px); }
 
 .hook { display: block; position: relative; z-index: 1; }
 
