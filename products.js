@@ -127,7 +127,7 @@ const PRODUCTS = {
     price: 28000,
     exclusive: true,
     railImage: "rail-sword-vest.webp",
-    images: ["photo-output.jpeg"],
+    images: ["photo-output.jpeg", "recluse-sword-vest-white.jpeg"],
     colors: [],
     sizes: ["S", "M", "L", "XL"],
     desc: "Black sleeveless vest featuring Samurai sword graphic."
