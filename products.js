@@ -8,7 +8,7 @@
    colors        leave [] to hide the color option; example for later:
                  [{ name: "White", hex: "#f4f4f2" }, { name: "Black", hex: "#161616" }]
    sizes         buttons shown on the product page
-   featured      true = shown in the home page teaser (keep it to 3)
+   featured      true = shown in the home page teaser (keep it to 2)
    exclusive     true = hangs on the home page rail (display only, not clickable)
    railImage     cut-out photo (no background) used on the rail; falls back to the first photo
 */
@@ -19,7 +19,6 @@ const PRODUCTS = {
     category: "tees",
     drop: "TEE ESSENTIALS",
     price: 32000,
-    featured: true,
     exclusive: true,
     railImage: "rail-fifty-two.webp",
     images: ["recluse-fifty-two-back.jpeg", "recluse-fifty-two.jpeg"],
@@ -27,19 +26,37 @@ const PRODUCTS = {
     sizes: ["S", "M", "L", "XL"],
     desc: "White tee. RECLUSE Fifty Two arch on the front, samurai in a red brush circle on the back."
   },
-
+  "beer-tee": {
+    name: "RECLUSE BEER TEE",
+    category: "tees",
+    drop: "DROP 01",
+    price: 30000,
+    images: ["a041ae76-2fca-4c0c-9cac-6bcdfc03dd88.jpeg"],
+    colors: [],
+    sizes: ["S", "M", "L", "XL"],
+    desc: "Minimal street graphic tee with bold back print."
+  },
   "thorns": {
     name: "RECLUSE THORNS",
     category: "tees",
     drop: "DROP 03",
     price: 30000,
-    featured: true,
     images: ["recluse-thorns.jpeg"],
     colors: [],
     sizes: ["S", "M", "L", "XL"],
     desc: "White tee. Black-and-white crown of thorns portrait on the front, blackletter RECLUSE across the back."
   },
-
+  "rf2": {
+    name: "RECLUSE RF2",
+    category: "tees",
+    drop: "DROP 03",
+    price: 30000,
+    featured: true,
+    images: ["recluse-rf2.jpeg"],
+    colors: [],
+    sizes: ["S", "M", "L", "XL"],
+    desc: "Black tee. RECLUSE over a glowing planet on the front, stacked RF2 on the back."
+  },
   "camo-thorns": {
     name: "RECLUSE CAMO THORNS",
     category: "tees",
@@ -50,7 +67,17 @@ const PRODUCTS = {
     sizes: ["S", "M", "L", "XL"],
     desc: "White tee. Camo RECLUSE oval on the front, camo crown of thorns portrait on the back."
   },
-
+  "smoked-flower": {
+    name: "RECLUSE SMOKED FLOWER",
+    category: "tees",
+    drop: "DROP 01",
+    price: 30000,
+    featured: true,
+    images: ["2af34606-1479-4be7-a83d-7b61140dda21.jpeg"],
+    colors: [],
+    sizes: ["S", "M", "L", "XL"],
+    desc: "Smoked floral graphic tee with premium cotton finish."
+  },
   "camo-block": {
     name: "RECLUSE CAMO BLOCK",
     category: "tees",
@@ -63,7 +90,6 @@ const PRODUCTS = {
     sizes: ["S", "M", "L", "XL"],
     desc: "White tee. Camo RECLUSE wordmark on the front, camo crown of thorns portrait on the back."
   },
-
   "no-rest": {
     name: "RECLUSE NO REST",
     category: "tees",
@@ -74,52 +100,6 @@ const PRODUCTS = {
     sizes: ["S", "M", "L", "XL"],
     desc: "White tee. Blackletter RECLUSE over a winged hourglass and No Rest banner on the back."
   },
-
-  "rf2": {
-    name: "RECLUSE RF2",
-    category: "tees",
-    drop: "DROP 03",
-    price: 30000,
-    featured: true,
-    images: ["recluse-rf2.jpeg"],
-    colors: [],
-    sizes: ["S", "M", "L", "XL"],
-    desc: "Black tee. RECLUSE over a glowing planet on the front, stacked RF2 on the back."
-  },
-
-  "beer-tee": {
-    name: "RECLUSE BEER TEE",
-    category: "tees",
-    drop: "DROP 01",
-    price: 30000,
-    images: ["a041ae76-2fca-4c0c-9cac-6bcdfc03dd88.jpeg"],
-    colors: [],
-    sizes: ["S", "M", "L", "XL"],
-    desc: "Minimal street graphic tee with bold back print."
-  },
-
-  "smoked-flower": {
-    name: "RECLUSE SMOKED FLOWER",
-    category: "tees",
-    drop: "DROP 01",
-    price: 30000,
-    images: ["2af34606-1479-4be7-a83d-7b61140dda21.jpeg"],
-    colors: [],
-    sizes: ["S", "M", "L", "XL"],
-    desc: "Smoked floral graphic tee with premium cotton finish."
-  },
-
-  "chain-heart": {
-    name: "RECLUSE CHAIN HEART",
-    category: "tees",
-    drop: "DROP 01",
-    price: 30000,
-    images: ["e875715a-90af-4361-b1a9-9fe4e38f0a67.jpeg"],
-    colors: [],
-    sizes: ["S", "M", "L", "XL"],
-    desc: "Heavy streetwear tee featuring chain heart graphic."
-  },
-
   "dreams": {
     name: "RECLUSE DREAMS",
     category: "tees",
@@ -130,7 +110,16 @@ const PRODUCTS = {
     sizes: ["S", "M", "L", "XL"],
     desc: "Minimal dream-inspired streetwear tee."
   },
-
+  "chain-heart": {
+    name: "RECLUSE CHAIN HEART",
+    category: "tees",
+    drop: "DROP 01",
+    price: 30000,
+    images: ["e875715a-90af-4361-b1a9-9fe4e38f0a67.jpeg"],
+    colors: [],
+    sizes: ["S", "M", "L", "XL"],
+    desc: "Heavy streetwear tee featuring chain heart graphic."
+  },
   "sleeveless-sword": {
     name: "RECLUSE SWORD VEST",
     category: "sleeveless",

@@ -12,7 +12,7 @@
 <meta property="og:image" content="https://johnnafuh.github.io/recluse52-site/sleeveless-drop.jpeg">
 <meta property="og:url" content="https://johnnafuh.github.io/recluse52-site/">
 
-<link rel="stylesheet" href="style.css?v=12">
+<link rel="stylesheet" href="style.css?v=13">
 </head>
 
 <body>
@@ -57,7 +57,6 @@
       <p class="rail-loading">HANGING THE COLLECTION…</p>
       <div class="rail-track" id="railTrack"></div>
     </div>
-    <p class="rail-hint">DRAG TO BROWSE</p>
   </section>
 
   <!-- products (filled from products.js) -->
@@ -92,13 +91,13 @@
   </div>
 </footer>
 
-<script src="products.js?v=7"></script>
+<script src="products.js?v=8"></script>
 <script src="cart.js?v=2"></script>
 <script src="rail.js?v=3"></script>
 <script>
-  // teaser: only products marked featured: true (3 on desktop, 2 on phones)
+  // teaser: the 2 products marked featured: true
   document.getElementById("homeGrid").innerHTML =
-    listProducts().filter(p => p.featured).slice(0, 3).map(productCard).join("");
+    listProducts().filter(p => p.featured).slice(0, 2).map(productCard).join("");
   document.getElementById("viewAll").textContent =
     "VIEW ALL " + listProducts().length + " PIECES";
 </script>
