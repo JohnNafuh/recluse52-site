@@ -3,6 +3,10 @@
    Saved in the browser as a list of { id, size, color, qty }.
    Any element with data-cart-count shows the number of items. */
 
+/* Store switch: false = site is browsable but checkout is closed (banner shows on every page).
+   Set to true when Paystack approves the business (and swap in the pk_live_ key in cart.html). */
+const STORE_OPEN = false;
+
 const CART_KEY = "cart";
 
 function readCart() {
@@ -80,4 +84,16 @@ function updateCartBadge() {
   });
 }
 
-document.addEventListener("DOMContentLoaded", updateCartBadge);
+function showStoreBanner() {
+  if (STORE_OPEN) return;
+  const banner = document.createElement("div");
+  banner.className = "store-banner";
+  banner.setAttribute("role", "status");
+  banner.textContent = "STORE OPENING SOON · ORDERS AREN'T OPEN YET";
+  document.body.prepend(banner);
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  showStoreBanner();
+  updateCartBadge();
+});

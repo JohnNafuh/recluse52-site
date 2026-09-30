@@ -118,6 +118,18 @@ button { font: inherit; color: inherit; cursor: pointer; }
   color: var(--muted);
 }
 
+/* ---------- store closed banner ---------- */
+.store-banner {
+  padding: 10px var(--pad);
+  background: var(--ink);
+  color: var(--paper);
+  text-align: center;
+  font-family: var(--wide);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  line-height: 1.6;
+}
+
 /* ---------- buttons ---------- */
 .btn {
   display: inline-flex;
@@ -135,6 +147,8 @@ button { font: inherit; color: inherit; cursor: pointer; }
 }
 
 .btn:hover { background: #333333; }
+
+.btn:disabled { background: #d4d4d2; color: #5f5f5f; cursor: not-allowed; }
 
 /* ---------- drop box (home) ---------- */
 .drop-box {

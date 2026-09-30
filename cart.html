@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>RECLUSE | CART</title>
-<link rel="stylesheet" href="style.css?v=15">
+<link rel="stylesheet" href="style.css?v=16">
 </head>
 
 <body>
@@ -63,7 +63,7 @@
       <p id="formError" role="alert" style="margin: 0; color: #b42318" hidden></p>
 
       <button type="button" class="btn" id="payBtn" style="width: 100%">PAY</button>
-      <p style="margin: 0; font-size: 14px; color: var(--muted); text-align: center">
+      <p id="payNote" style="margin: 0; font-size: 14px; color: var(--muted); text-align: center">
         Pay by card, transfer, bank or USSD. Secured by Paystack.
       </p>
     </div>
@@ -81,7 +81,7 @@
 
 <script src="https://js.paystack.co/v2/inline.js"></script>
 <script src="products.js?v=11"></script>
-<script src="cart.js?v=2"></script>
+<script src="cart.js?v=3"></script>
 <script>
 /* Public key only. Never put the secret key (sk_...) in this file.
    Swap to pk_live_... when Paystack approves the business. */
@@ -169,7 +169,12 @@ function renderTotals() {
     delivery ? (delivery.fee ? formatPrice(delivery.fee) : "Free") : "Choose an option";
   const total = formatPrice(orderTotal());
   document.getElementById("cartTotal").textContent = total;
-  payBtn.textContent = "PAY " + total;
+  if (STORE_OPEN) {
+    payBtn.textContent = "PAY " + total;
+  } else {
+    payBtn.textContent = "CHECKOUT OPENS SOON";
+    payBtn.disabled = true;
+  }
 }
 
 document.getElementById("deliveryOptions").onclick = e => {
@@ -207,6 +212,8 @@ function orderLines() {
 
 // Paystack checkout: card or bank transfer
 payBtn.onclick = () => {
+  if (!STORE_OPEN) return; // store closed: no payments yet
+
   const name = document.getElementById("name").value.trim();
   const email = document.getElementById("email").value.trim();
   const phone = document.getElementById("phone").value.trim();
@@ -333,6 +340,10 @@ function showConfirmation(order) {
   window.scrollTo(0, 0);
 }
 
+if (!STORE_OPEN) {
+  document.getElementById("payNote").textContent =
+    "We're not taking orders yet. Checkout opens as soon as the store launches.";
+}
 renderDelivery();
 renderCart();
 </script>
