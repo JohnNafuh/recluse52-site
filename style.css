@@ -423,7 +423,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .card-price { color: var(--muted); }
 
 /* ---------- product page ---------- */
-.product { padding-bottom: 120px; } /* room for the fixed buy bar on phones */
+.product { padding-bottom: calc(170px + env(safe-area-inset-bottom, 0px)); } /* room so the size buttons never hide behind the fixed buy bar */
 
 .product-intro {
   display: flex;
@@ -472,7 +472,8 @@ button { font: inherit; color: inherit; cursor: pointer; }
   background: var(--stone);
 }
 
-.gallery img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; }
+/* show the whole photo, whatever its shape (no cropping) */
+.gallery img { width: 100%; height: auto; }
 
 .counter {
   position: absolute;
@@ -608,7 +609,6 @@ button { font: inherit; color: inherit; cursor: pointer; }
   }
 
   .gallery { grid-area: gallery; margin: 0; border-radius: 28px; overflow: hidden; }
-  .gallery img { aspect-ratio: 4 / 5; }
 
   .product-intro { grid-area: intro; padding-top: 0; }
   .panel { grid-area: panel; margin-top: 0; }

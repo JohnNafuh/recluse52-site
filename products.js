@@ -21,7 +21,7 @@ const PRODUCTS = {
     price: 32000,
     exclusive: true,
     railImage: "rail-fifty-two.webp",
-    images: ["recluse-fifty-two-back.jpeg", "recluse-fifty-two.jpeg"],
+    images: ["recluse-fifty-two.jpeg", "recluse-fifty-two-back.jpeg"],
     colors: [],
     sizes: ["S", "M", "L", "XL"],
     desc: "White tee. RECLUSE Fifty Two arch on the front, samurai in a red brush circle on the back."
