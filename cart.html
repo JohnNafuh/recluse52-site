@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>RECLUSE | CART</title>
-<link rel="stylesheet" href="style.css?v=6">
+<link rel="stylesheet" href="style.css?v=7">
 </head>
 
 <body>
@@ -25,6 +25,15 @@
   <div class="cart-list" id="cartList"></div>
 
   <div id="checkout">
+    <div class="option" style="padding-top: 20px">
+      <div class="option-head"><h2>Delivery</h2></div>
+      <div class="delivery-options" id="deliveryOptions"></div>
+    </div>
+
+    <div class="totals">
+      <div><span>Subtotal</span><span id="subtotal"></span></div>
+      <div><span>Delivery</span><span id="deliveryFee">Choose an option</span></div>
+    </div>
     <div class="cart-total">
       <span>Total</span>
       <span id="cartTotal"></span>
@@ -43,10 +52,13 @@
         <label for="phone">Phone number</label>
         <input id="phone" type="tel" autocomplete="tel">
       </div>
-      <div class="field">
+      <div class="field" id="addressField">
         <label for="address">Delivery address</label>
         <textarea id="address" rows="3" autocomplete="street-address"></textarea>
       </div>
+      <p id="pickupNote" class="cart-meta" style="margin: 0" hidden>
+        We'll contact you on your phone number with pickup details once your order is in.
+      </p>
 
       <p id="formError" role="alert" style="margin: 0; color: #b42318" hidden></p>
 
@@ -75,6 +87,14 @@
    Swap to pk_live_... when Paystack approves the business. */
 const PAYSTACK_PUBLIC_KEY = "pk_test_5782603cdecee08c6aff3139313ced1d8cbf4925";
 const WHATSAPP_NUMBER = "2347038547668";
+
+// delivery options: edit prices here
+const DELIVERY = [
+  { id: "abuja", label: "Within Abuja", fee: 2000 },
+  { id: "outside", label: "Outside Abuja", fee: 4000 },
+  { id: "pickup", label: "Pickup", fee: 0 }
+];
+let delivery = null; // chosen option
 
 const listEl = document.getElementById("cartList");
 const checkoutEl = document.getElementById("checkout");
@@ -121,10 +141,43 @@ function renderCart() {
       </div>`;
   }).join("");
 
-  const total = formatPrice(cartTotal());
+  renderTotals();
+}
+
+function orderTotal() {
+  return cartTotal() + (delivery ? delivery.fee : 0);
+}
+
+function renderDelivery() {
+  document.getElementById("deliveryOptions").innerHTML = DELIVERY.map(d => `
+    <button type="button" class="delivery-option" data-delivery="${d.id}"
+            aria-pressed="${delivery && delivery.id === d.id}">
+      <span>${d.label}</span>
+      <span>${d.fee ? formatPrice(d.fee) : "Free"}</span>
+    </button>`).join("");
+
+  const isPickup = delivery && delivery.id === "pickup";
+  document.getElementById("addressField").hidden = isPickup;
+  document.getElementById("pickupNote").hidden = !isPickup;
+}
+
+function renderTotals() {
+  document.getElementById("subtotal").textContent = formatPrice(cartTotal());
+  document.getElementById("deliveryFee").textContent =
+    delivery ? (delivery.fee ? formatPrice(delivery.fee) : "Free") : "Choose an option";
+  const total = formatPrice(orderTotal());
   document.getElementById("cartTotal").textContent = total;
   payBtn.textContent = "PAY " + total;
 }
+
+document.getElementById("deliveryOptions").onclick = e => {
+  const btn = e.target.closest("[data-delivery]");
+  if (!btn) return;
+  delivery = DELIVERY.find(d => d.id === btn.dataset.delivery);
+  errorEl.hidden = true;
+  renderDelivery();
+  renderTotals();
+};
 
 // quantity and remove buttons
 listEl.onclick = e => {
@@ -157,8 +210,15 @@ payBtn.onclick = () => {
   const phone = document.getElementById("phone").value.trim();
   const address = document.getElementById("address").value.trim();
 
-  if (!name || !email || !phone || !address) {
-    showError("Add your name, email, phone number and delivery address to pay.");
+  if (!delivery) {
+    showError("Choose a delivery option: within Abuja, outside Abuja or pickup.");
+    return;
+  }
+  const isPickup = delivery.id === "pickup";
+  if (!name || !email || !phone || (!isPickup && !address)) {
+    showError(isPickup
+      ? "Add your name, email and phone number to pay."
+      : "Add your name, email, phone number and delivery address to pay.");
     return;
   }
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
@@ -171,8 +231,9 @@ payBtn.onclick = () => {
   }
   errorEl.hidden = true;
 
-  const total = cartTotal();
+  const total = orderTotal();
   const lines = orderLines();
+  const deliveryLine = "Delivery: " + delivery.label + " - " + (delivery.fee ? formatPrice(delivery.fee) : "Free");
   const reference = "RCL-" + Date.now();
 
   const popup = new PaystackPop();
@@ -186,13 +247,14 @@ payBtn.onclick = () => {
       custom_fields: [
         { display_name: "Name", variable_name: "name", value: name },
         { display_name: "Phone", variable_name: "phone", value: phone },
-        { display_name: "Address", variable_name: "address", value: address },
+        { display_name: "Delivery", variable_name: "delivery", value: deliveryLine },
+        { display_name: "Address", variable_name: "address", value: isPickup ? "Pickup" : address },
         { display_name: "Items", variable_name: "items", value: lines.join(" | ") },
         { display_name: "Order total", variable_name: "order_total", value: formatPrice(total) }
       ]
     },
     onSuccess: transaction => {
-      showConfirmation({ name, reference: transaction.reference || reference, lines, total });
+      showConfirmation({ name, reference: transaction.reference || reference, lines, deliveryLine, total });
     },
     onCancel: () => {
       showError("Payment cancelled. Your cart is still here when you're ready.");
@@ -212,7 +274,7 @@ function showConfirmation(order) {
     "Name: " + order.name + "\n" +
     "Reference: " + order.reference + "\n" +
     "Total paid: " + formatPrice(order.total) + "\n\n" +
-    order.lines.join("\n");
+    order.lines.join("\n") + "\n" + order.deliveryLine;
 
   document.getElementById("cartPage").innerHTML = `
     <div class="section-head" style="padding-top: 16px">
@@ -223,7 +285,7 @@ function showConfirmation(order) {
       A receipt has been sent to your email.
     </p>
     <div class="cart-list">
-      ${order.lines.map(l => `<div class="cart-item"><span class="cart-meta">${l}</span></div>`).join("")}
+      ${order.lines.concat(order.deliveryLine).map(l => `<div class="cart-item"><span class="cart-meta">${l}</span></div>`).join("")}
     </div>
     <div class="cart-total"><span>Total paid</span><span>${formatPrice(order.total)}</span></div>
     <p class="cart-meta" style="margin: 0 0 24px">Reference: ${order.reference}</p>
@@ -235,6 +297,7 @@ function showConfirmation(order) {
   window.scrollTo(0, 0);
 }
 
+renderDelivery();
 renderCart();
 </script>
 
