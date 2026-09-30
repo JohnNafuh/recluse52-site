@@ -12,7 +12,7 @@
 <meta property="og:image" content="https://johnnafuh.github.io/recluse52-site/sleeveless-drop.jpeg">
 <meta property="og:url" content="https://johnnafuh.github.io/recluse52-site/">
 
-<link rel="stylesheet" href="style.css?v=7">
+<link rel="stylesheet" href="style.css?v=8">
 </head>
 
 <body>
@@ -44,6 +44,20 @@
       </div>
       <a class="btn" href="shop.html#sleeveless">SHOP THE DROP</a>
     </div>
+  </section>
+
+  <!-- exclusive rail: display only, filled by rail.js -->
+  <section class="section" aria-label="Exclusive pieces">
+    <div class="section-head">
+      <h2>EXCLUSIVE</h2>
+      <button type="button" class="motion-toggle" id="motionToggle" aria-pressed="true">MOTION ON</button>
+    </div>
+    <div class="rail" id="rail">
+      <div class="rail-bar" aria-hidden="true"></div>
+      <p class="rail-loading">HANGING THE COLLECTION…</p>
+      <div class="rail-track" id="railTrack"></div>
+    </div>
+    <p class="rail-hint">DRAG TO BROWSE</p>
   </section>
 
   <!-- products (filled from products.js) -->
@@ -78,8 +92,9 @@
   </div>
 </footer>
 
-<script src="products.js?v=5"></script>
+<script src="products.js?v=6"></script>
 <script src="cart.js?v=2"></script>
+<script src="rail.js?v=1"></script>
 <script>
   // teaser: only products marked featured: true (3 on desktop, 2 on phones)
   document.getElementById("homeGrid").innerHTML =

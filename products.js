@@ -9,6 +9,7 @@
                  [{ name: "White", hex: "#f4f4f2" }, { name: "Black", hex: "#161616" }]
    sizes         buttons shown on the product page
    featured      true = shown in the home page teaser (keep it to 3)
+   exclusive     true = hangs on the home page rail (display only, not clickable)
 */
 
 const PRODUCTS = {
@@ -18,7 +19,8 @@ const PRODUCTS = {
     drop: "TEE ESSENTIALS",
     price: 32000,
     featured: true,
-    images: ["recluse-fifty-two-back.jpeg"],
+    exclusive: true,
+    images: ["recluse-fifty-two-back.jpeg", "recluse-fifty-two.jpeg"],
     colors: [],
     sizes: ["S", "M", "L", "XL"],
     desc: "White tee. RECLUSE Fifty Two arch on the front, samurai in a red brush circle on the back."
@@ -52,6 +54,7 @@ const PRODUCTS = {
     category: "tees",
     drop: "DROP 03",
     price: 30000,
+    exclusive: true,
     images: ["recluse-camo-block.jpeg"],
     colors: [],
     sizes: ["S", "M", "L", "XL"],
@@ -130,6 +133,7 @@ const PRODUCTS = {
     category: "sleeveless",
     drop: "DROP 02",
     price: 28000,
+    exclusive: true,
     images: ["photo-output.jpeg"],
     colors: [],
     sizes: ["S", "M", "L", "XL"],
