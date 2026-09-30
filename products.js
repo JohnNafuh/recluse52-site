@@ -10,6 +10,7 @@
    sizes         buttons shown on the product page
    featured      true = shown in the home page teaser (keep it to 3)
    exclusive     true = hangs on the home page rail (display only, not clickable)
+   railImage     cut-out photo (no background) used on the rail; falls back to the first photo
 */
 
 const PRODUCTS = {
@@ -20,6 +21,7 @@ const PRODUCTS = {
     price: 32000,
     featured: true,
     exclusive: true,
+    railImage: "rail-fifty-two.webp",
     images: ["recluse-fifty-two-back.jpeg", "recluse-fifty-two.jpeg"],
     colors: [],
     sizes: ["S", "M", "L", "XL"],
@@ -55,6 +57,7 @@ const PRODUCTS = {
     drop: "DROP 03",
     price: 30000,
     exclusive: true,
+    railImage: "rail-camo-block.webp",
     images: ["recluse-camo-block.jpeg"],
     colors: [],
     sizes: ["S", "M", "L", "XL"],
@@ -134,6 +137,7 @@ const PRODUCTS = {
     drop: "DROP 02",
     price: 28000,
     exclusive: true,
+    railImage: "rail-sword-vest.webp",
     images: ["photo-output.jpeg"],
     colors: [],
     sizes: ["S", "M", "L", "XL"],

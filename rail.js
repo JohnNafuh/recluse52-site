@@ -15,15 +15,33 @@
     return;
   }
 
+  // metal gradients for the hooks, defined once
+  document.body.insertAdjacentHTML("beforeend", `
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+      <defs>
+        <linearGradient id="hookChrome" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#5a5a5a"/>
+          <stop offset="0.45" stop-color="#f2f2f2"/>
+          <stop offset="1" stop-color="#7a7a7a"/>
+        </linearGradient>
+        <linearGradient id="hangerNeck" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#3a3a3a"/>
+          <stop offset="1" stop-color="#0d0d0d"/>
+        </linearGradient>
+      </defs>
+    </svg>`);
+
+  // hook curls over the rail, then drops into the hanger neck behind the collar
   const hookSvg = `
-    <svg class="hook" width="28" height="44" viewBox="0 0 28 44" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
-      <path d="M14 44 V18 C14 3 27 3 27 13"/>
+    <svg class="hook" width="40" height="66" viewBox="0 0 40 66" fill="none" aria-hidden="true">
+      <path d="M20 60 V22 C20 9 21 1 28 1 C35 1 36 9 33 15" stroke="url(#hookChrome)" stroke-width="3.2" stroke-linecap="round"/>
+      <rect x="13" y="52" width="14" height="14" rx="3" fill="url(#hangerNeck)"/>
     </svg>`;
 
   track.innerHTML = pieces.map(p => `
     <div class="hang">
       ${hookSvg}
-      <img class="hang-img" src="${p.images[0]}" alt="${p.name}" draggable="false" onload="markLight(this)">
+      <img class="hang-garment" src="${p.railImage || p.images[0]}" alt="${p.name}" draggable="false">
     </div>`).join("");
 
   const hangs = Array.from(track.children).map((el, i) => ({ el, angle: 0, vel: 0, phase: i * 1.7 }));

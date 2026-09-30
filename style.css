@@ -259,14 +259,16 @@ button { font: inherit; color: inherit; cursor: pointer; }
 
 .rail.is-dragging { cursor: grabbing; }
 
+/* chrome tube */
 .rail-bar {
   position: absolute;
-  top: 14px;
+  top: 12px;
   left: 0;
   right: 0;
-  height: 4px;
-  border-radius: 2px;
-  background: var(--ink);
+  height: 10px;
+  border-radius: 5px;
+  background: linear-gradient(to bottom, #c9c9c9 0%, #ffffff 22%, #b5b5b5 48%, #5c5c5c 80%, #2e2e2e 100%);
+  box-shadow: 0 7px 10px -5px rgba(0, 0, 0, 0.4);
 }
 
 .rail-track {
@@ -302,23 +304,23 @@ button { font: inherit; color: inherit; cursor: pointer; }
   display: flex;
   flex-direction: column;
   align-items: center;
-  transform-origin: 50% 8px; /* swings from the rail */
+  transform-origin: 50% 8px; /* swings from where the hook meets the rail */
 }
 
-.hook { display: block; color: var(--ink); }
+.hook { display: block; position: relative; z-index: 1; }
 
-.hang-img {
-  width: clamp(170px, 46vw, 260px);
-  aspect-ratio: 4 / 5;
-  border: 1px solid transparent;
-  border-radius: var(--radius);
-  background: var(--stone);
-  object-fit: cover;
+/* the garment sits over the bottom of the hook, like it's inside the collar */
+.hang-garment {
+  position: relative;
+  z-index: 2;
+  /* same length for every piece, like real garments on a rail; width follows the shape */
+  height: clamp(180px, 50vw, 240px);
+  width: auto;
+  margin-top: -14px;
   pointer-events: none;
   -webkit-user-drag: none;
+  filter: drop-shadow(0 14px 16px rgba(0, 0, 0, 0.16)) drop-shadow(0 2px 3px rgba(0, 0, 0, 0.12));
 }
-
-.hang-img.is-light { border-color: var(--line); }
 
 .rail-hint {
   margin: 0;
