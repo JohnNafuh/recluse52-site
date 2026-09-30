@@ -265,8 +265,8 @@ button { font: inherit; color: inherit; cursor: pointer; }
   top: 22px;
   left: 0;
   right: 0;
-  height: 12px;
-  border-radius: 6px;
+  height: 10px;
+  border-radius: 5px;
   background:
     linear-gradient(to bottom,
       #7d7d7d 0%, #e9e9e9 14%, #ffffff 24%, #cfcfcf 38%,
@@ -285,8 +285,8 @@ button { font: inherit; color: inherit; cursor: pointer; }
     content: "";
     position: absolute;
     top: -22px;
-    width: 14px;
-    height: 34px;
+    width: 12px;
+    height: 32px;
     border-radius: 4px 4px 7px 7px;
     background: linear-gradient(to right, #6b6b6b, #f2f2f2 45%, #8a8a8a);
     box-shadow: 0 6px 8px -4px rgba(0, 0, 0, 0.35);
@@ -331,22 +331,22 @@ button { font: inherit; color: inherit; cursor: pointer; }
   display: flex;
   flex-direction: column;
   align-items: center;
-  transform-origin: 50% 14px; /* swings from where the hook sits on the rail */
+  transform-origin: 50% 12px; /* swings from where the hook sits on the rail */
 }
 
 /* pieces hang tight together, sleeves slightly overlapping like a real rail */
-.hang + .hang { margin-left: clamp(-40px, -6vw, -20px); }
+.hang + .hang { margin-left: clamp(-30px, -4.5vw, -14px); }
 
-.hook { display: block; position: relative; z-index: 1; }
+.hook { display: block; position: relative; z-index: 1; width: 44px; height: 68px; }
 
 /* the garment sits over the bottom of the hook, like it's inside the collar */
 .hang-garment {
   position: relative;
   z-index: 2;
   /* same length for every piece, like real garments on a rail; width follows the shape */
-  height: clamp(180px, 50vw, 240px);
+  height: clamp(130px, 34vw, 180px);
   width: auto;
-  margin-top: -12px;
+  margin-top: -10px;
   pointer-events: none;
   -webkit-user-drag: none;
   filter: drop-shadow(0 14px 16px rgba(0, 0, 0, 0.16)) drop-shadow(0 2px 3px rgba(0, 0, 0, 0.12));
