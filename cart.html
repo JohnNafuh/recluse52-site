@@ -182,7 +182,6 @@ payBtn.onclick = () => {
     amount: total * 100, // Paystack counts in kobo
     currency: "NGN",
     reference: reference,
-    channels: ["card", "bank_transfer"],
     metadata: {
       custom_fields: [
         { display_name: "Name", variable_name: "name", value: name },
