@@ -758,7 +758,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
   color: var(--muted);
 }
 
-.footer-links { display: flex; gap: 28px; }
+.footer-links { display: flex; flex-wrap: wrap; gap: 0 22px; }
 
 .footer a { display: inline-flex; align-items: center; min-height: 44px; }
 
@@ -767,3 +767,13 @@ button { font: inherit; color: inherit; cursor: pointer; }
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; animation: none !important; }
 }
+
+
+/* ---------- legal pages (privacy, terms) ---------- */
+.legal { max-width: 720px; padding-bottom: 24px; }
+.legal h1 { margin: 16px 0 8px; font-family: var(--wide); font-weight: 400; font-size: clamp(16px, 2vw, 22px); letter-spacing: 0.18em; }
+.legal h2 { margin: 28px 0 8px; font-size: 18px; font-weight: 600; }
+.legal p, .legal li { margin: 0 0 12px; line-height: 1.65; color: #333333; }
+.legal ul { margin: 0 0 12px; padding-left: 20px; }
+.legal .updated { font-size: 14px; color: var(--muted); }
+.legal a { text-decoration: underline; text-underline-offset: 3px; }
