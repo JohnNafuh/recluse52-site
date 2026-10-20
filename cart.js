@@ -5,7 +5,7 @@
 
 /* Store switch: false = site is browsable but checkout is closed (banner shows on every page).
    Set to true when Paystack approves the business (and swap in the pk_live_ key in cart.html). */
-const STORE_OPEN = false;
+const STORE_OPEN = true;
 
 const CART_KEY = "cart";
 
