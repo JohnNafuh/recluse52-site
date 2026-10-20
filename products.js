@@ -142,6 +142,94 @@ const PRODUCTS = {
     colors: [],
     sizes: ["S", "M", "L", "XL"],
     desc: "White sleeveless vest featuring Samurai sword graphic."
+  },
+
+  "nostalgia": {
+    name: "NOSTALGIA FRAME",
+    category: "frames",
+    drop: "FRAMES",
+    price: 18000,
+    images: ["frame-nostalgia.jpeg"],
+    colors: [],
+    sizes: ["One size"],
+    desc: "Wall frame featuring the NOSTALGIA album cover design."
+  },
+
+  "we-are-all-in-this-together": {
+    name: "WE ARE ALL IN THIS TOGETHER FRAME",
+    category: "frames",
+    drop: "FRAMES",
+    price: 18000,
+    images: ["frame-we-are-all-in-this-together.jpeg"],
+    colors: [],
+    sizes: ["One size"],
+    desc: "Wall frame featuring the WE ARE ALL IN THIS TOGETHER album cover design."
+  },
+
+  "mr-morale": {
+    name: "MR MORALE FRAME",
+    category: "frames",
+    drop: "FRAMES",
+    price: 18000,
+    images: ["frame-mr-morale.jpeg"],
+    colors: [],
+    sizes: ["One size"],
+    desc: "Wall frame featuring the MR MORALE album cover design."
+  },
+
+  "forest-hills": {
+    name: "FOREST HILLS FRAME",
+    category: "frames",
+    drop: "FRAMES",
+    price: 18000,
+    images: ["frame-forest-hills.jpeg"],
+    colors: [],
+    sizes: ["One size"],
+    desc: "Wall frame featuring the FOREST HILLS album cover design."
+  },
+
+  "take-care": {
+    name: "TAKE CARE FRAME",
+    category: "frames",
+    drop: "FRAMES",
+    price: 18000,
+    images: ["frame-take-care.jpeg"],
+    colors: [],
+    sizes: ["One size"],
+    desc: "Wall frame featuring the TAKE CARE album cover design."
+  },
+
+  "african-giant": {
+    name: "AFRICAN GIANT FRAME",
+    category: "frames",
+    drop: "FRAMES",
+    price: 18000,
+    images: ["frame-african-giant.jpeg"],
+    colors: [],
+    sizes: ["One size"],
+    desc: "Wall frame featuring the AFRICAN GIANT album cover design."
+  },
+
+  "a-better-time": {
+    name: "A BETTER TIME FRAME",
+    category: "frames",
+    drop: "FRAMES",
+    price: 18000,
+    images: ["frame-a-better-time.jpeg"],
+    colors: [],
+    sizes: ["One size"],
+    desc: "Wall frame featuring the A BETTER TIME album cover design."
+  },
+
+  "mil-deluxe": {
+    name: "MIL DELUXE FRAME",
+    category: "frames",
+    drop: "FRAMES",
+    price: 18000,
+    images: ["frame-mil-deluxe.jpeg"],
+    colors: [],
+    sizes: ["One size"],
+    desc: "Wall frame featuring the MIL DELUXE album cover design."
   }
 };
 
@@ -168,7 +256,7 @@ function listProducts(category) {
 function productCard(p) {
   return `
     <a class="card" href="product.html?id=${p.id}">
-      <img class="card-img" src="${p.images[0]}" alt="${p.name}" loading="lazy" onload="markLight(this)">
+      <img class="card-img${p.category === 'frames' ? ' card-img-poster' : ''}" src="${p.images[0]}" alt="${p.name}" loading="lazy" onload="markLight(this)">
       <div class="card-meta">
         <span class="card-name">${p.name}</span>
         <span class="card-price">${formatPrice(p.price)}</span>

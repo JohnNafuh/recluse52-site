@@ -777,3 +777,10 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .legal ul { margin: 0 0 12px; padding-left: 20px; }
 .legal .updated { font-size: 14px; color: var(--muted); }
 .legal a { text-decoration: underline; text-underline-offset: 3px; }
+
+
+/* ---------- wall frames ---------- */
+.card-img-poster { aspect-ratio: 2 / 3; }
+
+.frames-hero { display: block; }
+.frames-hero img { display: block; width: 100%; height: auto; border-radius: var(--radius); background: var(--stone); }

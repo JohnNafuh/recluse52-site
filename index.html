@@ -12,7 +12,7 @@
 <meta property="og:image" content="https://johnnafuh.github.io/recluse52-site/sleeveless-drop.jpeg">
 <meta property="og:url" content="https://johnnafuh.github.io/recluse52-site/">
 
-<link rel="stylesheet" href="style.css?v=17">
+<link rel="stylesheet" href="style.css?v=18">
 </head>
 
 <body>
@@ -70,6 +70,16 @@
     </div>
   </section>
 
+  <!-- wall frames intro -->
+  <section class="section" aria-label="Wall frames">
+    <a class="frames-hero" href="shop.html#frames">
+      <img src="Index%20header%20frame%20image.JPEG" alt="RECLUSE wall frames" loading="lazy">
+    </a>
+    <div class="view-all">
+      <a class="btn" href="shop.html#frames">VIEW FRAMES</a>
+    </div>
+  </section>
+
   <!-- about -->
   <section class="section" id="about">
     <div class="section-head">
@@ -93,7 +103,7 @@
   </div>
 </footer>
 
-<script src="products.js?v=11"></script>
+<script src="products.js?v=12"></script>
 <script src="cart.js?v=4"></script>
 <script src="rail.js?v=3"></script>
 <script>
@@ -101,7 +111,7 @@
   document.getElementById("homeGrid").innerHTML =
     listProducts().filter(p => p.featured).slice(0, 2).map(productCard).join("");
   document.getElementById("viewAll").textContent =
-    "VIEW ALL " + listProducts().length + " PIECES";
+    "VIEW ALL " + listProducts().filter(p => p.category !== "frames").length + " PIECES";
 </script>
 
 </body>
