@@ -73,7 +73,7 @@
   <!-- wall frames intro -->
   <section class="section section-compact" aria-label="Wall frames">
     <a class="frames-hero" href="shop.html#extras">
-      <img src="Index%20header%20frame%20image.JPEG" alt="RECLUSE wall frames" loading="lazy">
+      <img src="Index%20header%20frame%20image.JPEG" alt="RECLUSE wall frames" loading="lazy" style="height: auto; max-width: 520px; margin: 0 auto; object-fit: contain;">
     </a>
     <div class="view-all">
       <a class="btn btn-sm" href="shop.html#extras">VIEW FRAMES</a>
@@ -110,8 +110,7 @@
   // teaser: the 2 products marked featured: true
   document.getElementById("homeGrid").innerHTML =
     listProducts().filter(p => p.featured).slice(0, 2).map(productCard).join("");
-  document.getElementById("viewAll").textContent =
-    "VIEW ALL " + listProducts().filter(p => p.category !== "frames").length + " PIECES";
+
 </script>
 
 </body>
