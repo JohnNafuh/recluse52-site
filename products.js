@@ -10,6 +10,7 @@
    sizes         buttons shown on the product page
    featured      true = shown in the home page teaser (keep it to 2)
    exclusive     true = hangs on the home page rail (display only, not clickable)
+   oldPrice      original price, shown struck through next to the discounted price
    railImage     cut-out photo (no background) used on the rail; falls back to the first photo
 */
 
@@ -148,88 +149,96 @@ const PRODUCTS = {
     name: "NOSTALGIA FRAME",
     category: "frames",
     drop: "FRAMES",
-    price: 18000,
+    price: 20000,
+    oldPrice: 23000,
     images: ["frame-nostalgia.jpeg"],
     colors: [],
-    sizes: ["One size"],
-    desc: "Wall frame featuring the NOSTALGIA album cover design."
+    sizes: ["16 x 24 in"],
+    desc: "16 x 24 in wall frame featuring the NOSTALGIA album cover design."
   },
 
   "we-are-all-in-this-together": {
     name: "WE ARE ALL IN THIS TOGETHER FRAME",
     category: "frames",
     drop: "FRAMES",
-    price: 18000,
+    price: 20000,
+    oldPrice: 23000,
     images: ["frame-we-are-all-in-this-together.jpeg"],
     colors: [],
-    sizes: ["One size"],
-    desc: "Wall frame featuring the WE ARE ALL IN THIS TOGETHER album cover design."
+    sizes: ["16 x 24 in"],
+    desc: "16 x 24 in wall frame featuring the WE ARE ALL IN THIS TOGETHER album cover design."
   },
 
   "mr-morale": {
     name: "MR MORALE FRAME",
     category: "frames",
     drop: "FRAMES",
-    price: 18000,
+    price: 20000,
+    oldPrice: 23000,
     images: ["frame-mr-morale.jpeg"],
     colors: [],
-    sizes: ["One size"],
-    desc: "Wall frame featuring the MR MORALE album cover design."
+    sizes: ["16 x 24 in"],
+    desc: "16 x 24 in wall frame featuring the MR MORALE album cover design."
   },
 
   "forest-hills": {
     name: "FOREST HILLS FRAME",
     category: "frames",
     drop: "FRAMES",
-    price: 18000,
+    price: 20000,
+    oldPrice: 23000,
     images: ["frame-forest-hills.jpeg"],
     colors: [],
-    sizes: ["One size"],
-    desc: "Wall frame featuring the FOREST HILLS album cover design."
+    sizes: ["16 x 24 in"],
+    desc: "16 x 24 in wall frame featuring the FOREST HILLS album cover design."
   },
 
   "take-care": {
     name: "TAKE CARE FRAME",
     category: "frames",
     drop: "FRAMES",
-    price: 18000,
+    price: 20000,
+    oldPrice: 23000,
     images: ["frame-take-care.jpeg"],
     colors: [],
-    sizes: ["One size"],
-    desc: "Wall frame featuring the TAKE CARE album cover design."
+    sizes: ["16 x 24 in"],
+    desc: "16 x 24 in wall frame featuring the TAKE CARE album cover design."
   },
 
   "african-giant": {
     name: "AFRICAN GIANT FRAME",
     category: "frames",
     drop: "FRAMES",
-    price: 18000,
+    price: 20000,
+    oldPrice: 23000,
     images: ["frame-african-giant.jpeg"],
     colors: [],
-    sizes: ["One size"],
-    desc: "Wall frame featuring the AFRICAN GIANT album cover design."
+    sizes: ["16 x 24 in"],
+    desc: "16 x 24 in wall frame featuring the AFRICAN GIANT album cover design."
   },
 
   "a-better-time": {
     name: "A BETTER TIME FRAME",
     category: "frames",
     drop: "FRAMES",
-    price: 18000,
+    price: 20000,
+    oldPrice: 23000,
     images: ["frame-a-better-time.jpeg"],
     colors: [],
-    sizes: ["One size"],
-    desc: "Wall frame featuring the A BETTER TIME album cover design."
+    sizes: ["16 x 24 in"],
+    desc: "16 x 24 in wall frame featuring the A BETTER TIME album cover design."
   },
 
   "mil-deluxe": {
     name: "MIL DELUXE FRAME",
     category: "frames",
     drop: "FRAMES",
-    price: 18000,
+    price: 20000,
+    oldPrice: 23000,
     images: ["frame-mil-deluxe.jpeg"],
     colors: [],
-    sizes: ["One size"],
-    desc: "Wall frame featuring the MIL DELUXE album cover design."
+    sizes: ["16 x 24 in"],
+    desc: "16 x 24 in wall frame featuring the MIL DELUXE album cover design."
   }
 };
 
@@ -252,6 +261,12 @@ function listProducts(category) {
     .filter(p => !category || p.category === category);
 }
 
+// price text; shows the original price struck through when oldPrice is set
+function priceHtml(p) {
+  if (!p.oldPrice) return formatPrice(p.price);
+  return '<s style="opacity:.55;font-size:.8em;margin-right:6px">' + formatPrice(p.oldPrice) + '</s>' + formatPrice(p.price);
+}
+
 // markup for one shop / home card
 function productCard(p) {
   return `
@@ -259,7 +274,7 @@ function productCard(p) {
       <img class="card-img${p.category === 'frames' ? ' card-img-poster' : ''}" src="${p.images[0]}" alt="${p.name}" loading="lazy" onload="markLight(this)">
       <div class="card-meta">
         <span class="card-name">${p.name}</span>
-        <span class="card-price">${formatPrice(p.price)}</span>
+        <span class="card-price">${priceHtml(p)}</span>
       </div>
     </a>`;
 }

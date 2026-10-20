@@ -76,7 +76,7 @@
   </div>
 </footer>
 
-<script src="products.js?v=12"></script>
+<script src="products.js?v=13"></script>
 <script src="cart.js?v=5"></script>
 <script>
 const id = new URLSearchParams(location.search).get("id");
@@ -97,7 +97,8 @@ if (!product) {
   document.getElementById("name").textContent = product.name;
   document.getElementById("drop").textContent = product.drop;
   document.getElementById("desc").textContent = product.desc;
-  document.getElementById("price").textContent = formatPrice(product.price);
+  document.getElementById("price").innerHTML = priceHtml(product);
+  if (product.oldPrice) document.querySelector(".price-note").textContent = "Limited-time price · no restock";
 
   const addBtn = document.getElementById("addBtn");
   const resetAdd = () => { addBtn.textContent = "Add to cart"; };
@@ -149,6 +150,7 @@ if (!product) {
     renderSizes();
     resetAdd();
   };
+  document.getElementById("sizes").style.gridTemplateColumns = product.sizes.length === 1 ? "1fr" : "";
   renderSizes();
 
   /* add to cart */
