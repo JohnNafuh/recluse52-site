@@ -806,3 +806,95 @@ button { font: inherit; color: inherit; cursor: pointer; }
 @media (min-width: 900px) {
   .grid-extras { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 16px; }
 }
+
+
+/* ---------- real frames ---------- */
+.frame {
+  position: relative;
+  display: block;
+  background: #ffffff;
+  border: var(--fw, 4px) solid #141414;
+  box-shadow: 0 12px 18px -8px rgba(0, 0, 0, 0.38), 0 2px 4px rgba(0, 0, 0, 0.22), inset 0 0 0 1px rgba(255, 255, 255, 0.14);
+}
+
+/* faint glass shine */
+.frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(118deg, rgba(255, 255, 255, 0.34) 0%, rgba(255, 255, 255, 0) 42%);
+  pointer-events: none;
+}
+
+.frame img { display: block; width: 100%; height: auto; }
+.frame .card-img { border: 0; border-radius: 0; }
+.grid-extras .frame { --fw: 3px; }
+
+/* gallery wall (home) */
+.wall {
+  position: relative;
+  max-width: 760px;
+  margin: 0 auto;
+  aspect-ratio: 10 / 9;
+  border-radius: var(--radius);
+  background: radial-gradient(ellipse at 50% 0%, #f5f2eb 0%, #e5e0d6 100%);
+  overflow: hidden;
+}
+
+.wall .frame { --fw: clamp(2px, 0.9vw, 5px); }
+
+.wall-piece {
+  position: absolute;
+  display: block;
+  transform-origin: 50% 0;
+  animation: sway 6s ease-in-out infinite;
+}
+
+/* the nail it hangs from */
+.wall-piece::before {
+  content: "";
+  position: absolute;
+  top: -7px;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  margin-left: -3px;
+  border-radius: 50%;
+  background: #8d877b;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes sway {
+  0%, 100% { transform: rotate(-0.7deg); }
+  50% { transform: rotate(0.7deg); }
+}
+
+/* product page: frame on a wall */
+.gallery-frame {
+  display: flex;
+  justify-content: center;
+  padding: 36px 0 64px;
+  background: radial-gradient(ellipse at 50% 0%, #f5f2eb 0%, #e2ddd3 100%);
+}
+
+.gallery-frame .frame { width: min(72%, 380px); --fw: 8px; }
+
+/* see it on your wall */
+.room-btn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  min-height: 44px;
+  padding: 0 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--paper);
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.room { margin-top: 12px; }
+.room-tabs { display: flex; gap: 8px; margin-bottom: 10px; }
+.room svg { display: block; width: 100%; height: auto; border-radius: var(--radius-sm); }
+.room-note { margin: 8px 0 0; font-size: 13px; color: var(--muted); }

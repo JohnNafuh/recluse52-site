@@ -10,6 +10,7 @@
    sizes         buttons shown on the product page
    featured      true = shown in the home page teaser (keep it to 2)
    exclusive     true = hangs on the home page rail (display only, not clickable)
+   wall          true = hangs on the home page gallery wall (frames only, max 5)
    oldPrice      original price, shown struck through next to the discounted price
    railImage     cut-out photo (no background) used on the rail; falls back to the first photo
 */
@@ -175,6 +176,7 @@ const PRODUCTS = {
     drop: "FRAMES",
     price: 20000,
     oldPrice: 23000,
+    wall: true,
     images: ["frame-mr-morale.jpeg"],
     colors: [],
     sizes: ["16 x 24 in"],
@@ -187,6 +189,7 @@ const PRODUCTS = {
     drop: "FRAMES",
     price: 20000,
     oldPrice: 23000,
+    wall: true,
     images: ["frame-forest-hills.jpeg"],
     colors: [],
     sizes: ["16 x 24 in"],
@@ -211,6 +214,7 @@ const PRODUCTS = {
     drop: "FRAMES",
     price: 20000,
     oldPrice: 23000,
+    wall: true,
     images: ["frame-african-giant.jpeg"],
     colors: [],
     sizes: ["16 x 24 in"],
@@ -223,6 +227,7 @@ const PRODUCTS = {
     drop: "FRAMES",
     price: 20000,
     oldPrice: 23000,
+    wall: true,
     images: ["frame-a-better-time.jpeg"],
     colors: [],
     sizes: ["16 x 24 in"],
@@ -239,6 +244,19 @@ const PRODUCTS = {
     colors: [],
     sizes: ["16 x 24 in"],
     desc: "16 x 24 in wall frame featuring the MIL DELUXE album cover design."
+  },
+
+  "vibe-till-thy-kingdom-come": {
+    name: "VIBE TILL THY KINGDOM COME FRAME",
+    category: "frames",
+    drop: "FRAMES",
+    price: 20000,
+    oldPrice: 23000,
+    wall: true,
+    images: ["frame-vibe-till-thy-kingdom-come.jpeg"],
+    colors: [],
+    sizes: ["16 x 24 in"],
+    desc: "16 x 24 in wall frame featuring the VIBE TILL THY KINGDOM COME album cover design."
   }
 };
 
@@ -269,9 +287,11 @@ function priceHtml(p) {
 
 // markup for one shop / home card
 function productCard(p) {
+  const isFrame = p.category === 'frames';
+  const img = `<img class="card-img${isFrame ? ' card-img-poster' : ''}" src="${p.images[0]}" alt="${p.name}" loading="lazy" onload="markLight(this)">`;
   return `
     <a class="card" href="product.html?id=${p.id}">
-      <img class="card-img${p.category === 'frames' ? ' card-img-poster' : ''}" src="${p.images[0]}" alt="${p.name}" loading="lazy" onload="markLight(this)">
+      ${isFrame ? '<span class="frame">' + img + '</span>' : img}
       <div class="card-meta">
         <span class="card-name">${p.name}</span>
         <span class="card-price">${priceHtml(p)}</span>

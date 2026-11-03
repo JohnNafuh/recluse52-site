@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>RECLUSE</title>
-<link rel="stylesheet" href="style.css?v=19">
+<link rel="stylesheet" href="style.css?v=20">
 </head>
 
 <body>
@@ -50,6 +50,17 @@
         <div class="option-head"><h2>Size</h2><span id="sizeName"></span></div>
         <div class="sizes" id="sizes"></div>
       </div>
+      <div class="option" id="roomOption" hidden>
+        <button type="button" class="room-btn" id="roomToggle" aria-expanded="false"><span>See it on your wall</span><span id="roomChevron">+</span></button>
+        <div class="room" id="room" hidden>
+          <div class="room-tabs">
+            <button type="button" class="pill is-active" data-scene="sofa">Sofa</button>
+            <button type="button" class="pill" data-scene="door">Door</button>
+          </div>
+          <div id="roomScene"></div>
+          <p class="room-note">Shown to scale: 16 x 24 in frame, 5'8" person.</p>
+        </div>
+      </div>
     </div>
 
     <div class="buy-bar">
@@ -76,7 +87,7 @@
   </div>
 </footer>
 
-<script src="products.js?v=13"></script>
+<script src="products.js?v=15"></script>
 <script src="cart.js?v=5"></script>
 <script>
 const id = new URLSearchParams(location.search).get("id");
@@ -99,6 +110,56 @@ if (!product) {
   document.getElementById("desc").textContent = product.desc;
   document.getElementById("price").innerHTML = priceHtml(product);
   if (product.oldPrice) document.querySelector(".price-note").textContent = "Limited-time price · no restock";
+
+  /* frames: hang the photo in a real frame, plus the "see it on your wall" view */
+  if (product.category === "frames") {
+    const g = document.querySelector(".gallery");
+    const ph = document.getElementById("photo");
+    g.classList.add("gallery-frame");
+    const fr = document.createElement("span");
+    fr.className = "frame";
+    ph.parentNode.insertBefore(fr, ph);
+    fr.appendChild(ph);
+
+    const FW = 16, FH = 24;
+    const person = (cx) => `<circle cx="${cx}" cy="24.8" r="4.8" fill="#b9b3a8"/><rect x="${cx - 8}" y="29.6" width="16" height="58.4" rx="7" fill="#b9b3a8"/>`;
+    const frameSvg = (x, y, src) => `
+      <rect x="${x + 1.2}" y="${y + 1.6}" width="${FW}" height="${FH}" fill="#000" opacity=".16"/>
+      <rect x="${x}" y="${y}" width="${FW}" height="${FH}" fill="#141414"/>
+      <image href="${src}" x="${x + 0.9}" y="${y + 0.9}" width="${FW - 1.8}" height="${FH - 1.8}" preserveAspectRatio="xMidYMid slice"/>`;
+    const scenes = {
+      sofa: (src) => `
+        <rect x="26" y="62" width="10" height="22" rx="4" fill="#3d3a36"/><rect x="104" y="62" width="10" height="22" rx="4" fill="#3d3a36"/>
+        <rect x="30" y="54" width="80" height="30" rx="5" fill="#46423d"/><rect x="30" y="70" width="80" height="14" rx="3" fill="#57524b"/>
+        <rect x="32" y="84" width="3" height="4" fill="#2a2724"/><rect x="105" y="84" width="3" height="4" fill="#2a2724"/>
+        ${frameSvg(62, 20, src)}${person(14)}`,
+      door: (src) => `
+        <rect x="82" y="8" width="36" height="80" fill="#7a5c3e"/><rect x="86" y="12" width="28" height="30" fill="#6c5035"/><rect x="86" y="48" width="28" height="36" fill="#6c5035"/>
+        <circle cx="87" cy="50" r="1.6" fill="#d8c9a7"/>
+        ${frameSvg(48, 19, src)}${person(26)}`
+    };
+    const drawRoom = (scene) => {
+      document.getElementById("roomScene").innerHTML = `
+        <svg viewBox="0 0 120 96" role="img" aria-label="${product.name} shown on a wall at true size">
+          <rect width="120" height="88" fill="#ece8e0"/><rect y="88" width="120" height="8" fill="#cfc8bb"/>
+          ${scenes[scene](product.images[0])}
+        </svg>`;
+    };
+    document.getElementById("roomOption").hidden = false;
+    drawRoom("sofa");
+    document.getElementById("roomToggle").onclick = () => {
+      const room = document.getElementById("room");
+      room.hidden = !room.hidden;
+      document.getElementById("roomToggle").setAttribute("aria-expanded", String(!room.hidden));
+      document.getElementById("roomChevron").textContent = room.hidden ? "+" : "−";
+    };
+    document.querySelector(".room-tabs").onclick = (e) => {
+      const b = e.target.closest("[data-scene]");
+      if (!b) return;
+      document.querySelectorAll(".room-tabs .pill").forEach(x => x.classList.toggle("is-active", x === b));
+      drawRoom(b.dataset.scene);
+    };
+  }
 
   const addBtn = document.getElementById("addBtn");
   const resetAdd = () => { addBtn.textContent = "Add to cart"; };
