@@ -11,6 +11,8 @@
    featured      true = shown in the home page teaser (keep it to 2)
    exclusive     true = hangs on the home page rail (display only, not clickable)
    wall          true = hangs on the home page gallery wall (frames only, max 5)
+   tag           small label on the card: "NEW", "LIMITED"...
+   soldOut       true = shows SOLD OUT and blocks Add to cart
    oldPrice      original price, shown struck through next to the discounted price
    railImage     cut-out photo (no background) used on the rail; falls back to the first photo
 */
@@ -23,7 +25,8 @@ const PRODUCTS = {
     price: 32000,
     exclusive: true,
     railImage: "rail-fifty-two.webp",
-    images: ["recluse-fifty-two.jpeg", "recluse-fifty-two-back.jpeg"],
+    tag: "LIMITED",
+    images: ["studio-fifty-two-front.jpeg", "studio-fifty-two-back.jpeg"],
     colors: [],
     sizes: ["S", "M", "L", "XL"],
     desc: "White tee. RECLUSE Fifty Two arch on the front, samurai in a red brush circle on the back."
@@ -33,11 +36,12 @@ const PRODUCTS = {
     category: "tees",
     drop: "DROP 03",
     price: 30000,
-    images: ["recluse-hooded-blue.jpeg", "recluse-hooded-pink.jpeg", "recluse-hooded-orange.jpeg"],
+    tag: "NEW",
+    images: ["studio-hooded-blue.jpeg", "studio-hooded-pink.jpeg", "studio-hooded-orange.jpeg"],
     colors: [
-      { name: "Blue", hex: "#7999C1", image: "recluse-hooded-blue.jpeg" },
-      { name: "Pink", hex: "#E6A8A6", image: "recluse-hooded-pink.jpeg" },
-      { name: "Orange", hex: "#E3AE73", image: "recluse-hooded-orange.jpeg" }
+      { name: "Blue", hex: "#7999C1", image: "studio-hooded-blue.jpeg" },
+      { name: "Pink", hex: "#E6A8A6", image: "studio-hooded-pink.jpeg" },
+      { name: "Orange", hex: "#E3AE73", image: "studio-hooded-orange.jpeg" }
     ],
     sizes: ["S", "M", "L", "XL"],
     desc: "White tee. Tall RECLUSE lettering over a hooded figure. Choose blue, pink or orange print."
@@ -48,7 +52,7 @@ const PRODUCTS = {
     category: "tees",
     drop: "DROP 01",
     price: 30000,
-    images: ["a041ae76-2fca-4c0c-9cac-6bcdfc03dd88.jpeg"],
+    images: ["studio-beer-front.jpeg", "studio-beer-back.jpeg"],
     colors: [],
     sizes: ["S", "M", "L", "XL"],
     desc: "Minimal street graphic tee with bold back print."
@@ -58,7 +62,7 @@ const PRODUCTS = {
     category: "tees",
     drop: "DROP 03",
     price: 30000,
-    images: ["recluse-thorns.jpeg"],
+    images: ["studio-thorns-front.jpeg", "studio-thorns-back.jpeg"],
     colors: [],
     sizes: ["S", "M", "L", "XL"],
     desc: "White tee. Black-and-white crown of thorns portrait on the front, blackletter RECLUSE across the back."
@@ -69,7 +73,7 @@ const PRODUCTS = {
     drop: "DROP 03",
     price: 30000,
     featured: true,
-    images: ["recluse-rf2.jpeg"],
+    images: ["studio-rf2-front.jpeg", "studio-rf2-back.jpeg"],
     colors: [],
     sizes: ["S", "M", "L", "XL"],
     desc: "Black tee. RECLUSE over a glowing planet on the front, stacked RF2 on the back."
@@ -79,7 +83,8 @@ const PRODUCTS = {
     category: "tees",
     drop: "DROP 03",
     price: 30000,
-    images: ["recluse-gothic.jpeg"],
+    tag: "NEW",
+    images: ["studio-gothic-front.jpeg"],
     colors: [],
     sizes: ["S", "M", "L", "XL"],
     desc: "White tee. Distressed blackletter RECLUSE across the chest."
@@ -90,7 +95,7 @@ const PRODUCTS = {
     category: "tees",
     drop: "DROP 03",
     price: 30000,
-    images: ["recluse-camo-thorns.jpeg"],
+    images: ["studio-camo-thorns-front.jpeg", "studio-camo-thorns-back.jpeg"],
     colors: [],
     sizes: ["S", "M", "L", "XL"],
     desc: "White tee. Camo RECLUSE oval on the front, camo crown of thorns portrait on the back."
@@ -101,7 +106,7 @@ const PRODUCTS = {
     drop: "DROP 01",
     price: 30000,
     featured: true,
-    images: ["2af34606-1479-4be7-a83d-7b61140dda21.jpeg"],
+    images: ["studio-smoked-front.jpeg", "studio-smoked-back.jpeg"],
     colors: [],
     sizes: ["S", "M", "L", "XL"],
     desc: "Smoked floral graphic tee with premium cotton finish."
@@ -113,7 +118,7 @@ const PRODUCTS = {
     price: 30000,
     exclusive: true,
     railImage: "rail-camo-block.webp",
-    images: ["recluse-camo-block.jpeg"],
+    images: ["studio-camo-block-front.jpeg", "studio-camo-block-back.jpeg"],
     colors: [],
     sizes: ["S", "M", "L", "XL"],
     desc: "White tee. Camo RECLUSE wordmark on the front, camo crown of thorns portrait on the back."
@@ -123,7 +128,7 @@ const PRODUCTS = {
     category: "tees",
     drop: "DROP 03",
     price: 30000,
-    images: ["recluse-no-rest.jpeg"],
+    images: ["studio-no-rest-back.jpeg"],
     colors: [],
     sizes: ["S", "M", "L", "XL"],
     desc: "White tee. Blackletter RECLUSE over a winged hourglass and No Rest banner on the back."
@@ -133,7 +138,7 @@ const PRODUCTS = {
     category: "tees",
     drop: "DROP 01",
     price: 30000,
-    images: ["233d44f0-6ed6-4388-9a0f-69d90e762b66.jpeg"],
+    images: ["studio-dreams-front.jpeg", "studio-dreams-back.jpeg"],
     colors: [],
     sizes: ["S", "M", "L", "XL"],
     desc: "Minimal dream-inspired streetwear tee."
@@ -143,7 +148,7 @@ const PRODUCTS = {
     category: "tees",
     drop: "DROP 01",
     price: 30000,
-    images: ["e875715a-90af-4361-b1a9-9fe4e38f0a67.jpeg"],
+    images: ["studio-chain-front.jpeg", "studio-chain-back.jpeg"],
     colors: [],
     sizes: ["S", "M", "L", "XL"],
     desc: "Heavy streetwear tee featuring chain heart graphic."
@@ -155,7 +160,7 @@ const PRODUCTS = {
     price: 28000,
     exclusive: true,
     railImage: "rail-sword-vest.webp",
-    images: ["photo-output.jpeg"],
+    images: ["studio-sword-vest.jpeg"],
     colors: [],
     sizes: ["S", "M", "L", "XL"],
     desc: "Black sleeveless vest featuring Samurai sword graphic."
@@ -320,16 +325,38 @@ function priceHtml(p) {
 // markup for one shop / home card
 function productCard(p) {
   const isFrame = p.category === 'frames';
-  const img = `<img class="card-img${isFrame ? ' card-img-poster' : ''}" src="${p.images[0]}" alt="${p.name}" loading="lazy" onload="markLight(this)">`;
-  return `
-    <a class="card" href="product.html?id=${p.id}">
-      ${isFrame ? '<span class="frame">' + img + '</span>' : img}
+  const title = isFrame ? p.name : p.name.replace(/^RECLUSE /, '');
+  const meta = `
       <div class="card-meta">
-        <span class="card-name">${p.name}</span>
+        <span class="card-name">${title}</span>
         <span class="card-price">${priceHtml(p)}</span>
-      </div>
+      </div>`;
+  if (isFrame) {
+    const img = `<img class="card-img card-img-poster" src="${p.images[0]}" alt="${p.name}" loading="lazy" onload="markLight(this)">`;
+    return `
+    <a class="card" href="product.html?id=${p.id}">
+      <span class="frame">${img}</span>${meta}
+    </a>`;
+  }
+  // front first; the back shows on hover (desktop) or swipe (phone). Colour products show their cover only.
+  const shots = p.colors.length ? [p.images[0]] : p.images.slice(0, 2);
+  const imgs = shots.map((s, i) => `<img class="card-img" src="${s}" alt="${p.name}${i ? ' (back)' : ''}" loading="lazy" draggable="false">`).join("");
+  const dots = shots.length > 1 ? '<span class="dots" aria-hidden="true"><i></i><i></i></span>' : "";
+  const label = p.soldOut ? "SOLD OUT" : (p.tag || "");
+  const tag = label ? `<span class="tag${p.soldOut ? " tag-out" : ""}">${label}</span>` : "";
+  return `
+    <a class="card${p.soldOut ? " is-out" : ""}" href="product.html?id=${p.id}">
+      <span class="card-media"><span class="slides">${imgs}</span>${dots}${tag}</span>${meta}
     </a>`;
 }
+
+// keeps the little dots in step when a card is swiped on a phone
+document.addEventListener("scroll", e => {
+  const el = e.target;
+  if (el && el.classList && el.classList.contains("slides")) {
+    el.parentElement.dataset.i = Math.round(el.scrollLeft / el.clientWidth);
+  }
+}, true);
 
 // adds a thin border to photos with a white / near-white background
 // (checks the top-left corner pixel once the photo has loaded)
@@ -340,7 +367,7 @@ function markLight(img) {
     const ctx = c.getContext("2d");
     ctx.drawImage(img, 0, 0, 4, 4, 0, 0, 1, 1);
     const [r, g, b] = ctx.getImageData(0, 0, 1, 1).data;
-    if ((r + g + b) / 3 > 225) img.classList.add("is-light");
+    if ((r + g + b) / 3 > 245) img.classList.add("is-light");
   } catch (e) { /* can't read the photo: leave it without a border */ }
 }
 
