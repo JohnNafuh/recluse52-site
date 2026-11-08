@@ -85,7 +85,7 @@
 </footer>
 
 <script src="https://js.paystack.co/v2/inline.js"></script>
-<script src="products.js?v=15"></script>
+<script src="products.js?v=16"></script>
 <script src="cart.js?v=5"></script>
 <script>
 /* Public key only. Never put the secret key (sk_...) in this file.
@@ -133,7 +133,7 @@ function renderCart() {
     const details = "Size " + item.size + (item.color ? " · " + item.color : "");
     return `
       <div class="cart-item">
-        <img src="${p.images[0]}" alt="${p.name}">
+        <img src="${imageFor(p, item.color)}" alt="${p.name}">
         <div class="cart-info">
           <span class="cart-name">${p.name}</span>
           <span class="cart-meta">${details}</span>

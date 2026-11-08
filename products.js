@@ -28,6 +28,21 @@ const PRODUCTS = {
     sizes: ["S", "M", "L", "XL"],
     desc: "White tee. RECLUSE Fifty Two arch on the front, samurai in a red brush circle on the back."
   },
+  "hooded": {
+    name: "RECLUSE HOODED",
+    category: "tees",
+    drop: "DROP 03",
+    price: 30000,
+    images: ["recluse-hooded-blue.jpeg", "recluse-hooded-pink.jpeg", "recluse-hooded-orange.jpeg"],
+    colors: [
+      { name: "Blue", hex: "#7999C1", image: "recluse-hooded-blue.jpeg" },
+      { name: "Pink", hex: "#E6A8A6", image: "recluse-hooded-pink.jpeg" },
+      { name: "Orange", hex: "#E3AE73", image: "recluse-hooded-orange.jpeg" }
+    ],
+    sizes: ["S", "M", "L", "XL"],
+    desc: "White tee. Tall RECLUSE lettering over a hooded figure. Choose blue, pink or orange print."
+  },
+
   "beer-tee": {
     name: "RECLUSE BEER TEE",
     category: "tees",
@@ -59,6 +74,17 @@ const PRODUCTS = {
     sizes: ["S", "M", "L", "XL"],
     desc: "Black tee. RECLUSE over a glowing planet on the front, stacked RF2 on the back."
   },
+  "gothic": {
+    name: "RECLUSE GOTHIC",
+    category: "tees",
+    drop: "DROP 03",
+    price: 30000,
+    images: ["recluse-gothic.jpeg"],
+    colors: [],
+    sizes: ["S", "M", "L", "XL"],
+    desc: "White tee. Distressed blackletter RECLUSE across the chest."
+  },
+
   "camo-thorns": {
     name: "RECLUSE CAMO THORNS",
     category: "tees",
@@ -277,6 +303,12 @@ function listProducts(category) {
   return Object.keys(PRODUCTS)
     .map(getProduct)
     .filter(p => !category || p.category === category);
+}
+
+// photo for a chosen colour (falls back to the first photo)
+function imageFor(p, colorName) {
+  const c = (p.colors || []).find(c => c.name === colorName);
+  return (c && c.image) || p.images[0];
 }
 
 // price text; shows the original price struck through when oldPrice is set
