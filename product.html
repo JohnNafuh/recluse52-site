@@ -109,7 +109,13 @@ if (!product) {
   document.getElementById("drop").textContent = product.drop;
   document.getElementById("desc").textContent = product.desc;
   document.getElementById("price").innerHTML = priceHtml(product);
-  if (product.oldPrice) document.querySelector(".price-note").textContent = "Limited-time price · no restock";
+  if (product.oldPrice) {
+    // discounted price takes more room: keep the buy bar inside the screen on phones
+    document.querySelector(".price-note").textContent = "Limited-time price";
+    document.querySelector(".price-block").style.minWidth = "0";
+    document.querySelector(".buy-bar").style.gap = "8px";
+    document.getElementById("addBtn").style.padding = "0 18px";
+  }
 
   /* frames: hang the photo in a real frame, plus the "see it on your wall" view */
   if (product.category === "frames") {
