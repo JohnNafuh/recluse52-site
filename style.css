@@ -929,3 +929,28 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .card.is-out .card-media { opacity: 0.55; }
 
 .add-btn:disabled { background: #d4d4d2; color: #5f5f5f; cursor: not-allowed; }
+
+
+/* ---------- tabs: small, flat, underlined ---------- */
+.pills { gap: 22px; padding-bottom: 0; border-bottom: 1px solid var(--line); }
+.pill, .pill-alt {
+  min-height: 34px;
+  padding: 0 1px;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
+  margin-bottom: -1px;
+  background: none;
+  font-family: var(--wide);
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.pill:hover, .pill-alt:hover, .pill.is-active { background: none; color: var(--ink); border-color: transparent; border-bottom-color: var(--ink); }
+
+/* top nav: smaller and lighter */
+.nav a:not(.nav-logo) { min-height: 26px; padding: 0 10px; background: transparent; box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.16); font-size: 8px; }
+.nav a:not(.nav-logo):hover, .nav a:not(.nav-logo):active { background: var(--ink); color: var(--paper); box-shadow: none; }
+.nav a[href="cart.html"] { background: var(--ink); color: var(--paper); box-shadow: none; }

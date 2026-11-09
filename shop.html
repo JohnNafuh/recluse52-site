@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>RECLUSE | SHOP</title>
 <meta name="description" content="Shop RECLUSE tees and sleeveless pieces. Limited drops, no restock.">
-<link rel="stylesheet" href="style.css?v=21">
+<link rel="stylesheet" href="style.css?v=22">
 </head>
 
 <body>
@@ -52,13 +52,34 @@
   </div>
 </footer>
 
-<script src="products.js?v=17"></script>
+<script src="products.js?v=18"></script>
 <script src="cart.js?v=5"></script>
 <script>
   // fill each section with its category, in the order listed in products.js
   document.querySelectorAll("[data-category]").forEach(grid => {
     grid.innerHTML = listProducts(grid.dataset.category).map(productCard).join("");
   });
+
+  // coming back from a product: return to the spot you left
+  const nav = performance.getEntriesByType("navigation")[0];
+  const cameBack = (nav && nav.type === "back_forward") || sessionStorage.getItem("restoreShop") === "1";
+  sessionStorage.removeItem("restoreShop");
+  const savedY = Number(sessionStorage.getItem("shopScroll") || 0);
+  if (cameBack && savedY) { history.scrollRestoration = "manual"; window.scrollTo(0, savedY); }
+  const saveY = () => sessionStorage.setItem("shopScroll", String(window.scrollY));
+  window.addEventListener("pagehide", saveY);
+  document.addEventListener("click", e => { if (e.target.closest("a.card")) saveY(); });
+
+  // highlight the tab for the section on screen
+  const tabs = Array.from(document.querySelectorAll(".pill"));
+  const sections = tabs.map(t => document.querySelector(t.getAttribute("href")));
+  function markTab() {
+    let i = 0;
+    sections.forEach((sec, n) => { if (sec && sec.getBoundingClientRect().top < window.innerHeight * 0.4) i = n; });
+    tabs.forEach((t, n) => t.classList.toggle("is-active", n === i));
+  }
+  window.addEventListener("scroll", markTab, { passive: true });
+  markTab();
 </script>
 
 </body>

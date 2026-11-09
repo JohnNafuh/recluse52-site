@@ -171,7 +171,7 @@ const PRODUCTS = {
     category: "sleeveless",
     drop: "DROP 02",
     price: 28000,
-    images: ["recluse-sword-vest-white.jpeg"],
+    images: ["studio-sword-vest-white.jpeg"],
     colors: [],
     sizes: ["S", "M", "L", "XL"],
     desc: "White sleeveless vest featuring Samurai sword graphic."
