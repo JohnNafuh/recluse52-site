@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>RECLUSE</title>
-<link rel="stylesheet" href="style.css?v=22">
+<link rel="stylesheet" href="style.css?v=23">
 </head>
 
 <body>
@@ -23,12 +23,13 @@
     <div class="product-intro">
       <a class="back-link" href="shop.html" onclick="if (document.referrer.indexOf('shop.html') > -1) { history.back(); return false; } sessionStorage.setItem('restoreShop', '1');">
         <svg width="20" height="14" viewBox="0 0 20 14" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M19 7H1M7 1L1 7l6 6"/></svg>
-        Back to shop
+        Shop
       </a>
       <div class="product-title-row">
         <h1 class="product-title" id="name"></h1>
         <span class="badge" id="drop"></span>
       </div>
+      <div class="pdp-price" id="pdpPrice"></div>
       <p class="product-desc" id="desc"></p>
     </div>
 
@@ -39,6 +40,7 @@
         <span id="photoCount">1 / 1</span>
         <button type="button" id="nextPhoto" aria-label="Next photo">›</button>
       </div>
+      <div class="thumbs" id="thumbs" hidden></div>
     </div>
 
     <div class="panel">
@@ -61,6 +63,25 @@
           <p class="room-note">Shown to scale: 16 x 24 in frame, 5'8" person.</p>
         </div>
       </div>
+
+      <div class="accs">
+        <details class="acc">
+          <summary>Delivery</summary>
+          <div>
+            <p>Within Abuja: ₦2,000</p>
+            <p>Outside Abuja: ₦4,000</p>
+            <p>Pickup: free</p>
+            <p>We'll contact you on your phone number to arrange delivery.</p>
+          </div>
+        </details>
+        <details class="acc">
+          <summary>Returns</summary>
+          <div>
+            <p>Return within 7 days of receiving your order if it is unworn, unwashed and in its original condition. Wrong or damaged item? Tell us within 7 days and we'll make it right.</p>
+            <p><a href="terms.html">Read the full terms</a></p>
+          </div>
+        </details>
+      </div>
     </div>
 
     <div class="buy-bar">
@@ -75,6 +96,11 @@
     </div>
 
   </div>
+
+  <section class="pdp-more" id="more" hidden>
+    <h2>YOU MAY ALSO LIKE</h2>
+    <div class="more-row" id="moreRow"></div>
+  </section>
 </main>
 
 <footer class="footer">
@@ -109,6 +135,8 @@ if (!product) {
   document.getElementById("drop").textContent = product.drop;
   document.getElementById("desc").textContent = product.desc;
   document.getElementById("price").innerHTML = priceHtml(product);
+  document.getElementById("pdpPrice").innerHTML = priceHtml(product) +
+    (product.oldPrice ? '<span class="pdp-save">Save ' + formatPrice(product.oldPrice - product.price) + '</span>' : "");
   if (product.oldPrice) {
     // discounted price takes more room: keep the buy bar inside the screen on phones
     document.querySelector(".price-note").textContent = "Limited-time price";
@@ -177,13 +205,46 @@ if (!product) {
     photoEl.src = product.images[photo];
     photoEl.alt = product.name + " photo " + (photo + 1);
     document.getElementById("photoCount").textContent = (photo + 1) + " / " + product.images.length;
+    document.querySelectorAll("#thumbs button").forEach((b, i) => b.setAttribute("aria-current", String(i === photo)));
   }
   if (product.images.length > 1) {
     document.getElementById("counter").hidden = false;
     document.getElementById("prevPhoto").onclick = () => { photo = (photo - 1 + product.images.length) % product.images.length; showPhoto(); syncColor(); };
     document.getElementById("nextPhoto").onclick = () => { photo = (photo + 1) % product.images.length; showPhoto(); syncColor(); };
   }
+
+  // thumbnails + swipe (2+ photos)
+  if (product.images.length > 1) {
+    const thumbs = document.getElementById("thumbs");
+    thumbs.hidden = false;
+    thumbs.innerHTML = product.images.map((s, i) => `<button type="button" aria-label="Photo ${i + 1}" data-i="${i}"><img src="${s}" alt="" draggable="false"></button>`).join("");
+    thumbs.onclick = e => {
+      const b = e.target.closest("[data-i]");
+      if (!b) return;
+      photo = Number(b.dataset.i); showPhoto(); syncColor();
+    };
+    let sx = null;
+    const gal = document.querySelector(".gallery");
+    gal.addEventListener("touchstart", e => { sx = e.touches[0].clientX; }, { passive: true });
+    gal.addEventListener("touchend", e => {
+      if (sx === null) return;
+      const dx = e.changedTouches[0].clientX - sx; sx = null;
+      if (Math.abs(dx) > 45) { photo = (photo + (dx < 0 ? 1 : -1) + product.images.length) % product.images.length; showPhoto(); syncColor(); }
+    }, { passive: true });
+  }
   showPhoto();
+
+  // more from the same section: the next 4 after this one
+  (function () {
+    const same = listProducts(product.category);
+    const i = same.findIndex(p => p.id === product.id);
+    const next = [];
+    for (let k = 1; k < same.length && next.length < 4; k++) next.push(same[(i + k) % same.length]);
+    if (next.length) {
+      document.getElementById("moreRow").innerHTML = next.map(productCard).join("");
+      document.getElementById("more").hidden = false;
+    }
+  })();
 
   // when the photo changes, pick the matching colour
   function syncColor() {
