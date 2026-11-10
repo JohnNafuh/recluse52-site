@@ -1001,3 +1001,29 @@ button { font: inherit; color: inherit; cursor: pointer; }
   .more-row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; overflow: visible; margin: 0; padding: 0; }
   .more-row .card { flex: none; }
 }
+
+
+/* ---------- product page: photo first and fully visible, smaller controls ---------- */
+@media (max-width: 899px) {
+  .product-layout { display: flex; flex-direction: column; }
+  .gallery { order: 1; margin-top: 2px; }
+  .product-intro { order: 2; padding-top: 22px; }
+  .panel { order: 3; }
+  .back-link { display: none; } /* the SHOP button in the top menu does this on phones */
+}
+
+@media (min-width: 900px) {
+  .product-layout { grid-template-columns: minmax(0, 560px) minmax(0, 440px); justify-content: center; column-gap: 72px; }
+  .gallery { position: sticky; top: 16px; align-self: start; }
+}
+
+.sizes { display: flex; flex-wrap: wrap; gap: 8px; }
+.size { min-width: 50px; height: 36px; padding: 0 14px; border: 1px solid #cfcfcd; border-radius: 4px; font-family: var(--wide); font-size: 10px; font-weight: 400; letter-spacing: 0.1em; }
+.size[aria-pressed="true"] { border-color: var(--ink); }
+
+.swatches { gap: 8px; }
+.swatch { padding: 2px; border-radius: 12px; }
+.swatch span { width: 40px; height: 40px; border-radius: 9px; }
+
+.acc summary { min-height: 46px; }
+.option-head h2 { font-size: 9px; }

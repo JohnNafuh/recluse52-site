@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>RECLUSE</title>
-<link rel="stylesheet" href="style.css?v=23">
+<link rel="stylesheet" href="style.css?v=24">
 </head>
 
 <body>
@@ -118,6 +118,12 @@
 <script>
 const id = new URLSearchParams(location.search).get("id");
 const product = getProduct(id);
+
+// SHOP button in the menu: go back to the spot you left in the shop
+const navShop = document.querySelector('.nav a[href="shop.html"]');
+if (navShop) navShop.onclick = e => {
+  if (document.referrer.indexOf("shop.html") > -1) { e.preventDefault(); history.back(); }
+};
 
 if (!product) {
   document.getElementById("product").innerHTML = `
