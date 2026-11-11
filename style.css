@@ -1027,3 +1027,17 @@ button { font: inherit; color: inherit; cursor: pointer; }
 
 .acc summary { min-height: 46px; }
 .option-head h2 { font-size: 9px; }
+
+
+/* ---------- buy row: not fixed, sits in the page right under the product ---------- */
+.buy-bar .price { display: none; } /* the price is already shown under the name */
+
+@media (max-width: 899px) {
+  .product { padding-bottom: 32px; }
+  .product-layout { gap: 22px; }
+  .product-intro { padding: 0; }
+  .panel { display: contents; }
+  .panel > * { order: 3; }
+  .panel > .accs { order: 5; }
+  .buy-bar { order: 4; position: static; padding: 0; background: none; box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none; }
+}
