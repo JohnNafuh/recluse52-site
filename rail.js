@@ -43,13 +43,13 @@
     #rail .rail-bar::before { left: -9px; }
     #rail .rail-bar::after { right: -9px; }
 
-    #rail .hang { position: relative; flex: 0 0 auto; width: clamp(50px, 13vw, 74px); display: flex; justify-content: center; margin: 0; perspective: 900px; transform-origin: 50% 13px; }
-    #rail .hang + .hang { margin-left: 0; }
+    #rail .hang { position: relative; flex: 0 0 auto; display: flex; justify-content: center; margin: 0; transform-origin: 50% 13px; }
+    #rail .hang + .hang { margin-left: clamp(-30px, -4.5vw, -14px); }
     #rail .hook { position: absolute; left: 50%; top: 0; width: 26px; height: 64px; margin-left: -13px; z-index: 1; filter: drop-shadow(0 2px 1.5px rgba(0, 0, 0, 0.3)); }
-    #rail .turn { position: relative; z-index: 2; margin-top: 60px; transform: rotateY(var(--ry, 74deg)); transform-style: preserve-3d; }
+    #rail .turn { position: relative; z-index: 2; margin-top: 60px; }
     #rail .arms { position: absolute; left: 50%; top: -9px; width: 64%; height: 22px; transform: translateX(-50%); z-index: 0; overflow: visible; }
-    #rail .hang-garment { position: relative; z-index: 1; display: block; margin: 0; height: clamp(135px, 36vw, 195px); width: auto;
-      filter: brightness(var(--b, 0.78)) drop-shadow(0 10px 9px rgba(0, 0, 0, 0.2)); }`;
+    #rail .hang-garment { position: relative; z-index: 1; display: block; margin: 0; height: clamp(110px, 28vw, 170px); width: auto;
+      filter: drop-shadow(0 10px 9px rgba(0, 0, 0, 0.2)); }`;
   document.head.appendChild(css);
 
   // thin chrome wire over the rail + small wooden neck
@@ -76,7 +76,7 @@
     </div>`).join("");
 
   const slots = Array.from(track.querySelectorAll(".hang"));
-  const state = slots.map((el, i) => ({ el, turn: el.querySelector(".turn"), angle: 0, vel: 0, ry: 74, phase: i * 1.7 }));
+  const state = slots.map((el, i) => ({ el, angle: 0, vel: 0, phase: i * 1.7 }));
 
   /* ---------- motion on / off ---------- */
   let motion = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -88,28 +88,27 @@
   setMotion(motion);
   toggle.onclick = () => setMotion(!motion);
 
-  /* ---------- which piece faces front ---------- */
-  let focus = Math.floor((slots.length - 1) / 2);
-  slots.forEach((el, k) => { el.style.zIndex = k === focus ? 5 : 1; });
-
-  function setFocus(i) {
-    if (i === focus) return;
-    state[focus].vel += 2.4; state[i].vel -= 2.4;      // a little swing as it turns
-    focus = i;
-    slots.forEach((el, k) => { el.style.zIndex = k === focus ? 5 : 1; });
-  }
-  function nearest(clientX) {
-    let best = 0, bd = 1e9;
-    slots.forEach((el, i) => {
-      const r = el.getBoundingClientRect(), d = Math.abs(clientX - (r.left + r.width / 2));
-      if (d < bd) { bd = d; best = i; }
+  /* ---------- swing when you move over them or tap ---------- */
+  let lastX = null;
+  rail.addEventListener("pointermove", e => {
+    if (lastX !== null) {
+      const dx = e.clientX - lastX;
+      state.forEach(h => {
+        const rc = h.el.getBoundingClientRect(), d = Math.abs(e.clientX - (rc.left + rc.width / 2));
+        if (d < 130) h.vel += dx * 0.03 * (1 - d / 130);
+      });
+    }
+    lastX = e.clientX;
+  });
+  rail.addEventListener("pointerleave", () => { lastX = null; });
+  rail.addEventListener("pointerdown", e => {
+    let best = state[0], bd = 1e9;
+    state.forEach(h => {
+      const rc = h.el.getBoundingClientRect(), d = Math.abs(e.clientX - (rc.left + rc.width / 2));
+      if (d < bd) { bd = d; best = h; }
     });
-    return best;
-  }
-  rail.addEventListener("pointermove", e => { if (e.pointerType === "mouse") setFocus(nearest(e.clientX)); });
-  rail.addEventListener("pointerdown", e => setFocus(nearest(e.clientX)));
-
-  const targetRy = i => (i === focus ? 0 : Math.min(80, 68 + Math.abs(i - focus) * 4));
+    best.vel += 2.6;
+  });
 
   /* ---------- animation loop ---------- */
   let visible = true;
@@ -119,22 +118,19 @@
     requestAnimationFrame(frame);
     if (!visible) return;
     state.forEach((h, i) => {
-      const tgt = targetRy(i);
-      if (!motion) { h.ry = tgt; h.angle = 0; h.vel = 0; }
+      if (!motion) { h.angle = 0; h.vel = 0; }
       else {
-        h.ry += (tgt - h.ry) * 0.1;
         const rest = Math.sin(time / 1000 * 0.9 + h.phase) * 1.1;
         h.vel += (rest - h.angle) * 0.02; h.vel *= 0.93;
         h.angle = Math.max(-14, Math.min(14, h.angle + h.vel));
       }
       h.el.style.transform = `rotate(${h.angle.toFixed(2)}deg)`;
-      h.turn.style.setProperty("--ry", h.ry.toFixed(1) + "deg");
-      h.turn.style.setProperty("--b", (1 - 0.30 * Math.min(h.ry, 78) / 78).toFixed(3));
     });
   }
 
   function sizeBar() {
-    bar.style.width = Math.min(rail.clientWidth - 44, slots[0].offsetWidth * slots.length + 110) + "px";
+    const a = slots[0].getBoundingClientRect(), z = slots[slots.length - 1].getBoundingClientRect();
+    bar.style.width = Math.min(rail.clientWidth - 44, z.right - a.left + 70) + "px";
   }
 
   /* ---------- start once the photos are in ---------- */
