@@ -1,6 +1,6 @@
 /* RECLUSE — exclusive rail (home page)
-   Display only: pieces marked exclusive: true in products.js hang on a rail.
-   Drag / swipe to move the rail; the pieces swing with the movement and sway gently at rest.
+   Display only. Pieces marked exclusive: true in products.js hang on a chrome rail from thin wire hooks
+   and small wooden hangers. They hang side-on; the one you hover / tap swings round to face front.
    Needs products.js loaded first. */
 
 (function () {
@@ -8,69 +8,75 @@
   if (!rail) return;
   const track = document.getElementById("railTrack");
   const toggle = document.getElementById("motionToggle");
+  const bar = rail.querySelector(".rail-bar");
 
   const pieces = listProducts().filter(p => p.exclusive);
-  if (!pieces.length) {
-    rail.closest("section").hidden = true;
-    return;
-  }
+  if (!pieces.length) { rail.closest("section").hidden = true; return; }
 
-  // finishes for the hanger, defined once
+  // finishes: chrome wire, wood
   document.body.insertAdjacentHTML("beforeend", `
     <svg width="0" height="0" style="position:absolute" aria-hidden="true">
       <defs>
-        <linearGradient id="wireMetal" gradientUnits="userSpaceOnUse" x1="24" y1="0" x2="52" y2="0">
-          <stop offset="0" stop-color="#3d3d3d"/>
-          <stop offset="0.28" stop-color="#cfcfcf"/>
-          <stop offset="0.42" stop-color="#ffffff"/>
-          <stop offset="0.66" stop-color="#8a8a8a"/>
-          <stop offset="1" stop-color="#2f2f2f"/>
+        <linearGradient id="woodNeck" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#3a110d"/><stop offset="0.45" stop-color="#97442f"/><stop offset="1" stop-color="#3a110d"/>
         </linearGradient>
-        <linearGradient id="nutChrome" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0" stop-color="#5a5a5a"/>
-          <stop offset="0.4" stop-color="#f6f6f6"/>
-          <stop offset="1" stop-color="#6a6a6a"/>
-        </linearGradient>
-        <linearGradient id="neckGloss" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0" stop-color="#070707"/>
-          <stop offset="0.32" stop-color="#2e2e2e"/>
-          <stop offset="0.46" stop-color="#5b5b5b"/>
-          <stop offset="0.6" stop-color="#242424"/>
-          <stop offset="1" stop-color="#050505"/>
+        <linearGradient id="woodArm" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#a84f38"/><stop offset="0.55" stop-color="#6a2a20"/><stop offset="1" stop-color="#3d130f"/>
         </linearGradient>
       </defs>
     </svg>`);
 
-  // a little depth: soft shadow under the hanger and where the neck meets the collar
-  const st = document.createElement("style");
-  st.textContent = `
-    .hang { position: relative; }
-    .hook { filter: drop-shadow(0 3px 2.5px rgba(0, 0, 0, 0.35)); }
-    .hang::after { content: ""; position: absolute; left: 50%; top: 61px; width: 30px; height: 13px; transform: translateX(-50%);
-      background: radial-gradient(ellipse at 50% 0%, rgba(0, 0, 0, 0.28), rgba(0, 0, 0, 0) 75%); z-index: 3; pointer-events: none; }`;
-  document.head.appendChild(st);
+  const css = document.createElement("style");
+  css.textContent = `
+    #rail { overflow-x: auto; overflow-y: hidden; touch-action: pan-x pan-y; cursor: default; scrollbar-width: none; }
+    #rail::-webkit-scrollbar { display: none; }
+    #rail .rail-track { width: max-content; min-width: 100%; justify-content: center; gap: 0; padding: 14px 0 38px; }
+    #rail .rail-bar { left: 50%; right: auto; transform: translateX(-50%); }
+    #rail .rail-bar::before, #rail .rail-bar::after {
+      content: ""; position: absolute; top: -11px; width: 12px; height: 32px; border-radius: 3px;
+      background:
+        radial-gradient(circle at 50% 24%, #4a4a4a 0 1.3px, transparent 1.7px),
+        radial-gradient(circle at 50% 76%, #4a4a4a 0 1.3px, transparent 1.7px),
+        linear-gradient(90deg, #8a8a8a, #f6f6f6 45%, #7a7a7a);
+      box-shadow: 0 5px 6px -3px rgba(0, 0, 0, 0.4);
+    }
+    #rail .rail-bar::before { left: -9px; }
+    #rail .rail-bar::after { right: -9px; }
 
-  // chrome wire hook over the rail, swivel, and a glossy black plastic neck that disappears into the collar
+    #rail .hang { position: relative; flex: 0 0 auto; width: clamp(50px, 13vw, 74px); display: flex; justify-content: center; margin: 0; perspective: 900px; transform-origin: 50% 13px; }
+    #rail .hang + .hang { margin-left: 0; }
+    #rail .hook { position: absolute; left: 50%; top: 0; width: 26px; height: 64px; margin-left: -13px; z-index: 1; filter: drop-shadow(0 2px 1.5px rgba(0, 0, 0, 0.3)); }
+    #rail .turn { position: relative; z-index: 2; margin-top: 60px; transform: rotateY(var(--ry, 74deg)); transform-style: preserve-3d; }
+    #rail .arms { position: absolute; left: 50%; top: -9px; width: 64%; height: 22px; transform: translateX(-50%); z-index: 0; overflow: visible; }
+    #rail .hang-garment { position: relative; z-index: 1; display: block; margin: 0; height: clamp(135px, 36vw, 195px); width: auto;
+      filter: brightness(var(--b, 0.78)) drop-shadow(0 10px 9px rgba(0, 0, 0, 0.2)); }`;
+  document.head.appendChild(css);
+
+  // thin chrome wire over the rail + small wooden neck
   const hookSvg = `
-    <svg class="hook" width="56" height="86" viewBox="0 0 56 86" fill="none" aria-hidden="true">
-      <path d="M28 64 V24 C28 12 31 2 39 2 C47 2 50 9 48 17" stroke="rgba(0,0,0,0.22)" stroke-width="5" stroke-linecap="round" transform="translate(1.6 1.6)"/>
-      <path d="M28 64 V24 C28 12 31 2 39 2 C47 2 50 9 48 17" stroke="url(#wireMetal)" stroke-width="3.8" stroke-linecap="round"/>
-      <path d="M27.1 62 V24 C27.1 12.5 30.4 3.2 39 3.2" stroke="rgba(255,255,255,0.85)" stroke-width="0.9" stroke-linecap="round"/>
-      <rect x="24" y="55" width="8" height="9" rx="1.5" fill="url(#nutChrome)"/>
-      <rect x="22.5" y="61.5" width="11" height="3.4" rx="1.2" fill="url(#nutChrome)" stroke="rgba(0,0,0,0.3)" stroke-width="0.4"/>
-      <path d="M22 66 C22 64.6 24.2 64 28 64 C31.8 64 34 64.6 34 66 L47 86 H9 Z" fill="url(#neckGloss)"/>
-      <path d="M22.4 66.6 L10.6 85" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
-      <path d="M33.6 66.6 L45.4 85" stroke="rgba(0,0,0,0.55)" stroke-width="1"/>
-      <ellipse cx="28" cy="65.8" rx="5.6" ry="1.2" fill="rgba(255,255,255,0.28)"/>
+    <svg class="hook" viewBox="0 0 26 64" fill="none" aria-hidden="true">
+      <path d="M13 56 V20 C13 12 15 7 19 7 C23 7 25 11 24 15" stroke="#6f6f6f" stroke-width="2.6" stroke-linecap="round"/>
+      <path d="M13 56 V20 C13 12 15 7 19 7 C23 7 25 11 24 15" stroke="#e4e4e4" stroke-width="1.5" stroke-linecap="round"/>
+      <rect x="10" y="50" width="6" height="12" rx="2.6" fill="url(#woodNeck)"/>
+    </svg>`;
+  // wooden hanger shoulders, mostly hidden inside the garment so only a hint shows at the collar
+  const armsSvg = `
+    <svg class="arms" viewBox="0 0 100 26" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M3 22 Q50 -2 97 22" stroke="url(#woodArm)" stroke-width="5.5" stroke-linecap="round" fill="none" vector-effect="non-scaling-stroke"/>
+      <path d="M3 20.6 Q50 -3.4 97 20.6" stroke="rgba(255,255,255,0.28)" stroke-width="1.1" stroke-linecap="round" fill="none" vector-effect="non-scaling-stroke"/>
     </svg>`;
 
   track.innerHTML = pieces.map(p => `
     <div class="hang">
       ${hookSvg}
-      <img class="hang-garment" src="${p.railImage || p.images[0]}" alt="${p.name}" draggable="false">
+      <div class="turn">
+        ${armsSvg}
+        <img class="hang-garment" src="${p.railImage || p.images[0]}" alt="${p.name}" draggable="false">
+      </div>
     </div>`).join("");
 
-  const hangs = Array.from(track.children).map((el, i) => ({ el, angle: 0, vel: 0, phase: i * 1.7 }));
+  const slots = Array.from(track.querySelectorAll(".hang"));
+  const state = slots.map((el, i) => ({ el, turn: el.querySelector(".turn"), angle: 0, vel: 0, ry: 74, phase: i * 1.7 }));
 
   /* ---------- motion on / off ---------- */
   let motion = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -82,45 +88,28 @@
   setMotion(motion);
   toggle.onclick = () => setMotion(!motion);
 
-  /* ---------- rail position ---------- */
-  let x = 0, v = 0, minX = 0, maxX = 0;
-  let dragging = false, lastPointerX = 0;
-  let prevX = 0, prevDelta = 0;
+  /* ---------- which piece faces front ---------- */
+  let focus = Math.floor((slots.length - 1) / 2);
+  slots.forEach((el, k) => { el.style.zIndex = k === focus ? 5 : 1; });
 
-  function measure() {
-    const railW = rail.clientWidth;
-    const trackW = track.scrollWidth;
-    if (trackW <= railW) {
-      minX = maxX = (railW - trackW) / 2; // everything fits: centre it
-    } else {
-      minX = railW - trackW;
-      maxX = 0;
-    }
+  function setFocus(i) {
+    if (i === focus) return;
+    state[focus].vel += 2.4; state[i].vel -= 2.4;      // a little swing as it turns
+    focus = i;
+    slots.forEach((el, k) => { el.style.zIndex = k === focus ? 5 : 1; });
   }
-
-  rail.addEventListener("pointerdown", e => {
-    dragging = true;
-    lastPointerX = e.clientX;
-    v = 0;
-    rail.setPointerCapture(e.pointerId);
-    rail.classList.add("is-dragging");
-  });
-
-  rail.addEventListener("pointermove", e => {
-    if (!dragging) return;
-    let dx = e.clientX - lastPointerX;
-    lastPointerX = e.clientX;
-    if (x + dx > maxX || x + dx < minX) dx *= 0.35; // resistance past the ends
-    x += dx;
-    v = dx;
-  });
-
-  function release() {
-    dragging = false;
-    rail.classList.remove("is-dragging");
+  function nearest(clientX) {
+    let best = 0, bd = 1e9;
+    slots.forEach((el, i) => {
+      const r = el.getBoundingClientRect(), d = Math.abs(clientX - (r.left + r.width / 2));
+      if (d < bd) { bd = d; best = i; }
+    });
+    return best;
   }
-  rail.addEventListener("pointerup", release);
-  rail.addEventListener("pointercancel", release);
+  rail.addEventListener("pointermove", e => { if (e.pointerType === "mouse") setFocus(nearest(e.clientX)); });
+  rail.addEventListener("pointerdown", e => setFocus(nearest(e.clientX)));
+
+  const targetRy = i => (i === focus ? 0 : Math.min(80, 68 + Math.abs(i - focus) * 4));
 
   /* ---------- animation loop ---------- */
   let visible = true;
@@ -129,48 +118,32 @@
   function frame(time) {
     requestAnimationFrame(frame);
     if (!visible) return;
-
-    if (!dragging) {
-      x += v;
-      v *= 0.94; // momentum fades
-      if (x > maxX) { v *= 0.5; x += (maxX - x) * 0.15; } // spring back into place
-      else if (x < minX) { v *= 0.5; x += (minX - x) * 0.15; }
-    }
-
-    const delta = x - prevX;
-    const accel = delta - prevDelta;
-    prevX = x;
-    prevDelta = delta;
-
-    track.style.transform = `translate3d(${x}px, 0, 0)`;
-
-    hangs.forEach(h => {
-      if (!motion) {
-        h.angle = 0;
-        h.vel = 0;
-      } else {
-        const moving = dragging || Math.abs(v) > 0.5;
-        const rest = moving ? 0 : Math.sin(time / 1000 * 0.9 + h.phase) * 1.2; // gentle idle sway
-        h.vel += (rest - h.angle) * 0.02 + accel * 0.6 + delta * 0.02; // swing with the rail
-        h.vel *= 0.92;
-        h.angle = Math.max(-18, Math.min(18, h.angle + h.vel));
+    state.forEach((h, i) => {
+      const tgt = targetRy(i);
+      if (!motion) { h.ry = tgt; h.angle = 0; h.vel = 0; }
+      else {
+        h.ry += (tgt - h.ry) * 0.1;
+        const rest = Math.sin(time / 1000 * 0.9 + h.phase) * 1.1;
+        h.vel += (rest - h.angle) * 0.02; h.vel *= 0.93;
+        h.angle = Math.max(-14, Math.min(14, h.angle + h.vel));
       }
       h.el.style.transform = `rotate(${h.angle.toFixed(2)}deg)`;
+      h.turn.style.setProperty("--ry", h.ry.toFixed(1) + "deg");
+      h.turn.style.setProperty("--b", (1 - 0.30 * Math.min(h.ry, 78) / 78).toFixed(3));
     });
+  }
+
+  function sizeBar() {
+    bar.style.width = Math.min(rail.clientWidth - 44, slots[0].offsetWidth * slots.length + 110) + "px";
   }
 
   /* ---------- start once the photos are in ---------- */
   const imgs = Array.from(track.querySelectorAll("img"));
   Promise.all(imgs.map(img => img.complete ? null : new Promise(r => { img.addEventListener("load", r); img.addEventListener("error", r); })))
     .then(() => {
-      measure();
-      x = prevX = (minX + maxX) / 2;
+      sizeBar();
       rail.classList.add("is-ready");
       requestAnimationFrame(frame);
     });
-
-  window.addEventListener("resize", () => {
-    measure();
-    x = Math.max(minX, Math.min(maxX, x));
-  });
+  window.addEventListener("resize", sizeBar);
 })();
