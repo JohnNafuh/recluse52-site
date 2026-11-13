@@ -46,33 +46,16 @@
     </div>
   </section>
 
-  <style>
-.spot { position: relative; overflow: hidden; height: clamp(430px, 72vw, 580px); border-radius: var(--radius); background: #0e0e0e; color: #ffffff; touch-action: pan-y; user-select: none; -webkit-user-select: none; }
-.spot::before { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 52%, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0) 62%); }
-.spot-word { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: var(--wide); font-size: min(10.4vw, 150px); letter-spacing: 0.04em; white-space: nowrap; color: transparent; -webkit-text-stroke: 1px rgba(255, 255, 255, 0.3); }
-.spot-stage { position: absolute; inset: 0; }
-.spot-slide { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.9s ease; pointer-events: none; }
-.spot-slide.is-on { opacity: 1; }
-.spot-slide img { height: 74%; max-width: 86%; width: auto; object-fit: contain; filter: drop-shadow(0 18px 22px rgba(0, 0, 0, 0.55)); animation: spotFloat 6s ease-in-out infinite; }
-@keyframes spotFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
-.spot-info { position: absolute; left: 0; right: 0; bottom: 0; display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; padding: clamp(18px, 3vw, 32px); }
-.spot-name { margin: 0 0 6px; font-family: var(--wide); font-size: clamp(11px, 1.3vw, 15px); letter-spacing: 0.2em; text-transform: uppercase; }
-.spot-note { margin: 0; font-size: 13px; color: rgba(255, 255, 255, 0.6); }
-.spot-count { margin: 0; font-family: var(--wide); font-size: 11px; letter-spacing: 0.2em; color: rgba(255, 255, 255, 0.75); }
-@media (prefers-reduced-motion: reduce) { .spot-slide img { animation: none; } }
-</style>
-<!-- exclusive spotlight: one piece at a time over a huge outlined word -->
+  <!-- exclusive rail: display only, filled by rail.js -->
   <section class="section" aria-label="Exclusive pieces">
-    <div class="spot" id="spot">
-      <div class="spot-word" aria-hidden="true">EXCLUSIVE</div>
-      <div class="spot-stage" id="spotStage"></div>
-      <div class="spot-info">
-        <div>
-          <p class="spot-name" id="spotName"></p>
-          <p class="spot-note">Limited · no restock</p>
-        </div>
-        <p class="spot-count" id="spotCount"></p>
-      </div>
+    <div class="section-head">
+      <h2>EXCLUSIVE</h2>
+      <button type="button" class="motion-toggle" id="motionToggle" aria-pressed="true">MOTION ON</button>
+    </div>
+    <div class="rail" id="rail">
+      <div class="rail-bar" aria-hidden="true"></div>
+      <p class="rail-loading">HANGING THE COLLECTION…</p>
+      <div class="rail-track" id="railTrack"></div>
     </div>
   </section>
 
@@ -121,47 +104,7 @@
 
 <script src="products.js?v=18"></script>
 <script src="cart.js?v=5"></script>
-<script>
-(function () {
-  const spot = document.getElementById("spot");
-  if (!spot) return;
-  const pieces = listProducts().filter(p => p.exclusive);
-  if (!pieces.length) { spot.closest("section").hidden = true; return; }
-
-  const stage = document.getElementById("spotStage");
-  stage.innerHTML = pieces.map(p => `<div class="spot-slide"><img src="${p.railImage || p.images[0]}" alt="${p.name}" draggable="false"></div>`).join("");
-  const slides = Array.from(stage.children);
-  const nameEl = document.getElementById("spotName");
-  const countEl = document.getElementById("spotCount");
-  const pad = n => String(n).padStart(2, "0");
-  let i = 0, timer = null, visible = true;
-  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  function show(n) {
-    i = (n + pieces.length) % pieces.length;
-    slides.forEach((s, k) => s.classList.toggle("is-on", k === i));
-    nameEl.textContent = pieces[i].name;
-    countEl.textContent = pad(i + 1) + " / " + pad(pieces.length);
-  }
-  function restart() {
-    clearInterval(timer);
-    if (!reduce && pieces.length > 1) timer = setInterval(() => { if (visible) show(i + 1); }, 4500);
-  }
-  show(0); restart();
-
-  new IntersectionObserver(e => { visible = e[0].isIntersecting; }).observe(spot);
-
-  // swipe or drag to change piece
-  let sx = null;
-  spot.addEventListener("pointerdown", e => { sx = e.clientX; });
-  spot.addEventListener("pointerup", e => {
-    if (sx === null) return;
-    const dx = e.clientX - sx; sx = null;
-    if (Math.abs(dx) > 40) { show(i + (dx < 0 ? 1 : -1)); restart(); }
-  });
-  spot.addEventListener("pointercancel", () => { sx = null; });
-})();
-</script>
+<script src="rail.js?v=6"></script>
 <script>
   // teaser: the 2 products marked featured: true
   // gallery wall: frames marked wall: true, hung salon-style (left %, top %, width %)
