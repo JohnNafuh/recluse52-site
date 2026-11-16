@@ -18,7 +18,7 @@
 
   const css = document.createElement("style");
   css.textContent = `
-    #rail { --h: clamp(112px, 33vw, 210px); overflow-x: auto; overflow-y: hidden; touch-action: pan-x pan-y; cursor: default; scrollbar-width: none; }
+    #rail { --h: clamp(96px, 29vw, 185px); --w: clamp(42px, 11.5vw, 64px); overflow-x: auto; overflow-y: hidden; touch-action: pan-x pan-y; cursor: default; scrollbar-width: none; }
     #rail::-webkit-scrollbar { display: none; }
     #rail .rail-bar { z-index: 0; left: 50%; right: auto; transform: translateX(-50%); }
     #rail .rail-bar::before, #rail .rail-bar::after {
@@ -32,14 +32,17 @@
     #rail .rail-bar::before { left: -9px; }
     #rail .rail-bar::after { right: -9px; }
     #rail .rail-track { z-index: 1; width: max-content; min-width: 100%; justify-content: center; gap: 0; padding: 0 0 38px; }
-    /* the hook's curl sits on the rail: image top is lined up with the rail's centre */
-    #rail .hang { position: relative; flex: 0 0 auto; margin: calc(27px - 0.045 * var(--h)) 0 0; transform-origin: 50% 4.5%; }
+    /* the hook is turned to face front: a wire runs up in front of the bar and arcs over the top of it */
+    #rail .hang { position: relative; flex: 0 0 auto; margin: 15px 0 0; padding-top: var(--w); transform-origin: 50% 12px; }
+    #rail .wire { position: absolute; left: 50%; top: 0; z-index: 1; width: 2px; height: calc(var(--w) + 5px); margin-left: -1px; border-radius: 1px;
+      background: linear-gradient(90deg, #6a6a6a, #f6f6f6 50%, #6a6a6a); box-shadow: 0 0 1px rgba(0, 0, 0, 0.5); }
+    #rail .wire::before { content: ""; position: absolute; left: 1px; top: -1px; width: 10px; height: 8px; border-top: 2px solid #dcdcdc; border-right: 2px solid #b4b4b4; border-radius: 0 9px 0 0; }
     #rail .hang + .hang { margin-left: clamp(-24px, -4vw, -8px); }
-    #rail .hang-img { display: block; height: var(--h); width: auto; filter: drop-shadow(0 12px 10px rgba(0, 0, 0, 0.22)); pointer-events: none; user-select: none; -webkit-user-drag: none; }`;
+    #rail .hang-img { position: relative; z-index: 2; display: block; height: var(--h); width: auto; filter: drop-shadow(0 12px 10px rgba(0, 0, 0, 0.22)); pointer-events: none; user-select: none; -webkit-user-drag: none; }`;
   document.head.appendChild(css);
 
   track.innerHTML = PIECES.map(p => `
-    <div class="hang"><img class="hang-img" src="${p.src}" alt="${p.alt}" draggable="false"></div>`).join("");
+    <div class="hang"><span class="wire"></span><img class="hang-img" src="${p.src}" alt="${p.alt}" draggable="false"></div>`).join("");
 
   const slots = Array.from(track.querySelectorAll(".hang"));
   const state = slots.map((el, i) => ({ el, angle: 0, vel: 0, phase: i * 1.7 }));
