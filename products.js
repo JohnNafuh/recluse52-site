@@ -31,6 +31,21 @@ const PRODUCTS = {
     sizes: ["S", "M", "L", "XL"],
     desc: "White tee. RECLUSE Fifty Two arch on the front, samurai in a red brush circle on the back."
   },
+  "swirl": {
+    name: "RECLUSE SWIRL",
+    category: "tees",
+    drop: "DROP 03",
+    price: 28000,
+    tag: "NEW",
+    images: ["studio-swirl-white-front.jpeg", "studio-swirl-white-back.jpeg", "studio-swirl-black-front.jpeg", "studio-swirl-black-back.jpeg"],
+    colors: [
+      { name: "White", hex: "#F4F4F2", images: ["studio-swirl-white-front.jpeg", "studio-swirl-white-back.jpeg"] },
+      { name: "Black", hex: "#161616", images: ["studio-swirl-black-front.jpeg", "studio-swirl-black-back.jpeg"] }
+    ],
+    sizes: ["S", "M", "L", "XL"],
+    desc: "RECLUSE Fifty Two print on the chest and the swirling RECLUSE across the back. Choose white or black."
+  },
+
   "hooded": {
     name: "RECLUSE HOODED",
     category: "tees",
@@ -313,7 +328,7 @@ function listProducts(category) {
 // photo for a chosen colour (falls back to the first photo)
 function imageFor(p, colorName) {
   const c = (p.colors || []).find(c => c.name === colorName);
-  return (c && c.image) || p.images[0];
+  return (c && (c.images ? c.images[0] : c.image)) || p.images[0];
 }
 
 // price text; shows the original price struck through when oldPrice is set
@@ -339,7 +354,7 @@ function productCard(p) {
     </a>`;
   }
   // front first; the back shows on hover (desktop) or swipe (phone). Colour products show their cover only.
-  const shots = p.colors.length ? [p.images[0]] : p.images.slice(0, 2);
+  const shots = p.colors.length ? (p.colors[0].images || [p.images[0]]).slice(0, 2) : p.images.slice(0, 2);
   const imgs = shots.map((s, i) => `<img class="card-img" src="${s}" alt="${p.name}${i ? ' (back)' : ''}" loading="lazy" draggable="false">`).join("");
   const dots = shots.length > 1 ? '<span class="dots" aria-hidden="true"><i></i><i></i></span>' : "";
   const label = p.soldOut ? "SOLD OUT" : (p.tag || "");

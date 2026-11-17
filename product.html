@@ -113,7 +113,7 @@
   </div>
 </footer>
 
-<script src="products.js?v=18"></script>
+<script src="products.js?v=19"></script>
 <script src="cart.js?v=5"></script>
 <script>
 const id = new URLSearchParams(location.search).get("id");
@@ -254,7 +254,8 @@ if (!product) {
 
   // when the photo changes, pick the matching colour
   function syncColor() {
-    const c = product.colors.find(c => c.image === product.images[photo]);
+    const cur = product.images[photo];
+    const c = product.colors.find(c => c.images ? c.images.includes(cur) : c.image === cur);
     if (c && c.name !== color) { color = c.name; renderColors(); resetAdd(); }
   }
 
@@ -273,7 +274,8 @@ if (!product) {
       if (!btn) return;
       color = btn.dataset.color;
       const c = product.colors.find(c => c.name === color);
-      if (c && c.image && product.images.includes(c.image)) { photo = product.images.indexOf(c.image); showPhoto(); }
+      const first = c && (c.images ? c.images[0] : c.image);
+      if (first && product.images.includes(first)) { photo = product.images.indexOf(first); showPhoto(); }
       renderColors();
       resetAdd();
     };
