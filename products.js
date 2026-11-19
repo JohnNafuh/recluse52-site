@@ -138,16 +138,6 @@ const PRODUCTS = {
     sizes: ["S", "M", "L", "XL"],
     desc: "White tee. Camo RECLUSE wordmark on the front, camo crown of thorns portrait on the back."
   },
-  "no-rest": {
-    name: "RECLUSE NO REST",
-    category: "tees",
-    drop: "DROP 03",
-    price: 30000,
-    images: ["studio-no-rest-back.jpeg"],
-    colors: [],
-    sizes: ["S", "M", "L", "XL"],
-    desc: "White tee. Blackletter RECLUSE over a winged hourglass and No Rest banner on the back."
-  },
   "dreams": {
     name: "RECLUSE DREAMS",
     category: "tees",
