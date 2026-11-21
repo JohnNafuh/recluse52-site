@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RECLUSE | EXTRAS</title>
+<meta name="description" content="RECLUSE extras: wall frames and other pieces outside the clothing collection.">
+<link rel="stylesheet" href="style.css?v=25">
+</head>
+
+<body>
+
+<nav class="nav">
+  <a class="nav-logo" href="index.html">RECLUSE</a>
+  <div class="nav-links">
+    <a href="shop.html">SHOP</a>
+    <a href="cart.html">CART (<span data-cart-count>0</span>)</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <section class="section section-compact">
+    <div class="section-head"><h2>EXTRAS</h2></div>
+    <p class="about-text" style="margin: 0 0 22px; font-size: 16px">Wall frames and other pieces that live outside the clothing collection.</p>
+    <img src="Index%20header%20frame%20image.JPEG" alt="RECLUSE wall frames" onerror="this.remove()" style="display: block; width: 100%; max-width: 520px; height: auto; margin: 0 auto; border-radius: var(--radius);">
+  </section>
+
+  <section class="section section-compact" id="frames">
+    <div class="section-head"><h2>WALL FRAMES</h2></div>
+    <div class="grid" data-category="frames"></div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <span>© RECLUSE</span>
+  <div class="footer-links">
+    <a href="privacy.html">PRIVACY</a>
+    <a href="terms.html">TERMS</a>
+    <a href="#">INSTAGRAM</a>
+    <a href="https://wa.me/2347038547668" target="_blank" rel="noopener">WHATSAPP</a>
+  </div>
+</footer>
+
+<script src="products.js?v=21"></script>
+<script src="cart.js?v=5"></script>
+<script>
+  document.querySelectorAll("[data-category]").forEach(grid => {
+    grid.innerHTML = listProducts(grid.dataset.category).map(productCard).join("");
+  });
+
+  // coming back from a product: return to the spot you left
+  const nav = performance.getEntriesByType("navigation")[0];
+  const savedY = Number(sessionStorage.getItem("extrasScroll") || 0);
+  if (nav && nav.type === "back_forward" && savedY) { history.scrollRestoration = "manual"; window.scrollTo(0, savedY); }
+  const saveY = () => sessionStorage.setItem("extrasScroll", String(window.scrollY));
+  window.addEventListener("pagehide", saveY);
+  document.addEventListener("click", e => { if (e.target.closest("a.card")) saveY(); });
+</script>
+
+</body>
+</html>

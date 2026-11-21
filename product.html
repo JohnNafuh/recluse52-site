@@ -21,7 +21,7 @@
   <div class="product-layout">
 
     <div class="product-intro">
-      <a class="back-link" href="shop.html" onclick="if (document.referrer.indexOf('shop.html') > -1) { history.back(); return false; } sessionStorage.setItem('restoreShop', '1');">
+      <a class="back-link" href="shop.html" onclick="if (/(shop|extras)\.html/.test(document.referrer)) { history.back(); return false; } sessionStorage.setItem('restoreShop', '1');">
         <svg width="20" height="14" viewBox="0 0 20 14" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M19 7H1M7 1L1 7l6 6"/></svg>
         Shop
       </a>
@@ -122,7 +122,7 @@ const product = getProduct(id);
 // SHOP button in the menu: go back to the spot you left in the shop
 const navShop = document.querySelector('.nav a[href="shop.html"]');
 if (navShop) navShop.onclick = e => {
-  if (document.referrer.indexOf("shop.html") > -1) { e.preventDefault(); history.back(); }
+  if (/(shop|extras)\.html/.test(document.referrer)) { e.preventDefault(); history.back(); }
 };
 
 if (!product) {
