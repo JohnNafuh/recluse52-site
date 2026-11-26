@@ -13,29 +13,30 @@
 .ex-sub { position: relative; display: flex; justify-content: space-between; gap: 12px; margin: 16px 0 0; font-family: var(--wide); font-size: 9px; letter-spacing: 0.22em; color: rgba(255, 255, 255, 0.7); }
 
 /* frames leaning on a picture ledge */
-.ledge { position: relative; margin-top: 18px; padding-top: 36px; border-radius: var(--radius); background: radial-gradient(ellipse at 50% 0%, #f5f2eb 0%, #e2ddd3 100%); overflow: hidden; }
+.ledge { position: relative; margin-top: 0; padding-top: 36px; border-radius: var(--radius); background: radial-gradient(ellipse at 50% 0%, #f5f2eb 0%, #e2ddd3 100%); overflow: hidden; }
 .ledge-row { overflow-x: auto; scrollbar-width: none; scroll-snap-type: x proximity; padding: 0 clamp(18px, 4vw, 40px); }
 .ledge-row::-webkit-scrollbar { display: none; }
 .ledge-track { position: relative; display: flex; align-items: flex-end; justify-content: center; gap: clamp(8px, 2vw, 20px); width: max-content; min-width: 100%; padding-bottom: 18px; }
 .ledge-track::after { content: ""; position: absolute; left: -60px; right: -60px; bottom: 0; height: 18px; background: linear-gradient(#fcfbf8, #d6d1c6); box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.08), 0 12px 16px -6px rgba(0, 0, 0, 0.28); }
-.ledge-item { position: relative; z-index: 1; flex: 0 0 auto; width: clamp(96px, 26vw, 150px); scroll-snap-align: center; display: block; }
-.ledge-item:nth-child(3n + 2) { width: clamp(114px, 31vw, 178px); }
-.ledge-item:nth-child(3n) { width: clamp(88px, 23vw, 132px); }
+.ledge-item { position: relative; z-index: 1; flex: 0 0 auto; width: clamp(72px, 20vw, 118px); scroll-snap-align: center; display: block; }
+.ledge-item:nth-child(3n + 2) { width: clamp(88px, 24vw, 140px); }
+.ledge-item:nth-child(3n) { width: clamp(66px, 18vw, 104px); }
 .ledge-item .frame { --fw: 4px; transform: rotate(var(--r, 0deg)); transform-origin: 50% 100%; transition: transform 0.35s ease; }
 .ledge-item:nth-child(4n + 1) { --r: -1.2deg; } .ledge-item:nth-child(4n + 2) { --r: 0.6deg; } .ledge-item:nth-child(4n + 3) { --r: 1.3deg; } .ledge-item:nth-child(4n) { --r: -0.5deg; }
 .ledge-item:hover .frame, .ledge-item:active .frame { transform: rotate(0deg) translateY(-6px); }
 
 /* editorial grid */
-.ex-grid { counter-reset: n; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 26px 14px; }
+.ex-grid { counter-reset: n; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px 10px; }
 .ex-grid .card { counter-increment: n; transition: transform 0.35s ease; }
 .ex-grid .card::before { content: counter(n, decimal-leading-zero); margin-bottom: 4px; font-family: var(--wide); font-size: 9px; letter-spacing: 0.22em; color: var(--muted); }
-.ex-grid .card:nth-child(even) { margin-top: 36px; }
-.ex-grid .frame { --fw: 5px; }
+.ex-grid .card:nth-child(3n + 2) { margin-top: 30px; }
+.ex-grid .card-meta { font-size: 11px; }
+.ex-grid .frame { --fw: 4px; }
 .ex-grid .card:hover { transform: translateY(-6px); }
 @media (min-width: 900px) {
-  .ex-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 40px 26px; }
-  .ex-grid .card:nth-child(even) { margin-top: 0; }
-  .ex-grid .card:nth-child(4n + 2), .ex-grid .card:nth-child(4n + 4) { margin-top: 44px; }
+  .ex-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 36px 20px; }
+  .ex-grid .card:nth-child(3n + 2) { margin-top: 0; }
+  .ex-grid .card:nth-child(even) { margin-top: 38px; }
 }
 
 .ex-soon { margin-top: 56px; padding: 26px 18px; border: 1px dashed #bdbdba; border-radius: var(--radius); text-align: center; font-family: var(--wide); font-size: 10px; letter-spacing: 0.22em; color: var(--muted); }
@@ -55,10 +56,6 @@
 <main class="wrap">
 
   <section class="section section-compact">
-    <div class="ex-hero">
-      <h1 class="ex-word">EXTRAS</h1>
-      <p class="ex-sub"><span>WALL FRAMES · MADE TO HANG</span><span id="exCount"></span></p>
-    </div>
     <div class="ledge" aria-label="Frames on a ledge">
       <div class="ledge-row"><div class="ledge-track" id="ledge"></div></div>
     </div>
@@ -86,7 +83,6 @@
 <script src="cart.js?v=5"></script>
 <script>
   const frames = listProducts("frames");
-  document.getElementById("exCount").textContent = String(frames.length).padStart(2, "0") + " PIECES";
 
   // frames leaning on the ledge
   document.getElementById("ledge").innerHTML = frames.map(p =>
