@@ -12,18 +12,20 @@
 .ex-word { position: relative; margin: 0; font-family: var(--wide); font-weight: 400; font-size: min(15.5vw, 150px); line-height: 1; letter-spacing: 0.04em; color: transparent; -webkit-text-stroke: 1px rgba(255, 255, 255, 0.45); }
 .ex-sub { position: relative; display: flex; justify-content: space-between; gap: 12px; margin: 16px 0 0; font-family: var(--wide); font-size: 9px; letter-spacing: 0.22em; color: rgba(255, 255, 255, 0.7); }
 
-/* frames leaning on a picture ledge */
+/* frames leaning on a picture ledge, sliding left without end */
 .ledge { position: relative; margin-top: 0; padding-top: 36px; border-radius: var(--radius); background: radial-gradient(ellipse at 50% 0%, #f5f2eb 0%, #e2ddd3 100%); overflow: hidden; }
-.ledge-row { overflow-x: auto; scrollbar-width: none; scroll-snap-type: x proximity; padding: 0 clamp(18px, 4vw, 40px); }
-.ledge-row::-webkit-scrollbar { display: none; }
-.ledge-track { position: relative; display: flex; align-items: flex-end; justify-content: center; gap: clamp(8px, 2vw, 20px); width: max-content; min-width: 100%; padding-bottom: 18px; }
-.ledge-track::after { content: ""; position: absolute; left: -60px; right: -60px; bottom: 0; height: 18px; background: linear-gradient(#fcfbf8, #d6d1c6); box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.08), 0 12px 16px -6px rgba(0, 0, 0, 0.28); }
-.ledge-item { position: relative; z-index: 1; flex: 0 0 auto; width: clamp(72px, 20vw, 118px); scroll-snap-align: center; display: block; }
-.ledge-item:nth-child(3n + 2) { width: clamp(88px, 24vw, 140px); }
-.ledge-item:nth-child(3n) { width: clamp(66px, 18vw, 104px); }
+.ledge-row { position: relative; overflow: hidden; }
+.ledge-row::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 18px; background: linear-gradient(#fcfbf8, #d6d1c6); box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.08), 0 12px 16px -6px rgba(0, 0, 0, 0.28); }
+.ledge-track { display: flex; align-items: flex-end; width: max-content; padding-bottom: 18px; animation: ledgeMove 60s linear infinite; will-change: transform; }
+@keyframes ledgeMove { to { transform: translateX(calc(-1 * var(--set, 0px))); } }
+.ledge:hover .ledge-track { animation-play-state: paused; }
+.ledge-item { position: relative; z-index: 1; flex: 0 0 auto; display: block; width: clamp(72px, 20vw, 118px); margin-right: clamp(8px, 2vw, 20px); }
+.ledge-item.w1 { width: clamp(88px, 24vw, 140px); }
+.ledge-item.w2 { width: clamp(66px, 18vw, 104px); }
 .ledge-item .frame { --fw: 4px; transform: rotate(var(--r, 0deg)); transform-origin: 50% 100%; transition: transform 0.35s ease; }
-.ledge-item:nth-child(4n + 1) { --r: -1.2deg; } .ledge-item:nth-child(4n + 2) { --r: 0.6deg; } .ledge-item:nth-child(4n + 3) { --r: 1.3deg; } .ledge-item:nth-child(4n) { --r: -0.5deg; }
+.ledge-item.r0 { --r: -1.2deg; } .ledge-item.r1 { --r: 0.6deg; } .ledge-item.r2 { --r: 1.3deg; } .ledge-item.r3 { --r: -0.5deg; }
 .ledge-item:hover .frame, .ledge-item:active .frame { transform: rotate(0deg) translateY(-6px); }
+@media (prefers-reduced-motion: reduce) { .ledge-track { animation: none; } .ledge-row { overflow-x: auto; } }
 
 /* editorial grid */
 .ex-grid { counter-reset: n; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px 10px; }
@@ -84,9 +86,16 @@
 <script>
   const frames = listProducts("frames");
 
-  // frames leaning on the ledge
-  document.getElementById("ledge").innerHTML = frames.map(p =>
-    `<a class="ledge-item" href="product.html?id=${p.id}" aria-label="${p.name}"><span class="frame"><img src="${p.images[0]}" alt="${p.name}" loading="lazy" draggable="false"></span></a>`).join("");
+  // frames leaning on the ledge, repeated so the slide never runs out
+  const ledge = document.getElementById("ledge");
+  const setHtml = frames.map((p, i) =>
+    `<a class="ledge-item w${i % 3} r${i % 4}" href="product.html?id=${p.id}" aria-label="${p.name}"><span class="frame"><img src="${p.images[0]}" alt="${p.name}" loading="lazy" draggable="false"></span></a>`).join("");
+  ledge.innerHTML = setHtml;
+  const setW = ledge.scrollWidth;                                   // width of one full set
+  const copies = Math.ceil(ledge.parentElement.clientWidth / setW) + 1;
+  ledge.innerHTML = setHtml.repeat(copies);
+  ledge.style.setProperty("--set", setW + "px");
+  ledge.style.animationDuration = Math.max(20, setW / 40) + "s";    // about 40px per second
 
   // numbered grid
   document.querySelectorAll("[data-category]").forEach(grid => {
